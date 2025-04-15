@@ -60,7 +60,6 @@ body {
 .nav-icons a {
     text-decoration: none;
     color: white;
-
 }
 
 .nav-shopping-cart {
@@ -71,4 +70,15 @@ body {
 .nav-shopping-cart a {
     text-decoration: none;
     color: white;
+}
+
+.navbar.scrolled {
+    background-color: white;
+}
+
+.navbar.scrolled .nav-links a,
+.navbar.scrolled .nav-icons a,
+.navbar.scrolled .nav-shopping-cart a,
+.navbar.scrolled .logo {
+    color: grey;
 }
