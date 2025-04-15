@@ -14,8 +14,7 @@ body {
     left: 0;
     z-index: 10;
     width: 100%;
-    background: black;
-    color: grey;
+    color: transparent;
     transition: background-color 0.3s ease;
     align-items: center;
     justify-content: space-between;
@@ -28,6 +27,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    color: white;
 }
 
 .logo {
@@ -46,8 +46,7 @@ body {
 
 .nav-links a {
     text-decoration: none;
-    color: grey;
-
+    color: white;
 }
 
 .nav-icons {
@@ -55,11 +54,13 @@ body {
     position: relative;
     right: 190px;
     gap: 10px;
+
 }
 
 .nav-icons a {
     text-decoration: none;
-    color: grey;
+    color: white;
+
 }
 
 .nav-shopping-cart {
@@ -69,5 +70,5 @@ body {
 
 .nav-shopping-cart a {
     text-decoration: none;
-    color: grey;
+    color: white;
 }
