@@ -138,5 +138,5 @@ postgresql/
 media/
 static/
 
-staticfiles/videos
-staticfiles/images
+staticfiles/videos/
+staticfiles/images/
