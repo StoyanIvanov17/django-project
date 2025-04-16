@@ -15,12 +15,24 @@
 {% endblock %}
 
 {% block main_content %}
-    <div class="gallery">
-        <img src="{% static 'images/image1.jpg' %}" alt="Gallery Image 1">
-        <img src="{% static 'images/image2.jpg' %}" alt="Gallery Image 2">
-        <img src="{% static 'images/image3.jpg' %}" alt="Gallery Image 3">
-        <img src="{% static 'images/image4.jpg' %}" alt="Gallery Image 4">
+    <div class="home-gallery">
+    <div class="image-wrapper">
+        <img src="{% static 'images/clothes.jpg' %}" alt="Clothes">
+        <div class="overlay">Clothes</div>
     </div>
+    <div class="image-wrapper">
+        <img src="{% static 'images/jewellery.jpg' %}" alt="Jewellery">
+        <div class="overlay">Jewellery</div>
+    </div>
+    <div class="image-wrapper">
+        <img src="{% static 'images/make up.jpg' %}" alt="Makeup">
+        <div class="overlay">Makeup</div>
+    </div>
+    <div class="image-wrapper">
+        <img src="{% static 'images/shoes.jpg' %}" alt="Shoes">
+        <div class="overlay">Shoes</div>
+    </div>
+</div>
 {% endblock %}
 
 
