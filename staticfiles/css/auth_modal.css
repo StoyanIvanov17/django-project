@@ -1,0 +1,86 @@
+.auth-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+}
+
+.auth-modal-content {
+    background: white;
+    padding: 40px;
+    width: 90%;
+    max-width: 450px;
+    border-radius: 4px;
+    position: relative;
+    text-align: left;
+}
+
+.auth-close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.auth-title {
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.auth-subtitle {
+    font-weight: bold;
+    margin-bottom: 20px;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.auth-label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.auth-required {
+    color: red;
+}
+
+.auth-input {
+    width: 100%;
+    padding: 16px;
+    font-size: 14px;
+    margin-bottom: 20px;
+    border: 1px solid #000;
+}
+
+.auth-submit-btn {
+    width: 100%;
+    background: black;
+    color: white;
+    border: none;
+    padding: 16px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.auth-secure {
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+    margin-top: 15px;
+}
+
+.auth-secure i {
+    margin-right: 8px;
+}

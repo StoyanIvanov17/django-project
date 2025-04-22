@@ -1,0 +1,26 @@
+<div id="authModal" class="auth-modal">
+    <div class="auth-modal-content">
+        <button class="auth-close-btn" id="authCloseBtn">&times;</button>
+
+        <h2 class="auth-title">LOGIN</h2>
+        <p class="auth-subtitle">
+            Log in with an email address or register to become a loyal customer.
+        </p>
+
+        <form id="emailCheckForm">
+            {% csrf_token %}
+            <label for="authEmail" class="auth-label">Email <span class="auth-required">*</span></label>
+            <input type="email" id="authEmail" name="email" class="auth-input" placeholder="Email" required>
+            <button type="submit" class="auth-submit-btn">NEXT</button>
+        </form>
+
+        <div class="auth-secure">
+            <i class="fa fa-lock"></i> All data is protected
+        </div>
+        
+    </div>
+</div>
+
+
+
+

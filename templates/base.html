@@ -27,24 +27,14 @@
             <div class="nav-icons">
                 <a><i class="fa-solid fa-bag-shopping"></i></a>
                 <a><i class="fa-solid fa-magnifying-glass"></i></a>
-
-                <div class="user-menu-container">
-                    <a id="userIcon"><i class="fa-regular fa-user"></i></a>
-                    <div class="user-dropdown" id="userDropdown">
-                        {% if user.is_authenticated %}
-                            <a href="">Logout</a>
-                        {% else %}
-                            <a href="{% url 'login' %}">Login</a>
-                            <a href="{% url 'register' %}">Register</a>
-                        {% endif %}
-                    </div>
-                </div>
-
+                <a id="userIcon"><i class="fa-regular fa-user"></i></a>
                 <a><i class="fa-solid fa-bars"></i></a>
             </div>
-            
+
         </div>
     </nav>
+
+    {% include 'accounts/auth_modal.html' %}
 
     {% block hero_section %}
     {% endblock %}
@@ -52,10 +42,10 @@
     {% block main_content %}
     {% endblock %}
     
+
     <script src="{% static 'js/navbar.js' %}"></script>
     <script src="{% static 'js/film_wrapper.js' %}"></script>
-    <script src="{% static 'js/user_menu.js' %}"></script>
+    <script src="{% static 'js/auth_modal.js' %}"></script>
 
-    
 </body>
 </html>

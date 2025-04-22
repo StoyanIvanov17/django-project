@@ -132,3 +132,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
 USERNAME_FIELD = 'email'
+LOGIN_REDIRECT_URL = 'homepage'
