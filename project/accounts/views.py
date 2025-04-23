@@ -1,10 +1,11 @@
+from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import redirect
 from django.urls import reverse_lazy, reverse
 from django.views import generic as views
 from django.contrib.auth import views as auth_views, login, logout, get_user_model
 
-from project.accounts.forms import UserCreationForm
+from project.accounts.forms import UserCreationForm, CustomAuthenticationForm
 
 UserModel = get_user_model()
 
@@ -12,11 +13,11 @@ UserModel = get_user_model()
 class SignInUserView(auth_views.LoginView):
     template_name = 'accounts/auth_modal.html'
     redirect_authenticated_user = True
+    form_class = CustomAuthenticationForm
 
     def get_success_url(self):
-
         user = self.request.user
-        if user.is_authenticated and hasattr(user, 'customer'):
+        if user.is_authenticated:
             return reverse("homepage")
 
         return super().get_success_url()
@@ -48,6 +49,7 @@ class CheckEmailView(views.View):
         return JsonResponse({'error': 'Email not provided'}, status=400)
 
 
+@login_required
 def logout_user(request):
 
     logout(request)

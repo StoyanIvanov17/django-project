@@ -1,4 +1,6 @@
+from django import forms
 from django.contrib.auth import forms as auth_forms, get_user_model
+from django.contrib.auth.forms import AuthenticationForm
 from django.core.exceptions import ValidationError
 
 UserModel = get_user_model()
@@ -11,7 +13,11 @@ class UserCreationForm(auth_forms.UserCreationForm):
 
     class Meta(auth_forms.UserCreationForm.Meta):
         model = UserModel
-        fields = ('email', )
+        fields = ('email', 'date_of_birth')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['email'].widget.attrs['readonly'] = True
 
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")
@@ -29,3 +35,20 @@ class UserCreationForm(auth_forms.UserCreationForm):
             raise ValidationError("Password must contain at least one letter.")
 
         return password2
+
+
+class CustomAuthenticationForm(AuthenticationForm):
+    username = forms.EmailField(label='Email', widget=forms.EmailInput(attrs={'placeholder': 'Email'}))
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs['readonly'] = True
+
+    def clean_username(self):
+        email = self.cleaned_data.get('username')
+        try:
+            user = UserModel.objects.get(email=email)
+        except UserModel.DoesNotExist:
+            raise forms.ValidationError('No user with that email exists.')
+        return email
+

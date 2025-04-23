@@ -84,3 +84,14 @@
 .auth-secure i {
     margin-right: 8px;
 }
+
+.auth-input[readonly],
+.auth-input.greyed-out {
+    background-color: #f2f2f2;
+    color: #888;
+    cursor: not-allowed;
+}
+
+body.modal-open {
+    overflow: hidden;
+}

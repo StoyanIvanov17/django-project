@@ -16,6 +16,8 @@ class CustomUser(auth_models.AbstractBaseUser, auth_models.PermissionsMixin):
         },
     )
 
+    date_of_birth = models.DateField()
+
     date_joined = models.DateTimeField(
         default=timezone.now
     )
@@ -29,8 +31,6 @@ class CustomUser(auth_models.AbstractBaseUser, auth_models.PermissionsMixin):
     )
 
     USERNAME_FIELD = 'email'
-
-    REQUIRED_FIELDS = []
 
     objects = CustomUserManager()
 

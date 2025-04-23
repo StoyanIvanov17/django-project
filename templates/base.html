@@ -27,7 +27,11 @@
             <div class="nav-icons">
                 <a><i class="fa-solid fa-bag-shopping"></i></a>
                 <a><i class="fa-solid fa-magnifying-glass"></i></a>
-                <a id="userIcon"><i class="fa-regular fa-user"></i></a>
+                {% if not user.is_authenticated %}
+                    <a id="userIcon"><i class="fa-regular fa-user"></i></a>
+                {% else %}
+                    <a id="profileIcon"><i class="fa-regular fa-user"></i></a>
+                {% endif %}
                 <a><i class="fa-solid fa-bars"></i></a>
             </div>
 
@@ -35,6 +39,7 @@
     </nav>
 
     {% include 'accounts/auth_modal.html' %}
+    {% include 'accounts/profile_modal.html' %}
 
     {% block hero_section %}
     {% endblock %}
@@ -46,6 +51,7 @@
     <script src="{% static 'js/navbar.js' %}"></script>
     <script src="{% static 'js/film_wrapper.js' %}"></script>
     <script src="{% static 'js/auth_modal.js' %}"></script>
+    <script src="{% static 'js/profile_modal.js' %}"></script>
 
 </body>
 </html>

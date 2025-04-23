@@ -2,20 +2,60 @@ document.addEventListener("DOMContentLoaded", function () {
     const userIcon = document.getElementById("userIcon");
     const authModal = document.getElementById("authModal");
     const authCloseBtn = document.getElementById("authCloseBtn");
+    const loginCloseBtn = document.getElementById("loginCloseBtn");
+    const registerCloseBtn = document.getElementById("registerCloseBtn");
     const emailCheckForm = document.getElementById("emailCheckForm");
     const authEmailInput = document.getElementById("authEmail");
 
+    const loginModal = document.getElementById("loginModal");
+    const registerModal = document.getElementById("registerModal");
+    const loginEmailInput = document.getElementById("loginEmailInput");
+    const registerEmailInput = document.getElementById("registerEmailInput");
+
+    function closeModal(modal) {
+        modal.style.display = "none";
+    }
+
     userIcon.addEventListener("click", function () {
-        authModal.style.display = "flex";
+        openModal(authModal);
     });
 
     authCloseBtn.addEventListener("click", function () {
-        authModal.style.display = "none";
+        closeModal(authModal);
     });
+
+    loginCloseBtn.addEventListener("click", function () {
+        closeModal(loginModal);
+    });
+
+    registerCloseBtn.addEventListener("click", function () {
+        closeModal(registerModal);
+    });
+
+    function openModal(modal) {
+        modal.style.display = "flex";
+        document.body.classList.add("modal-open");
+    }
+
+    function closeModal(modal) {
+        modal.style.display = "none";
+
+        const anyOpen = [authModal, loginModal, registerModal].some(m => m.style.display === "flex");
+        if (!anyOpen) {
+            document.body.classList.remove("modal-open");
+        }
+    }
+
 
     window.addEventListener("click", function (e) {
         if (e.target === authModal) {
-            authModal.style.display = "none";
+            closeModal(authModal);
+        }
+        if (e.target === loginModal) {
+            closeModal(loginModal);
+        }
+        if (e.target === registerModal) {
+            closeModal(registerModal);
         }
     });
 
@@ -35,15 +75,19 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .then(response => response.json())
         .then(data => {
+            closeModal(authModal);
+
             if (data.exists) {
-                alert('Email exists! You can proceed with login.');
+                loginEmailInput.value = email;
+                openModal(loginModal)
             } else {
-                alert('Email does not exist! You can proceed with registration.');
+                registerEmailInput.value = email;
+                openModal(registerModal)
             }
         })
         .catch(error => {
             console.error('Error:', error);
             alert('An error occurred while checking the email.');
         });
-    })
+    });
 });
