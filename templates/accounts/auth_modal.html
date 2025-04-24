@@ -4,7 +4,7 @@
 
         <h2 class="auth-title">LOGIN</h2>
         <p class="auth-subtitle">
-            Log in with an email address or register to become a loyal customer.
+            Log in with an email address or register to become a member.
         </p>
 
         <form id="emailCheckForm">
@@ -17,6 +17,10 @@
         <div class="auth-secure">
             <i class="fa fa-lock"></i> All data is protected
         </div>
+
+        <div class="loyal-customer">
+            <a href="">LOYALTY PROGRAM</a>
+        </div>
     </div>
 </div>
 
@@ -24,10 +28,12 @@
     <div class="auth-modal-content">
         <button class="auth-close-btn" id="loginCloseBtn">&times;</button>
         <h2 class="auth-title">Login</h2>
+        <h4>Please log in with your email and password.</h4>
         <form method="POST" action="{% url 'login' %}">
             {% csrf_token %}
             {{ login_form.non_field_errors }}
 
+            <label for="authEmail" class="auth-label">Email <span class="auth-required">*</span></label>
             <input type="email"
                    id="loginEmailInput"
                    name="username"
@@ -38,14 +44,17 @@
 
             {{ login_form.username.errors }}
 
+            <label class="auth-label-form">Password <span class="auth-required">*</span></label>
             <input type="password"
                    name="password"
                    placeholder="Password"
                    required
+                   autocomplete="new-password"
                    class="auth-input">
             {{ login_form.password.errors }}
 
-            <button type="submit" class="auth-submit-btn">Log In</button>
+            <button type="submit" class="auth-submit-btn">NEXT</button>
+            <button type="button" id="backToLoginFromLogin" class="auth-back-btn">BACK TO LOGIN</button>
         </form>
     </div>
 </div>
@@ -54,11 +63,12 @@
 <div id="registerModal" class="auth-modal" style="display: none;">
     <div class="auth-modal-content">
         <button class="auth-close-btn" id="registerCloseBtn">&times;</button>
-        <h2 class="auth-title">Register</h2>
+        <h2 class="auth-title">BECOME A MEMBER</h2>
         <form method="POST" action="{% url 'register' %}">
             {% csrf_token %}
             {{ register_form.non_field_errors }}
 
+            <label for="authEmail" class="auth-label">Email <span class="auth-required">*</span></label>
             <input type="email"
                    id="registerEmailInput"
                    name="email"
@@ -68,25 +78,23 @@
                    class="auth-input greyed-out">
             {{ register_form.email.errors }}
 
+            <label class="auth-label-form">Create a password <span class="auth-required">*</span></label>
             <input type="password" 
                    name="password1" 
                    placeholder="Password" 
-                   required class="auth-input">
+                   required class="auth-input"
+                   autocomplete="new-password">
             {{ register_form.password1.errors }}
 
-            <input type="password" 
-                   name="password2" 
-                   placeholder="Confirm Password" 
-                   required class="auth-input">
-            {{ register_form.password2.errors }}
-
+            <label class="auth-label-form">Date of birth <span class="auth-required">*</span></label>
             <input type="date" 
                    name="date_of_birth" 
                    placeholder="Date of Birth" 
                    required class="auth-input">
             {{ register_form.date_of_birth.errors }}
 
-            <button type="submit" class="auth-submit-btn">Register</button>
+            <button type="submit" class="auth-submit-btn">BECOME A MEMBER</button>
+            <button type="button" id="backToLoginFromRegister" class="auth-back-btn">BACK TO LOGIN</button>
         </form>
     </div>
 </div>

@@ -14,12 +14,12 @@
 
 .auth-modal-content {
     background: white;
-    padding: 40px;
-    width: 90%;
+    padding: 30px;
+    width: 25%;
     max-width: 450px;
-    border-radius: 4px;
     position: relative;
     text-align: left;
+    align-content: center;
 }
 
 .auth-close-btn {
@@ -34,7 +34,9 @@
 
 .auth-title {
     font-size: 14px;
-    margin-bottom: 20px;
+    margin: 15px 0 30px 0;
+
+    font-weight: normal;
 }
 
 .auth-subtitle {
@@ -48,7 +50,14 @@
     display: block;
     margin-bottom: 6px;
     font-size: 14px;
-    font-weight: bold;
+    font-weight: normal;
+}
+
+.auth-label-form {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 14px;
+    font-weight: normal;
 }
 
 .auth-required {
@@ -65,13 +74,25 @@
 
 .auth-submit-btn {
     width: 100%;
-    background: black;
+    background: #1c1c1c;
     color: white;
     border: none;
     padding: 16px;
     font-size: 14px;
-    font-weight: bold;
+    font-weight: normal;
     cursor: pointer;
+}
+
+.auth-back-btn {
+    width: 100%;
+    background: white;
+    color: black;
+    border: 1px solid black;
+    padding: 16px;
+    font-size: 14px;
+    font-weight: normal;
+    cursor: pointer;
+    margin-top: 15px;
 }
 
 .auth-secure {
@@ -79,6 +100,7 @@
     align-items: center;
     font-size: 13px;
     margin-top: 15px;
+    justify-content: center;
 }
 
 .auth-secure i {
@@ -94,4 +116,22 @@
 
 body.modal-open {
     overflow: hidden;
+}
+
+.loyal-customer {
+    font-size: 14px;
+    margin: 20px 0 10px 0;
+    text-align: center;
+}
+
+.loyal-customer a,
+.loyal-customer a:visited {
+    text-decoration: underline;
+    color: black;
+    letter-spacing: 1px;
+}
+
+.auth-modal-content h4 {
+    font-size: 14px;
+    margin-bottom: 20px;
 }

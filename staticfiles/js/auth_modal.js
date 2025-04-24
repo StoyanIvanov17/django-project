@@ -90,4 +90,20 @@ document.addEventListener("DOMContentLoaded", function () {
             alert('An error occurred while checking the email.');
         });
     });
+    const backToLoginBtn = document.getElementById("backToLoginBtn");
+    const backToLoginFromRegister = document.getElementById("backToLoginFromRegister");
+    if (backToLoginFromRegister) {
+        backToLoginFromRegister.addEventListener("click", function () {
+            closeModal(registerModal);
+            openModal(loginModal);
+        });
+    }
+
+    const backToLoginFromLogin = document.getElementById("backToLoginFromLogin");
+    if (backToLoginFromLogin) {
+        backToLoginFromLogin.addEventListener("click", function () {
+            closeModal(loginModal);
+            openModal(authModal);
+        });
+    }
 });
