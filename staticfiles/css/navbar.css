@@ -90,3 +90,7 @@ body {
     vertical-align: middle;
     margin-bottom: 5px;
 }
+
+.main-content.with-padding {
+    padding-top: 100px;
+}

@@ -9,14 +9,14 @@
 
 </head>
 <body>
-    <nav class="navbar">
+    <nav class="navbar {% block navbar_class %}{% endblock %}">
         <div class="navbar-container">
             <span class="logo">
                 Logo
             </span>
 
             <div class="nav-links">
-              <a href="#" class="active">HOME <span class="arrow">&#x276F;</span></a>
+              <a href="#" class="active">HOME</a>
               <a href="#">WOMEN <span class="arrow">&#x276F;</span></a>
               <a href="#">MEN <span class="arrow">&#x276F;</span></a>
               <a href="#">KIDS <span class="arrow">&#x276F;</span></a>
@@ -44,8 +44,10 @@
     {% block hero_section %}
     {% endblock %}
 
-    {% block main_content %}
-    {% endblock %}
+    <main class="main-content {% block main_class %}{% endblock %}">
+        {% block main_content %}
+        {% endblock %}
+    </main>
     
 
     <script src="{% static 'js/navbar.js' %}"></script>
