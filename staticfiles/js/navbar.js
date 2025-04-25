@@ -1,5 +1,11 @@
 document.addEventListener("DOMContentLoaded", function() {
     const navbar = document.querySelector(".navbar");
+    const hero = document.querySelector(".hero-video-section");
+
+    if (!hero) {
+        navbar.classList.add("scrolled");
+        return;
+    }
 
     if (!navbar) return;
 
