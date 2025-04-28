@@ -12,10 +12,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const loginEmailInput = document.getElementById("loginEmailInput");
     const registerEmailInput = document.getElementById("registerEmailInput");
 
-    function closeModal(modal) {
-        modal.style.display = "none";
-    }
-
     userIcon.addEventListener("click", function () {
         openModal(authModal);
     });
