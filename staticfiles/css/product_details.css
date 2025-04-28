@@ -1,0 +1,126 @@
+.product-page {
+    display: flex;
+    gap: 40px;
+    padding: 50px;
+}
+
+.product-gallery {
+    display: flex;
+    margin-left: 300px;
+}
+
+.main-image img {
+    height: 650px;
+    border-radius: 10px;
+}
+
+.thumbnail-images {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-right: 20px;
+}
+
+.thumbnail-images img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.product-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.product-title {
+    font-size: 28px;
+    font-weight: 400;
+    margin: 0 0 -15px;
+}
+
+.product-subtitle {
+    color: gray;
+    margin: 0;
+}
+
+.price {
+    font-size: 18px;
+    font-weight: 500;
+    margin: -5px 0 10px;
+}
+
+.more-colors img {
+    height: 70px;
+}
+
+.sizes {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.size-options {
+    display: flex;
+    gap: 180px;
+    font-weight: bold;
+}
+
+.size-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 400px;
+    margin-bottom: 10px;
+}
+
+.size-buttons button {
+    padding: 14px 12px;
+    border: 1px solid gray;
+    background: white;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+.size-buttons button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+
+.add-to-bag {
+    background: black;
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 30px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 350px;
+}
+
+.favourite {
+    background: white;
+    border: 1px solid black;
+    color: black;
+    padding: 15px 30px;
+    border-radius: 30px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 350px;
+}
+
+.description {
+    color: gray;
+    line-height: 1.5;
+    width: 300px;
+}

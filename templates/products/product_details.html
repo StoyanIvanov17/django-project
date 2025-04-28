@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block navbar_class %}
+    scrolled
+{% endblock %}
+
+{% block main_class %}with-padding{% endblock %}
+
+{% block main_content %}
+    <div class="product-page">
+        <section class="product-gallery">
+            <div class="thumbnail-images">
+                <img src="{% static 'images/submain.png' %}" alt="">
+                <img src="{% static 'images/submain_2.png' %}" alt="">
+                <img src="{% static 'images/submain_3.png' %}" alt="">
+            </div>
+            <div class="main-image">
+                <img src="{% static 'images/main.png' %}" alt="Nike Cargo Shorts">
+            </div>
+        </section>
+
+        <section class="product-details">
+            <h1 class="product-title">Nike Club</h1>
+            <p class="product-subtitle">Men's Woven Cargo Shorts</p>
+            <p class="price">BGN 129.99</p>
+
+            <div class="more-colors">
+                <img src="{% static 'images/main_diff_color.png' %}" alt="">
+                <img src="{% static 'images/main_diff_color_2.png' %}" alt="">
+            </div>
+
+            <div class="sizes">
+                <div class="size-options">
+                    <p>Select Size</p>
+                    <p>Size Guide</p>
+                </div>
+                <div class="size-buttons">
+                    <button disabled>EU 44</button>
+                    <button>EU 46</button>
+                    <button>EU 48</button>
+                    <button>EU 50</button>
+                    <button>EU 52</button>
+                    <button>EU 54</button>
+                    <button>EU 56</button>
+                    <button>EU 58</button>
+                </div>
+            </div>
+
+            <div class="actions">
+                <button class="add-to-bag">Add to Bag</button>
+                <button class="favourite">♡ Favourite</button>
+            </div>
+
+            <p class="description">
+                Made from durable Ripstop fabric, these cargo shorts from our Nike Club collection bring a little extra storage and style to your shorts game. Pull these on with a tee or hoodie and your favourite Nike sneakers for a classic look.
+            </p>
+        </section>
+    </div>
+{% endblock %}

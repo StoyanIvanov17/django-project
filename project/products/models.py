@@ -1,17 +1,11 @@
 from django.db import models
+from django.utils.text import slugify
 
 
 class Category(models.Model):
     name = models.CharField(
         max_length=100
     )
-
-    slug = models.SlugField(
-        unique=True
-    )
-
-    class Meta:
-        verbose_name_plural = "Categories"
 
     def __str__(self):
         return self.name
@@ -20,10 +14,6 @@ class Category(models.Model):
 class Tag(models.Model):
     name = models.CharField(
         max_length=50
-    )
-
-    slug = models.SlugField(
-        unique=True
     )
 
     def __str__(self):
@@ -60,7 +50,11 @@ class Product(models.Model):
         related_name='products'
     )
 
-    name = models.CharField(
+    title = models.CharField(
+        max_length=255
+    )
+
+    subtitle = models.CharField(
         max_length=255
     )
 
@@ -81,10 +75,6 @@ class Product(models.Model):
         upload_to='product_images/'
     )
 
-    is_active = models.BooleanField(
-        default=True
-    )
-
     created_at = models.DateTimeField(
         auto_now_add=True
     )
@@ -102,5 +92,12 @@ class Product(models.Model):
         blank=True
     )
 
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            slug_base = f"{self.title}-{self.subtitle}"
+            self.slug = slugify(slug_base)
+
+        super().save(*args, **kwargs)
+
     def __str__(self):
-        return self.name
+        return self.title

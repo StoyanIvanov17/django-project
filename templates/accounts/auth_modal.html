@@ -29,7 +29,7 @@
         <button class="auth-close-btn" id="loginCloseBtn">&times;</button>
         <h2 class="auth-title">Login</h2>
         <h4>Please log in with your email and password.</h4>
-        <form method="POST" action="{% url 'login' %}">
+        <form method="POST" action="{% url 'account-login' %}">
             {% csrf_token %}
             {{ login_form.non_field_errors }}
 
@@ -64,7 +64,7 @@
     <div class="auth-modal-content">
         <button class="auth-close-btn" id="registerCloseBtn">&times;</button>
         <h2 class="auth-title">BECOME A MEMBER</h2>
-        <form method="POST" action="{% url 'register' %}">
+        <form method="POST" action="{% url 'account-register' %}">
             {% csrf_token %}
             {{ register_form.non_field_errors }}
 
