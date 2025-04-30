@@ -36,18 +36,18 @@
     gap: 20px;
 }
 
-.product-title {
+.details-title {
     font-size: 28px;
     font-weight: 400;
     margin: 0 0 -15px;
 }
 
-.product-subtitle {
+.details-subtitle {
     color: gray;
     margin: 0;
 }
 
-.price {
+.details-price {
     font-size: 18px;
     font-weight: 500;
     margin: -5px 0 10px;

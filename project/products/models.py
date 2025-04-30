@@ -116,3 +116,42 @@ class Product(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class ProductImage(models.Model):
+    product = models.ForeignKey(
+        Product,
+        on_delete=models.CASCADE,
+        related_name='extra_images'
+    )
+    image = models.ImageField(
+        upload_to='product_images/'
+    )
+    alt_text = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True
+    )
+
+    def __str__(self):
+        return f"Image for {self.product.title}"
+
+
+class ProductVideo(models.Model):
+    product = models.ForeignKey(
+        Product,
+        on_delete=models.CASCADE,
+        related_name='videos'
+    )
+    video = models.FileField(
+        upload_to='product_videos/',
+        help_text='Upload an MP4 video file.'
+    )
+    caption = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True
+    )
+
+    def __str__(self):
+        return f"Video for {self.product.title}"

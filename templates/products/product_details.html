@@ -11,19 +11,19 @@
     <div class="product-page">
         <section class="product-gallery">
             <div class="thumbnail-images">
-                <img src="{% static 'images/submain.png' %}" alt="">
-                <img src="{% static 'images/submain_2.png' %}" alt="">
-                <img src="{% static 'images/submain_3.png' %}" alt="">
+                {% for image in extra_images %}
+                    <img src="{{ image.image.url }}" alt="{{ image.alt_text|default:object.title }}">
+                {% endfor %}
             </div>
             <div class="main-image">
-                <img src="{% static 'images/main.png' %}" alt="Nike Cargo Shorts">
+                <img src="{{ object.image.url }}" alt="{{ object.subtitle }}">
             </div>
         </section>
 
         <section class="product-details">
-            <h1 class="product-title">Nike Club</h1>
-            <p class="product-subtitle">Men's Woven Cargo Shorts</p>
-            <p class="price">BGN 129.99</p>
+            <h1 class="details-title">{{ product.title }}</h1>
+            <p class="details-subtitle">{{ product.subtitle }}</p>
+            <p class="details-price">BGN {{ product.price }}</p>
 
             <div class="more-colors">
                 <img src="{% static 'images/main_diff_color.png' %}" alt="">
@@ -52,9 +52,7 @@
                 <button class="favourite">♡ Favourite</button>
             </div>
 
-            <p class="description">
-                Made from durable Ripstop fabric, these cargo shorts from our Nike Club collection bring a little extra storage and style to your shorts game. Pull these on with a tee or hoodie and your favourite Nike sneakers for a classic look.
-            </p>
+            <p class="description">{{ product.description }}</p>
         </section>
     </div>
 {% endblock %}

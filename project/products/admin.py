@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, Category, Tag, Size, Color
+from .models import Product, Category, Tag, Size, Color, ProductImage, ProductVideo
 
 
 @admin.register(Product)
@@ -28,3 +28,13 @@ class SizeAdmin(admin.ModelAdmin):
 @admin.register(Color)
 class ColorAdmin(admin.ModelAdmin):
     search_fields = ('name', 'hex_code')
+
+
+@admin.register(ProductImage)
+class ProductImageAdmin(admin.ModelAdmin):
+    search_fields = ('product', 'alt_text')
+
+
+@admin.register(ProductVideo)
+class ProductVideoAdmin(admin.ModelAdmin):
+    search_fields = ('product', 'caption')
