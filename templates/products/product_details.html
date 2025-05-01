@@ -12,11 +12,11 @@
         <section class="product-gallery">
             <div class="thumbnail-images">
                 {% for image in extra_images %}
-                    <img src="{{ image.image.url }}" alt="{{ image.alt_text|default:object.title }}">
+                    <img class="thumbnail" src="{{ image.image.url }}" alt="{{ image.alt_text|default:object.title }}">
                 {% endfor %}
             </div>
             <div class="main-image">
-                <img src="{{ object.image.url }}" alt="{{ object.subtitle }}">
+                <img id="main-product-image" src="{{ object.image.url }}" alt="{{ object.subtitle }}">
             </div>
         </section>
 
@@ -24,26 +24,23 @@
             <h1 class="details-title">{{ product.title }}</h1>
             <p class="details-subtitle">{{ product.subtitle }}</p>
             <p class="details-price">BGN {{ product.price }}</p>
+            <p class="color-shown">Color Shown: {{ product.color }}</p>
 
             <div class="more-colors">
-                <img src="{% static 'images/main_diff_color.png' %}" alt="">
-                <img src="{% static 'images/main_diff_color_2.png' %}" alt="">
+                {% for color in extra_colors %}
+                    <img src="{{ color.image.url }}" alt="">
+                {% endfor %}
             </div>
 
             <div class="sizes">
                 <div class="size-options">
                     <p>Select Size</p>
-                    <p>Size Guide</p>
+                    <p><i class="fa-solid fa-ruler"></i>Size Guide</p>
                 </div>
                 <div class="size-buttons">
-                    <button disabled>EU 44</button>
-                    <button>EU 46</button>
-                    <button>EU 48</button>
-                    <button>EU 50</button>
-                    <button>EU 52</button>
-                    <button>EU 54</button>
-                    <button>EU 56</button>
-                    <button>EU 58</button>
+                    {% for size in sizes %}
+                        <button>{{ size }}</button>
+                    {% endfor %}
                 </div>
             </div>
 
@@ -53,6 +50,7 @@
             </div>
 
             <p class="description">{{ product.description }}</p>
+
         </section>
     </div>
 {% endblock %}

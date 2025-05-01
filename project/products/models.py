@@ -11,32 +11,9 @@ class Category(models.Model):
         return self.name
 
 
-class Tag(models.Model):
-    name = models.CharField(
-        max_length=50
-    )
-
-    def __str__(self):
-        return self.name
-
-
 class Size(models.Model):
     name = models.CharField(
         max_length=10
-    )
-
-    def __str__(self):
-        return self.name
-
-
-class Color(models.Model):
-    name = models.CharField(
-        max_length=50
-    )
-
-    hex_code = models.CharField(
-        max_length=7,
-        help_text="Hex code (e.g. #FFFFFF for white)"
     )
 
     def __str__(self):
@@ -58,8 +35,14 @@ class Product(models.Model):
         max_length=255
     )
 
-    slug = models.SlugField(
-        unique=True
+    color = models.CharField(
+        max_length=50
+    )
+
+    video = models.FileField(
+        upload_to='product_videos/',
+        null=True,
+        blank=True,
     )
 
     description = models.TextField()
@@ -98,13 +81,8 @@ class Product(models.Model):
         Size, blank=True
     )
 
-    colors = models.ManyToManyField(
-        Color, blank=True
-    )
-
-    tags = models.ManyToManyField(
-        Tag,
-        blank=True
+    slug = models.SlugField(
+        unique=True
     )
 
     def save(self, *args, **kwargs):
@@ -127,31 +105,22 @@ class ProductImage(models.Model):
     image = models.ImageField(
         upload_to='product_images/'
     )
-    alt_text = models.CharField(
-        max_length=255,
-        blank=True,
-        null=True
-    )
-
-    def __str__(self):
-        return f"Image for {self.product.title}"
 
 
-class ProductVideo(models.Model):
+class ProductColor(models.Model):
     product = models.ForeignKey(
         Product,
         on_delete=models.CASCADE,
-        related_name='videos'
-    )
-    video = models.FileField(
-        upload_to='product_videos/',
-        help_text='Upload an MP4 video file.'
-    )
-    caption = models.CharField(
-        max_length=255,
-        blank=True,
-        null=True
+        related_name='extra_colors'
     )
 
-    def __str__(self):
-        return f"Video for {self.product.title}"
+    color = models.CharField(
+        max_length=50,
+    )
+
+    image = models.ImageField(
+        models.ImageField(
+            upload_to='product_images/',
+        )
+    )
+    

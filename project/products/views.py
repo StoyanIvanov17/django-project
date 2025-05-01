@@ -26,6 +26,8 @@ class ProductDetailsView(views.DetailView):
         product = self.get_object()
 
         context['extra_images'] = product.extra_images.all()
+        context['extra_colors'] = product.extra_colors.all()
+        context['sizes'] = product.sizes.all()
 
         return context
 

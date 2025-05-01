@@ -30,10 +30,10 @@
 }
 
 .product-details {
-    flex: 1;
     display: flex;
     flex-direction: column;
     gap: 20px;
+    width: 350px;
 }
 
 .details-title {
@@ -53,8 +53,21 @@
     margin: -5px 0 10px;
 }
 
+.color-shown {
+    margin: 0;
+}
+
+.more-colors {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
 .more-colors img {
-    height: 70px;
+    border-radius: 5px;
+    width: calc((100% - 4 * 5px) / 5);
+    object-fit: cover;
+    margin-top: 10px;
 }
 
 .sizes {
@@ -65,26 +78,30 @@
 
 .size-options {
     display: flex;
-    gap: 180px;
-    font-weight: bold;
+    justify-content: space-between;
+    margin: 20px 0 10px 0;
+}
+
+.size-options i {
+    margin-right: 5px;
 }
 
 .size-buttons {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-    width: 400px;
-    margin-bottom: 10px;
+    gap: 5px;
 }
 
 .size-buttons button {
-    padding: 14px 12px;
-    border: 1px solid gray;
+    border: 1px solid #b8b4b4;
     background: white;
     cursor: pointer;
-    border-radius: 8px;
+    border-radius: 5px;
+    font-size: 15px;
+    width: calc((100% - 4 * 5px) / 5);
+    height: 45px;
+    flex-shrink: 0;
 }
-
 .size-buttons button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
@@ -96,7 +113,6 @@
     gap: 10px;
 }
 
-
 .add-to-bag {
     background: black;
     color: white;
@@ -105,7 +121,7 @@
     border-radius: 30px;
     font-size: 16px;
     cursor: pointer;
-    width: 350px;
+    width: 100%;
 }
 
 .favourite {
@@ -116,11 +132,9 @@
     border-radius: 30px;
     font-size: 16px;
     cursor: pointer;
-    width: 350px;
+    width: 100%;
 }
 
 .description {
-    color: gray;
     line-height: 1.5;
-    width: 300px;
 }
