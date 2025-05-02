@@ -21,6 +21,12 @@ class Size(models.Model):
 
 
 class Product(models.Model):
+    class Gender(models.TextChoices):
+        MEN = 'men', 'Men'
+        WOMEN = 'women', 'Women'
+        UNISEX = 'unisex', 'Unisex'
+        KIDS = 'kids', 'Kids'
+
     category = models.ForeignKey(
         Category,
         on_delete=models.CASCADE,
@@ -33,6 +39,11 @@ class Product(models.Model):
 
     subtitle = models.CharField(
         max_length=255
+    )
+
+    gender = models.CharField(
+        max_length=10,
+        choices=Gender.choices
     )
 
     color = models.CharField(

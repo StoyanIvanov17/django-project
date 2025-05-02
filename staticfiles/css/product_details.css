@@ -102,10 +102,12 @@
     height: 45px;
     flex-shrink: 0;
 }
-.size-buttons button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
+
+.size-btn.selected {
+    background-color: #f0f0f0;
+    border: 1px solid #333;
 }
+
 
 .actions {
     display: flex;

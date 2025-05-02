@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     
     "project.home.apps.HomeConfig",
     "project.accounts.apps.AccountsConfig",
-    "project.products.apps.ProductsConfig"
+    "project.products.apps.ProductsConfig",
+    "project.bag.apps.BagConfig",
 ]
 
 MIDDLEWARE = [

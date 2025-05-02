@@ -39,13 +39,19 @@
                 </div>
                 <div class="size-buttons">
                     {% for size in sizes %}
-                        <button>{{ size }}</button>
+                        <button type="button" class="size-btn" data-size-id="{{ size.id }}">{{ size }}</button>
                     {% endfor %}
                 </div>
             </div>
 
             <div class="actions">
-                <button class="add-to-bag">Add to Bag</button>
+                <form method="POST" action="{% url 'add-to-bag' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="product_id" value="{{ product.id }}">
+                    <input type="hidden" name="size_id" id="size_id" value="">
+                    <input type="hidden" name="quantity" value="1">
+                    <button type="submit" class="add-to-bag">Add to Bag</button>
+                </form>
                 <button class="favourite">♡ Favourite</button>
             </div>
 

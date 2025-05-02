@@ -17,7 +17,7 @@
         {% for product in products %}
             <div class="product-card">
                 <div class="product-image-container">
-                    <a href="{% url 'product-details' pk=product.pk slug=product.slug %}">
+                    <a href="{% url 'product-details' pk=product.pk gender=product.gender slug=product.slug %}">
                         <img src="{{ product.image.url }}" alt="{{ product.subtitle }}" class="product-img">
                     </a>
                 </div>
