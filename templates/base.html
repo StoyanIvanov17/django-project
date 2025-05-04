@@ -48,7 +48,30 @@
         {% block main_content %}
         {% endblock %}
     </main>
-    
+
+    <div id="bag-modal" class="bag-modal hidden">
+      <div class="bag-modal-content">
+        <button class="bag-modal-close" onclick="closeBagModal()">×</button>
+        <div class="bag-modal-header">
+          <span class="bag-modal-check">✔</span>
+          <span class="bag-modal-message">Added to Bag</span>
+        </div>
+        <div class="bag-modal-body">
+          <img id="bag-modal-product-image" src="" alt="">
+          <div class="bag-modal-details">
+            <h3 id="bag-modal-product-title">Nike Tech</h3>
+            <p id="bag-modal-product-subtitle">Men's Woven Jacket</p>
+            <p class="bag-modal-product-size">Size M</p>
+            <p class="bag-modal-product-price">BGN 239.99</p>
+          </div>
+        </div>
+        <div class="bag-modal-actions">
+          <a id="view-bag-link" class="bag-btn outline" data-url="{% url 'bag' %}">View Bag ({{ bag_size }})</a>
+          <a id="checkout-link" class="bag-btn primary" data-url="#">Checkout</a>
+        </div>
+      </div>
+    </div>
+
     
     <script src="{% static 'js/navbar.js' %}"></script>
     <script src="{% static 'js/film_wrapper.js' %}"></script>
@@ -56,6 +79,7 @@
     <script src="{% static 'js/profile_modal.js' %}"></script>
     <script src="{% static 'js/main_image_swap.js' %}"></script>
     <script src="{% static 'js/select_size.js' %}"></script>
+    <script src="{% static 'js/add_to_bag.js' %}"></script>
 
 </body>
 </html>

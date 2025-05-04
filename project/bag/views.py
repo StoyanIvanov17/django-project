@@ -1,4 +1,5 @@
-from django.shortcuts import get_object_or_404, redirect
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
 from django.views import generic as views
 
 from project.bag.models import Bag, BagItem
@@ -27,6 +28,7 @@ class BagView(views.TemplateView):
         bag = self.get_bag()
         context['bag'] = bag
         context['items'] = bag.items.select_related('product')
+        context['bag_size'] = bag.items.count()
         return context
 
 
@@ -53,4 +55,12 @@ class AddToBagView(views.View):
             item.quantity = quantity
         item.save()
 
-        return redirect('bag')
+        bag_size = bag.items.count()
+        return JsonResponse({
+            'product_image_url': product.image.url,
+            'product_title': product.title,
+            'product_subtitle': product.subtitle,
+            'product_size': size.name,
+            'price': str(product.price),
+            'bag_size': bag_size,
+        })

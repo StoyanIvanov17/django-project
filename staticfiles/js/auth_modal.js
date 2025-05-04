@@ -12,6 +12,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const loginEmailInput = document.getElementById("loginEmailInput");
     const registerEmailInput = document.getElementById("registerEmailInput");
 
+    if (!userIcon) {
+        return;
+    }
+
     userIcon.addEventListener("click", function () {
         openModal(authModal);
     });
