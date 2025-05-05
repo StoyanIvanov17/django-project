@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, Category, Size, ProductImage, ProductColor
+from .models import Product, Category, Size, ProductImage, ProductColor, ProductType
 
 
 @admin.register(Product)
@@ -12,7 +12,11 @@ class ProductAdmin(admin.ModelAdmin):
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
+    list_display = ('name', 'parent')
+    list_filter = ('parent',)
     search_fields = ('name',)
+    prepopulated_fields = {'slug': ('name',)}
+    ordering = ('parent__name', 'name')
 
 
 @admin.register(Size)
@@ -28,3 +32,8 @@ class ColorAdmin(admin.ModelAdmin):
 @admin.register(ProductImage)
 class ProductImageAdmin(admin.ModelAdmin):
     search_fields = ('product', 'alt_text')
+
+
+@admin.register(ProductType)
+class ProductTypeAdmin(admin.ModelAdmin):
+    list_display = ('name', )

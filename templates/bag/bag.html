@@ -8,4 +8,11 @@
 {% block main_class %}with-padding{% endblock %}
 
 {% block main_content %}
+    {% for item in items %}
+        <a href=""><img src="{{ item.product.image.url }}" alt=""></a>
+        {{ item.product.title }}
+        {{ item.product.subtitle }}
+        {{ item.product.color }}
+        {{ item.size.name }}
+    {% endfor %}
 {% endblock %}

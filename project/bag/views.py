@@ -28,7 +28,6 @@ class BagView(views.TemplateView):
         bag = self.get_bag()
         context['bag'] = bag
         context['items'] = bag.items.select_related('product')
-        context['bag_size'] = bag.items.count()
         return context
 
 

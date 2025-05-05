@@ -7,14 +7,56 @@ class Category(models.Model):
         max_length=100
     )
 
+    parent = models.ForeignKey(
+        'self',
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name='children',
+    )
+
+    slug = models.SlugField(
+        unique=True,
+        blank=True,
+    )
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
     def __str__(self):
-        return self.name
+        full_path = [self.name]
+        parent = self.parent
+        while parent is not None:
+            full_path.append(parent.name)
+            parent = parent.parent
+        return ' > '.join(reversed(full_path))
 
 
 class Size(models.Model):
     name = models.CharField(
         max_length=10
     )
+
+    def __str__(self):
+        return self.name
+
+
+class ProductType(models.Model):
+    name = models.CharField(
+        max_length=100
+    )
+
+    slug = models.SlugField(
+        unique=True,
+        blank=True
+    )
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name
@@ -29,6 +71,18 @@ class Product(models.Model):
 
     category = models.ForeignKey(
         Category,
+        on_delete=models.CASCADE,
+        related_name='products'
+    )
+
+    extra_categories = models.ManyToManyField(
+        Category,
+        blank=True,
+        related_name='additional_products'
+    )
+
+    product_type = models.ForeignKey(
+        ProductType,
         on_delete=models.CASCADE,
         related_name='products'
     )
@@ -93,7 +147,8 @@ class Product(models.Model):
     )
 
     slug = models.SlugField(
-        unique=True
+        unique=True,
+        blank=True,
     )
 
     def save(self, *args, **kwargs):
