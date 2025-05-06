@@ -16,19 +16,20 @@
                 {% endfor %}
             </div>
             <div class="main-image">
-                <img id="main-product-image" src="{{ object.image.url }}" alt="{{ object.subtitle }}">
+                <img id="main-product-image" src="{{ object.image.url }}" alt="{{ object.title }}">
             </div>
         </section>
 
         <section class="product-details">
             <h1 class="details-title">{{ product.title }}</h1>
-            <p class="details-subtitle">{{ product.subtitle }}</p>
             <p class="details-price">BGN {{ product.price }}</p>
-            <p class="color-shown">Color Shown: {{ product.color }}</p>
+            <p class="color-shown">COLOR: {{ product.color }}</p>
 
             <div class="more-colors">
-                {% for color in extra_colors %}
-                    <img src="{{ color.image.url }}" alt="">
+                {% for variant in extra_colors %}
+                    <a href="{% url 'product-details' pk=variant.pk gender=variant.gender slug=variant.slug %}">
+                        <img src="{{ variant.image.url }}" alt="{{ variant.color }}">
+                    </a>
                 {% endfor %}
             </div>
 
@@ -55,8 +56,17 @@
                 <button class="favourite">♡ Favourite</button>
             </div>
 
-            <p class="description">{{ product.description }}</p>
-
+            <p>Description +</p>
+            <p>Reviews +</p>
+            <p>Materials +</p>
+            <p>Care Guide +</p>
+            <p>Store Availability +</p>
         </section>
     </div>
+
+    <div id="zoomImageModal" class="image-modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="zoomedImage">
+    </div>
 {% endblock %}
+

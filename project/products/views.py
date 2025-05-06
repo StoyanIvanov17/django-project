@@ -22,12 +22,14 @@ class ProductDetailsView(views.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
         product = self.get_object()
 
+        color_variants = product.group.variants.exclude(id=product.id)
+
         context['extra_images'] = product.extra_images.all()
-        context['extra_colors'] = product.extra_colors.all()
+        context['extra_colors'] = color_variants
         context['sizes'] = product.sizes.all()
 
         return context
+
 

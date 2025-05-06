@@ -26,7 +26,6 @@ document.addEventListener('DOMContentLoaded', function () {
       .then(data => {
         document.getElementById('bag-modal-product-image').src = data.product_image_url;
         document.getElementById('bag-modal-product-title').textContent = data.product_title;
-        document.getElementById('bag-modal-product-subtitle').textContent = data.product_subtitle;
         document.querySelector('.bag-modal-product-size').textContent = data.product_size;
         document.querySelector('.bag-modal-product-price').textContent = data.price;
 

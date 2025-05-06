@@ -62,6 +62,25 @@ class ProductType(models.Model):
         return self.name
 
 
+class ProductGroup(models.Model):
+    name = models.CharField(
+        max_length=255
+    )
+
+    slug = models.SlugField(
+        unique=True,
+        blank=True
+    )
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
+
+
 class Product(models.Model):
     class Gender(models.TextChoices):
         MEN = 'men', 'Men'
@@ -91,13 +110,19 @@ class Product(models.Model):
         max_length=255
     )
 
-    subtitle = models.CharField(
-        max_length=255
-    )
-
     gender = models.CharField(
         max_length=10,
         choices=Gender.choices
+    )
+
+    group = models.ForeignKey(
+        ProductGroup,
+        on_delete=models.CASCADE,
+        related_name='variants'
+    )
+
+    sizes = models.ManyToManyField(
+        Size, blank=True
     )
 
     color = models.CharField(
@@ -142,10 +167,6 @@ class Product(models.Model):
         default=True
     )
 
-    sizes = models.ManyToManyField(
-        Size, blank=True
-    )
-
     slug = models.SlugField(
         unique=True,
         blank=True,
@@ -153,13 +174,13 @@ class Product(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            slug_base = f"{self.title}-{self.subtitle}"
+            slug_base = f"{self.title}-{self.color}"
             self.slug = slugify(slug_base)
 
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return self.title
+        return f"{self.title} - {self.color}"
 
 
 class ProductImage(models.Model):
@@ -168,25 +189,7 @@ class ProductImage(models.Model):
         on_delete=models.CASCADE,
         related_name='extra_images'
     )
+
     image = models.ImageField(
         upload_to='product_images/'
     )
-
-
-class ProductColor(models.Model):
-    product = models.ForeignKey(
-        Product,
-        on_delete=models.CASCADE,
-        related_name='extra_colors'
-    )
-
-    color = models.CharField(
-        max_length=50,
-    )
-
-    image = models.ImageField(
-        models.ImageField(
-            upload_to='product_images/',
-        )
-    )
-    

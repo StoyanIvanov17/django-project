@@ -58,7 +58,6 @@ class AddToBagView(views.View):
         return JsonResponse({
             'product_image_url': product.image.url,
             'product_title': product.title,
-            'product_subtitle': product.subtitle,
             'product_size': size.name,
             'price': str(product.price),
             'bag_size': bag_size,

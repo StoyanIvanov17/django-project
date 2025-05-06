@@ -140,3 +140,5 @@ static/
 
 staticfiles/videos/
 staticfiles/images/
+
+mediafiles/product_videos/

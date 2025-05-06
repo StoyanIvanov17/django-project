@@ -30,11 +30,10 @@
             <div class="product-card">
                 <div class="product-image-container">
                     <a href="{% url 'product-details' pk=product.pk gender=product.gender slug=product.slug %}">
-                        <img src="{{ product.image.url }}" alt="{{ product.subtitle }}" class="product-img">
+                        <img src="{{ product.image.url }}" alt="{{ product.title }}" class="product-img">
                     </a>
                 </div>
                 <h3 class="product-title">{{ product.title }}</h3>
-                <h3 class="product-subtitle">{{ product.subtitle }}</h3>
                 <div class="color-count">{{ product.colors.count }} Colors</div>
                 <p class="product-price">{{ product.price }} BGN</p>
             </div>
