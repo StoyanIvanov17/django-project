@@ -80,26 +80,28 @@
     border-radius: 6px;
 }
 
-.bag-modal-details h3 {
-    margin: 0;
+.bag-modal-product-title {
+    font-size: 18px;
+    font-weight: normal;
+    margin-bottom: 5px;
+}
+
+.bag-modal-product-subtitle {
+    opacity: 0.7;
+    font-weight: normal;
     font-size: 16px;
-    font-weight: 600;
+    margin-bottom: 5px;
 }
 
-.bag-modal-details p {
-    margin: 4px 0;
-    font-size: 14px;
-    color: #555;
-}
-
-.bag-modal-size {
+.bag-modal-product-size {
     font-weight: 500;
     color: #444;
+    margin-bottom: 5px
 }
 
-.bag-modal-price {
-    font-weight: bold;
-    margin-top: 5px;
+.bag-modal-product-price {
+    font-weight: normal;
+    font-size: 16px;
 }
 
 .bag-modal-actions {

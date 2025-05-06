@@ -51,7 +51,7 @@
 
     <div id="bag-modal" class="bag-modal hidden">
       <div class="bag-modal-content">
-        <button class="bag-modal-close" onclick="closeBagModal()">×</button>
+        <button class="bag-modal-close">×</button>
         <div class="bag-modal-header">
           <span class="bag-modal-check">✔</span>
           <span class="bag-modal-message">Added to Bag</span>
@@ -59,7 +59,8 @@
         <div class="bag-modal-body">
           <img id="bag-modal-product-image" src="" alt="">
           <div class="bag-modal-details">
-            <h3 id="bag-modal-product-title">{{ object.title }}</h3>
+            <h3 class="bag-modal-product-title">{{ object.title }}</h3>
+            <h3 class="bag-modal-product-subtitle">{{ object.group.subtitle }}</h3>
             <p class="bag-modal-product-size">Size: {{ object.size }}</p>
             <p class="bag-modal-product-price">BGN {{ object.price }}</p>
           </div>

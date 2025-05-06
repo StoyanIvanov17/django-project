@@ -47,6 +47,12 @@
     margin: 0 0 -15px;
 }
 
+.details-subtitle {
+    font-size: 18px;
+    font-weight: 400;
+    opacity: 0.6;
+}
+
 .details-price {
     font-size: 16px;
     font-weight: 500;
@@ -60,11 +66,12 @@
 }
 
 .more-colors img {
+    height: auto;
+    width: auto;
     border-radius: 5px;
-    width: 80px;
-    height: 80px;
     object-fit: cover;
-    margin-top: 50px;
+    margin-top: 10px;
+    max-height: 100px;
 }
 
 .sizes {
@@ -104,7 +111,6 @@
     background-color: #f0f0f0;
     border: 1px solid #333;
 }
-
 
 .actions {
     display: flex;

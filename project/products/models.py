@@ -67,6 +67,10 @@ class ProductGroup(models.Model):
         max_length=255
     )
 
+    subtitle = models.CharField(
+        max_length=255
+    )
+
     slug = models.SlugField(
         unique=True,
         blank=True
@@ -108,6 +112,11 @@ class Product(models.Model):
 
     title = models.CharField(
         max_length=255
+    )
+
+    subtitle = models.CharField(
+        max_length=255,
+        blank=True
     )
 
     gender = models.CharField(
@@ -180,7 +189,7 @@ class Product(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.title} - {self.color}"
+        return f"{self.title} ({self.color})"
 
 
 class ProductImage(models.Model):

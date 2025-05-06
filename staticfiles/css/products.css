@@ -54,10 +54,12 @@
     font-size: 15px;
     margin-left: 2px;
 }
+
 .products-gallery {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-    padding: 30px;
+    padding-top: 30px;
+    gap: 10px;
 }
 
 .product-card {
@@ -81,19 +83,33 @@
 }
 
 .product-title {
-    font-size: 16px;
-    font-weight: bold;
+    font-size: 17px;
+    font-weight: normal;
     margin: 10px 0 5px 0;
+}
+
+.product-subtitle {
+    font-size: 16px;
+    font-weight: 400;
+    opacity: 0.6;
+    margin-bottom: 5px;
 }
 
 .product-price {
     font-size: 16px;
-    font-weight: bold;
+    font-weight: normal;
     margin-top: 10px;
 }
 
-.color-count {
+.product-color-count {
     font-size: 16px;
     opacity: 0.6;
     font-weight: normal;
+}
+
+.product-title,
+.product-subtitle,
+.product-color-count,
+.product-price {
+    margin-left: 10px;
 }

@@ -9,6 +9,7 @@ class ProductAdmin(admin.ModelAdmin):
     search_fields = ('title', 'description', 'color')
     prepopulated_fields = {"slug": ("title", "color")}
     autocomplete_fields = ['group', 'category', 'product_type', 'sizes']
+    exclude = ('subtitle', )
 
 
 @admin.register(ProductGroup)
