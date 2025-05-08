@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, Category, Size, ProductImage, ProductType, ProductGroup
+from .models import Product, Category, Size, ProductImage, ProductGroup
 
 
 @admin.register(Product)
@@ -8,8 +8,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_filter = ('category', 'color', 'sizes', 'group', 'created_at')
     search_fields = ('title', 'description', 'color')
     prepopulated_fields = {"slug": ("title", "color")}
-    autocomplete_fields = ['group', 'category', 'product_type', 'sizes']
-    exclude = ('subtitle', )
+    autocomplete_fields = ['group', 'category', 'sizes']
 
 
 @admin.register(ProductGroup)
@@ -36,11 +35,4 @@ class SizeAdmin(admin.ModelAdmin):
 @admin.register(ProductImage)
 class ProductImageAdmin(admin.ModelAdmin):
     search_fields = ('product__title',)
-
-
-@admin.register(ProductType)
-class ProductTypeAdmin(admin.ModelAdmin):
-    list_display = ('name',)
-    prepopulated_fields = {"slug": ("name",)}
-    search_fields = ('name',)
 

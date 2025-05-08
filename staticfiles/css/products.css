@@ -88,13 +88,6 @@
     margin: 10px 0 5px 0;
 }
 
-.product-subtitle {
-    font-size: 16px;
-    font-weight: 400;
-    opacity: 0.6;
-    margin-bottom: 5px;
-}
-
 .product-price {
     font-size: 16px;
     font-weight: normal;
@@ -108,7 +101,6 @@
 }
 
 .product-title,
-.product-subtitle,
 .product-color-count,
 .product-price {
     margin-left: 10px;

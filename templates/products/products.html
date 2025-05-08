@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block main_class %}with-padding{% endblock %}
 
 {% block main_content %}
     <h1 class="current-category">ALL PRODUCTS</h1>
@@ -30,7 +29,6 @@
                     </a>
                 </div>
                 <h3 class="product-title">{{ product.title }}</h3>
-                <h3 class="product-subtitle">{{ product.group.subtitle }}</h3>
                 <p class="product-color-count">{{ product.group.variants.count }} Colors</p>
                 <p class="product-price">{{ product.price }} BGN</p>
             </div>

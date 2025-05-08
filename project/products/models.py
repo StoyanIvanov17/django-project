@@ -20,6 +20,9 @@ class Category(models.Model):
         blank=True,
     )
 
+    class Meta:
+        verbose_name_plural = 'Categories'
+
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
@@ -43,9 +46,9 @@ class Size(models.Model):
         return self.name
 
 
-class ProductType(models.Model):
+class ProductGroup(models.Model):
     name = models.CharField(
-        max_length=100
+        max_length=255
     )
 
     slug = models.SlugField(
@@ -62,13 +65,10 @@ class ProductType(models.Model):
         return self.name
 
 
-class ProductGroup(models.Model):
+class Tag(models.Model):
     name = models.CharField(
-        max_length=255
-    )
-
-    subtitle = models.CharField(
-        max_length=255
+        max_length=50,
+        unique=True
     )
 
     slug = models.SlugField(
@@ -97,31 +97,19 @@ class Product(models.Model):
         on_delete=models.CASCADE,
         related_name='products'
     )
-
-    extra_categories = models.ManyToManyField(
-        Category,
-        blank=True,
-        related_name='additional_products'
-    )
-
-    product_type = models.ForeignKey(
-        ProductType,
-        on_delete=models.CASCADE,
-        related_name='products'
-    )
-
     title = models.CharField(
         max_length=255
-    )
-
-    subtitle = models.CharField(
-        max_length=255,
-        blank=True
     )
 
     gender = models.CharField(
         max_length=10,
         choices=Gender.choices
+    )
+
+    tags = models.ManyToManyField(
+        Tag,
+        blank=True,
+        related_name='products'
     )
 
     group = models.ForeignKey(
