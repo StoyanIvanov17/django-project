@@ -14,7 +14,8 @@ body {
     left: 0;
     z-index: 10;
     width: 100%;
-    color: transparent;
+    color: white;
+    background-color: white;
     transition: background-color 0.3s ease;
     align-items: center;
     justify-content: space-between;
@@ -30,9 +31,14 @@ body {
     color: white;
 }
 
+.navbar-container a {
+    text-decoration: none;
+}
+
 .logo {
     position: relative;
     left: 200px;
+    color: #7e7c7c;
 }
 
 .logo:hover {
@@ -50,7 +56,7 @@ body {
 
 .nav-links a {
     text-decoration: none;
-    color: white;
+    color: #7e7c7c;
 }
 
 .nav-icons {
@@ -62,23 +68,11 @@ body {
 
 .nav-icons a {
     text-decoration: none;
-    color: white;
+    color: #7e7c7c;
 }
 
 .nav-icons a:hover {
     cursor: pointer;
-}
-
-
-.navbar.scrolled {
-    background-color: white;
-}
-
-.navbar.scrolled .nav-links a,
-.navbar.scrolled .nav-icons a,
-.navbar.scrolled .logo,
-.navbar.scrolled .arrow {
-    color: grey;
 }
 
 .arrow {
