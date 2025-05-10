@@ -3,9 +3,7 @@ from django.utils.text import slugify
 
 
 class Category(models.Model):
-    name = models.CharField(
-        max_length=100
-    )
+    name = models.CharField(max_length=100)
 
     parent = models.ForeignKey(
         'self',
@@ -38,18 +36,14 @@ class Category(models.Model):
 
 
 class Size(models.Model):
-    name = models.CharField(
-        max_length=10
-    )
+    name = models.CharField(max_length=10)
 
     def __str__(self):
         return self.name
 
 
 class ProductGroup(models.Model):
-    name = models.CharField(
-        max_length=255
-    )
+    name = models.CharField(max_length=255)
 
     slug = models.SlugField(
         unique=True,
@@ -85,6 +79,44 @@ class Tag(models.Model):
         return self.name
 
 
+class ProductAttribute(models.Model):
+    name = models.CharField(
+        max_length=100
+    )
+
+    parent = models.ForeignKey(
+        'self',
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name='children'
+    )
+
+    def __str__(self):
+        return self.name
+
+
+class AttributeValue(models.Model):
+    attribute = models.ForeignKey(
+        ProductAttribute,
+        on_delete=models.CASCADE,
+        related_name='values'
+    )
+
+    value = models.CharField(
+        max_length=100
+    )
+
+    applicable_categories = models.ManyToManyField(
+        Category,
+        blank=True,
+        related_name='attribute_values'
+    )
+
+    def __str__(self):
+        return f"{self.attribute.name}: {self.value}"
+
+
 class Product(models.Model):
     class Gender(models.TextChoices):
         MEN = 'men', 'Men'
@@ -97,9 +129,8 @@ class Product(models.Model):
         on_delete=models.CASCADE,
         related_name='products'
     )
-    title = models.CharField(
-        max_length=255
-    )
+
+    title = models.CharField(max_length=255)
 
     gender = models.CharField(
         max_length=10,
@@ -119,7 +150,8 @@ class Product(models.Model):
     )
 
     sizes = models.ManyToManyField(
-        Size, blank=True
+        Size,
+        blank=True
     )
 
     color = models.CharField(
@@ -169,11 +201,16 @@ class Product(models.Model):
         blank=True,
     )
 
+    attribute_values = models.ManyToManyField(
+        AttributeValue,
+        blank=True,
+        related_name='products'
+    )
+
     def save(self, *args, **kwargs):
         if not self.slug:
             slug_base = f"{self.title}-{self.color}"
             self.slug = slugify(slug_base)
-
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -190,3 +227,6 @@ class ProductImage(models.Model):
     image = models.ImageField(
         upload_to='product_images/'
     )
+
+    def __str__(self):
+        return f"Image for {self.product}"
