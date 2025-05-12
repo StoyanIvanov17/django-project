@@ -24,6 +24,12 @@
     color: white;
 }
 
+.category-pills a.active {
+    background-color: #232222;
+    color: white;
+}
+
+
 .sort-filter {
     display: flex;
     justify-content: end;

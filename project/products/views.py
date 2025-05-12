@@ -44,6 +44,11 @@ class ProductsListView(views.ListView):
         item_type = None
         item_type_models = []
 
+        is_view_all = self.request.path == '/products/view-all/'
+
+        if is_view_all:
+            context['all_item_types'] = ItemType.objects.all()
+
         if item_type_slug:
             item_type = get_object_or_404(ItemType, slug=item_type_slug)
             item_type_models = item_type.specific_item_types.all()
