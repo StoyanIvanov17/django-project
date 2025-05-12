@@ -5,9 +5,18 @@
 
 
 {% block main_content %}
-    <h1></h1>
-
     <div class="category-pills">
+      {% if item_type %}
+        <a href="?item_type={{ item_type.slug }}" class="pill active">
+          {{ item_type.name }}
+        </a>
+      {% endif %}
+
+      {% for model in item_type_models %}
+        <a href="?item_type={{ item_type.slug }}&item_type_model={{ model.slug }}" class="pill">
+          {{ model.name }}
+        </a>
+      {% endfor %}
     </div>
 
 

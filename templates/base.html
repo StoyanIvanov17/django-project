@@ -62,7 +62,7 @@
                                     </div>
 
                                     <div class="category-view subcategories" id="clothingSubcategories">
-                                        <a href="{% url 'products' %}"><h2 class="category-heading">VIEW ALL</h2></a>
+                                        <a href="{% url 'all-products' %}"><h2 class="category-heading">VIEW ALL</h2></a>
                                         <a href="#" class="back-button"><i class="fa-solid fa-arrow-left"></i></a>
                                         <div class="subcategory-group">
                                             <h2 class="title">Tops</h2>
@@ -79,7 +79,7 @@
                                         <div class="subcategory-group">
                                             
                                             <h2 class="title">Bottoms</h2>
-                                            <a href="">Jeans</a>
+                                            <a href="{% url 'all-products' %}?item_type=jeans">Jeans</a>
                                             <a href="#">Trousers</a>
                                             <a href="#">Pants</a>
                                             <a href="#">Shorts</a>

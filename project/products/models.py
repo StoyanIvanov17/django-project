@@ -9,7 +9,7 @@ class Category(models.Model):
 
     slug = models.SlugField(
         unique=True,
-        blank=True,
+        blank=True
     )
 
     class Meta:
@@ -18,10 +18,20 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
 
 class ItemType(models.Model):
     name = models.CharField(
         max_length=100
+    )
+
+    slug = models.SlugField(
+        unique=True,
+        blank=True
     )
 
     category = models.ForeignKey(
@@ -33,10 +43,20 @@ class ItemType(models.Model):
     def __str__(self):
         return self.name
 
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
 
 class ItemTypeModel(models.Model):
     name = models.CharField(
         max_length=100
+    )
+
+    slug = models.SlugField(
+        unique=True,
+        blank=True
     )
 
     item_type = models.ForeignKey(
@@ -48,18 +68,25 @@ class ItemTypeModel(models.Model):
     def __str__(self):
         return self.name
 
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
 
 class Size(models.Model):
-    name = models.CharField(
-        max_length=10
-    )
+    name = (models.CharField
+            (max_length=10
+             ))
 
     def __str__(self):
         return self.name
 
 
 class ProductGroup(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(
+        max_length=255
+    )
 
     slug = models.SlugField(
         unique=True,
@@ -132,12 +159,25 @@ class Product(models.Model):
         related_name='products'
     )
 
-    title = models.CharField(max_length=255)
+    item_type = models.ForeignKey(
+        ItemType,
+        on_delete=models.CASCADE,
+        related_name='products'
+    )
+
+    item_type_model = models.ForeignKey(
+        ItemTypeModel,
+        on_delete=models.CASCADE,
+        related_name='products'
+    )
+
+    title = models.CharField(
+        max_length=255
+    )
 
     gender = models.CharField(
         max_length=10,
-        choices=Gender.choices
-    )
+        choices=Gender.choices)
 
     tags = models.ManyToManyField(
         Tag,
@@ -153,8 +193,7 @@ class Product(models.Model):
 
     sizes = models.ManyToManyField(
         Size,
-        blank=True
-    )
+        blank=True)
 
     color = models.CharField(
         max_length=50
@@ -163,7 +202,7 @@ class Product(models.Model):
     video = models.FileField(
         upload_to='product_videos/',
         null=True,
-        blank=True,
+        blank=True
     )
 
     description = models.TextField()
@@ -177,7 +216,7 @@ class Product(models.Model):
         max_digits=8,
         decimal_places=2,
         blank=True,
-        null=True,
+        null=True
     )
 
     stock = models.PositiveIntegerField()
@@ -199,8 +238,7 @@ class Product(models.Model):
     )
 
     slug = models.SlugField(
-        unique=True,
-        blank=True,
+        unique=True, blank=True
     )
 
     attribute_values = models.ManyToManyField(
