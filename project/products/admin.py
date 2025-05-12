@@ -9,8 +9,6 @@ class ProductAdmin(admin.ModelAdmin):
     list_filter = ('category', 'color', 'sizes', 'group', 'created_at', 'attribute_values')
     search_fields = ('title', 'description', 'color')
     prepopulated_fields = {"slug": ("title", "color")}
-    autocomplete_fields = ['group', 'category', 'sizes']
-    filter_horizontal = ('attribute_values',)
 
 
 @admin.register(models.ProductGroup)
@@ -22,11 +20,20 @@ class ProductGroupAdmin(admin.ModelAdmin):
 
 @admin.register(models.Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('name', 'parent')
-    list_filter = ('parent',)
+    list_display = ('name', )
     search_fields = ('name',)
     prepopulated_fields = {'slug': ('name',)}
-    ordering = ('parent__name', 'name')
+    ordering = ('name', )
+
+
+@admin.register(models.ItemType)
+class ItemTypeAdmin(admin.ModelAdmin):
+    list_display = ('name', )
+
+
+@admin.register(models.ItemTypeModel)
+class ItemTypeModelAdmin(admin.ModelAdmin):
+    list_display = ('name', )
 
 
 @admin.register(models.Size)
@@ -41,17 +48,16 @@ class ProductImageAdmin(admin.ModelAdmin):
 
 @admin.register(models.ProductAttribute)
 class ProductAttributeAdmin(admin.ModelAdmin):
-    list_display = ('name', 'parent')
+    list_display = ('name', )
     search_fields = ('name',)
-    ordering = ('parent__name', 'name')
+    ordering = ('name', )
 
 
 @admin.register(models.AttributeValue)
 class AttributeValueAdmin(admin.ModelAdmin):
     list_display = ('attribute', 'value')
-    list_filter = ('attribute', 'applicable_categories')
+    list_filter = ('attribute', )
     search_fields = ('value',)
-    filter_horizontal = ('applicable_categories',)
 
 
 @admin.register(models.Tag)

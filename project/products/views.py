@@ -1,18 +1,22 @@
+from django.shortcuts import get_object_or_404
 from django.views import generic as views
 
-from project.products.models import Product
+from project.products.models import Product, Category
 
 
 class ProductsListView(views.ListView):
     template_name = 'products/products.html'
 
     def get_queryset(self):
-        return Product.objects.all()
+        queryset = Product.objects.all()
+
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
         context['products'] = self.get_queryset()
+
         return context
 
 

@@ -3,14 +3,8 @@ from django.utils.text import slugify
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=100)
-
-    parent = models.ForeignKey(
-        'self',
-        on_delete=models.CASCADE,
-        null=True,
-        blank=True,
-        related_name='children',
+    name = models.CharField(
+        max_length=100
     )
 
     slug = models.SlugField(
@@ -21,22 +15,44 @@ class Category(models.Model):
     class Meta:
         verbose_name_plural = 'Categories'
 
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.name)
-        super().save(*args, **kwargs)
+    def __str__(self):
+        return self.name
+
+
+class ItemType(models.Model):
+    name = models.CharField(
+        max_length=100
+    )
+
+    category = models.ForeignKey(
+        Category,
+        on_delete=models.CASCADE,
+        related_name='item_types'
+    )
 
     def __str__(self):
-        full_path = [self.name]
-        parent = self.parent
-        while parent is not None:
-            full_path.append(parent.name)
-            parent = parent.parent
-        return ' > '.join(reversed(full_path))
+        return self.name
+
+
+class ItemTypeModel(models.Model):
+    name = models.CharField(
+        max_length=100
+    )
+
+    item_type = models.ForeignKey(
+        ItemType,
+        on_delete=models.CASCADE,
+        related_name='specific_item_types'
+    )
+
+    def __str__(self):
+        return self.name
 
 
 class Size(models.Model):
-    name = models.CharField(max_length=10)
+    name = models.CharField(
+        max_length=10
+    )
 
     def __str__(self):
         return self.name
@@ -84,14 +100,6 @@ class ProductAttribute(models.Model):
         max_length=100
     )
 
-    parent = models.ForeignKey(
-        'self',
-        on_delete=models.CASCADE,
-        null=True,
-        blank=True,
-        related_name='children'
-    )
-
     def __str__(self):
         return self.name
 
@@ -105,12 +113,6 @@ class AttributeValue(models.Model):
 
     value = models.CharField(
         max_length=100
-    )
-
-    applicable_categories = models.ManyToManyField(
-        Category,
-        blank=True,
-        related_name='attribute_values'
     )
 
     def __str__(self):
