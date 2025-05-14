@@ -69,7 +69,7 @@
                                             <a href="#">T-Shirts</a>
                                             <a href="#">Crop Tops</a>
                                             <a href="#">Blouses</a>
-                                            <a href="#">Shirts</a>
+                                            <a href="{% url 'all-products' %}?item_type=shirts">Shirts</a>
                                             <a href="#">Sweaters</a>
                                             <a href="#">Hoodies</a>
                                             <a href="#">Sweatshirts</a>
@@ -213,6 +213,7 @@
         <script src="{% static 'js/add_to_bag.js' %}"></script>
         <script src="{% static 'js/zoomModal.js' %}"></script>
         <script src="{% static 'js/dropdown_navbar.js' %}"></script>
+        <script src="{% static 'js/toggle_filter.js' %}"></script>
 
     </body>
     </html>
