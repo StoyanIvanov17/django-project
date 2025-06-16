@@ -26,8 +26,22 @@ class BagView(views.TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         bag = self.get_bag()
+
+        items = bag.items.select_related('product', 'size')
+        seen = {}
+
+        for item in items:
+            key = (item.product_id, item.size_id)
+            if key in seen:
+                seen[key].quantity += item.quantity
+                seen[key].save()
+                item.delete()
+            else:
+                seen[key] = item
+
         context['bag'] = bag
-        context['items'] = bag.items.select_related('product')
+        context['items'] = bag.items.select_related('product', 'size')
+
         return context
 
 
@@ -62,3 +76,28 @@ class AddToBagView(views.View):
             'price': str(product.price),
             'bag_size': bag_size,
         })
+
+
+class RemoveFromBagView(views.View):
+    def post(self, request, *args, **kwargs):
+        product_id = request.POST.get('product_id')
+        size_id = request.POST.get('size_id')
+
+        product = get_object_or_404(Product, id=product_id)
+        size = get_object_or_404(Size, id=size_id)
+
+        bag = authentication_check(request)
+
+        try:
+            item = BagItem.objects.get(
+                bag=bag,
+                product=product,
+                size=size
+            )
+            item.delete()
+            bag_size = bag.items.count()
+
+            return JsonResponse({'success': True, 'bag_size': bag_size})
+
+        except BagItem.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'Item not found'}, status=404)

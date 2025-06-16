@@ -49,7 +49,7 @@ class ItemType(models.Model):
         super().save(*args, **kwargs)
 
 
-class ItemTypeModel(models.Model):
+class ItemStyle(models.Model):
     name = models.CharField(
         max_length=100
     )
@@ -166,7 +166,7 @@ class Product(models.Model):
     )
 
     item_type_model = models.ForeignKey(
-        ItemTypeModel,
+        ItemStyle,
         on_delete=models.CASCADE,
         related_name='products'
     )

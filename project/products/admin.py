@@ -1,7 +1,6 @@
 from django.contrib import admin
-from django.template.defaultfilters import slugify
 
-from .models import Category, ItemType, ItemTypeModel, Product, ProductGroup, Tag, Size, ProductImage, ProductAttribute, AttributeValue
+from .models import Category, ItemType, ItemStyle, Product, ProductGroup, Tag, Size, ProductImage, ProductAttribute, AttributeValue
 
 
 @admin.register(Product)
@@ -13,8 +12,8 @@ class ProductAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
 
 
-@admin.register(ItemTypeModel)
-class ItemTypeModelAdmin(admin.ModelAdmin):
+@admin.register(ItemStyle)
+class ItemStyleModelAdmin(admin.ModelAdmin):
     list_display = ('name', 'item_type',)
     list_filter = ('item_type',)
     search_fields = ('name', 'item_type__name')
