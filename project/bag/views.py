@@ -94,10 +94,18 @@ class RemoveFromBagView(views.View):
                 product=product,
                 size=size
             )
-            item.delete()
+
+            if item.quantity > 1:
+                item.quantity -= 1
+                item.save()
+                quantity = item.quantity
+            else:
+                item.delete()
+                quantity = 0
+
             bag_size = bag.items.count()
 
-            return JsonResponse({'success': True, 'bag_size': bag_size})
+            return JsonResponse({'success': True, 'bag_size': bag_size, 'quantity': quantity})
 
         except BagItem.DoesNotExist:
             return JsonResponse({'success': False, 'error': 'Item not found'}, status=404)

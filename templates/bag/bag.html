@@ -14,8 +14,13 @@
                     <a href="#"><img src="{{ item.product.image.url }}" alt="{{ item.product.title }}"></a>
                     <div class="bag-actions">
                         <div class="bag-actions-wrapper">
-                            <button class="icon-btn"><i class="fa-solid fa-trash-can"></i></button>
-                            {{ item.quantity }}
+                            <form class="remove-from-bag-form" method="POST" action="{% url 'remove-from-bag' %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="product_id" value="{{ item.product.id }}">
+                                <input type="hidden" name="size_id" value="{{ item.size.id }}">
+                                <button class="icon-btn"><i class="fa-solid fa-trash-can"></i></button>
+                            </form>
+                             <span class="item-quantity">{{ item.quantity }}</span>
                             <button class="icon-btn"><i class="fa-solid fa-plus"></i></button>
                         </div>
                         <div class="bag-actions-heart">

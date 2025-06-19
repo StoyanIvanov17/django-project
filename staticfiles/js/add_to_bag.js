@@ -44,6 +44,14 @@ document.addEventListener('DOMContentLoaded', function () {
             const modal = document.getElementById('bag-modal');
             modal.classList.remove('hidden');
 
+            if (modal) {
+                modal.addEventListener('click', function (event) {
+                    if (!modal.classList.contains('hidden') && event.target === modal) {
+                        modal.classList.add('hidden');
+                    }
+                });
+            }
+
             const closeModal = () => {
               modal.classList.add('hidden');
             };
