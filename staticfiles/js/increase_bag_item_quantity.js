@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const forms = document.querySelectorAll('.remove-from-bag-form');
+    const incForms = document.querySelectorAll('.increase-bag-item-quantity-form');
 
-    for (let i = 0; i < forms.length; i++) {
-        const form = forms[i];
+    for (let i = 0; i < incForms.length; i++) {
+        const form = incForms[i];
 
         form.addEventListener('submit', function (e) {
             e.preventDefault();
@@ -16,22 +16,21 @@ document.addEventListener('DOMContentLoaded', function () {
                 },
                 body: formData
             })
-            .then(r => r.json())
-            .then(data => {
+            .then(function (response) { return response.json(); })
+            .then(function (data) {
                 if (!data.success) return;
 
                 const itemRow = form.closest('.bag-item');
                 if (!itemRow) return;
 
-                if (data.quantity > 0) {
-                    const quantitySpan = itemRow.querySelector('.item-quantity');
-                    if (quantitySpan) quantitySpan.textContent = data.quantity;
-                } else {
-                    itemRow.remove();
-                }
+                const quantitySpan = itemRow.querySelector('.item-quantity');
+                if (quantitySpan) quantitySpan.textContent = data.quantity;
 
                 const bagCounter = document.querySelector('.bag-counter');
                 if (bagCounter) bagCounter.textContent = data.bag_size;
+            })
+            .catch(function (err) {
+                console.error('Error increasing item:', err);
             });
         });
     }

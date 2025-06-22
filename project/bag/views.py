@@ -1,3 +1,4 @@
+from django.db.models import Sum
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.views import generic as views
@@ -40,7 +41,7 @@ class BagView(views.TemplateView):
                 seen[key] = item
 
         context['bag'] = bag
-        context['items'] = bag.items.select_related('product', 'size')
+        context['items'] = bag.items.filter(quantity__gt=0).select_related('product', 'size')
 
         return context
 
@@ -68,7 +69,7 @@ class AddToBagView(views.View):
             item.quantity = quantity
         item.save()
 
-        bag_size = bag.items.count()
+        bag_size = bag.items.aggregate(total=Sum('quantity'))['total'] or 0
         return JsonResponse({
             'product_image_url': product.image.url,
             'product_title': product.title,
@@ -103,9 +104,34 @@ class RemoveFromBagView(views.View):
                 item.delete()
                 quantity = 0
 
-            bag_size = bag.items.count()
+            bag_size = bag.items.aggregate(total=Sum('quantity'))['total'] or 0
 
             return JsonResponse({'success': True, 'bag_size': bag_size, 'quantity': quantity})
 
         except BagItem.DoesNotExist:
             return JsonResponse({'success': False, 'error': 'Item not found'}, status=404)
+
+
+class IncreaseBagItemQuantity(views.View):
+    def post(self, request, *args, **kwargs):
+        product_id = request.POST.get('product_id')
+        size_id = request.POST.get('size_id')
+
+        product = get_object_or_404(Product, id=product_id)
+        size = get_object_or_404(Size, id=size_id)
+
+        bag = authentication_check(request)
+
+        item = BagItem.objects.get(
+            bag=bag,
+            product=product,
+            size=size
+        )
+
+        item.quantity += 1
+        item.save()
+        quantity = item.quantity
+
+        bag_size = bag.items.aggregate(total=Sum('quantity'))['total'] or 0
+
+        return JsonResponse({'success': True, 'bag_size': bag_size, 'quantity': quantity})

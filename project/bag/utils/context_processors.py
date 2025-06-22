@@ -1,3 +1,5 @@
+from django.db.models import Sum
+
 from project.bag.models import Bag
 
 
@@ -10,5 +12,5 @@ def bag_size(request):
         session_key = request.session.session_key
         bag, _ = Bag.objects.get_or_create(session_key=session_key)
 
-    bag_size = bag.items.count()
+    bag_size = bag.items.aggregate(total=Sum('quantity'))['total'] or 0
     return {'bag_size': bag_size}

@@ -21,7 +21,16 @@
                                 <button class="icon-btn"><i class="fa-solid fa-trash-can"></i></button>
                             </form>
                              <span class="item-quantity">{{ item.quantity }}</span>
-                            <button class="icon-btn"><i class="fa-solid fa-plus"></i></button>
+                            <form class="increase-bag-item-quantity-form"
+                                  method="POST"
+                                  action="{% url 'increase-item-quantity' %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="product_id" value="{{ item.product.id }}">
+                                <input type="hidden" name="size_id"    value="{{ item.size.id }}">
+                                <button type="submit" class="icon-btn" aria-label="Increase quantity">
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
+                            </form>
                         </div>
                         <div class="bag-actions-heart">
                             <i class="fa-regular fa-heart"></i>
