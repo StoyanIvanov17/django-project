@@ -42,7 +42,7 @@
             </div>
 
             <div class="actions">
-                <form id="addToBagForm" method="POST" action="{% url 'add-to-bag' %}">
+                <form id="addToBagForm" method="POST" action="{% url 'api-add-to-bag' %}">
                     {% csrf_token %}
                     <input type="hidden" name="product_id" value="{{ product.id }}">
                     <input type="hidden" name="size_id" id="size_id" value="">

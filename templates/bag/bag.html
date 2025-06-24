@@ -14,7 +14,7 @@
                     <a href="#"><img src="{{ item.product.image.url }}" alt="{{ item.product.title }}"></a>
                     <div class="bag-actions">
                         <div class="bag-actions-wrapper">
-                            <form class="remove-from-bag-form" method="POST" action="{% url 'remove-from-bag' %}">
+                            <form class="remove-from-bag-form" method="POST" action="{% url 'api-remove-from-bag' %}">
                                 {% csrf_token %}
                                 <input type="hidden" name="product_id" value="{{ item.product.id }}">
                                 <input type="hidden" name="size_id" value="{{ item.size.id }}">
@@ -23,7 +23,7 @@
                              <span class="item-quantity">{{ item.quantity }}</span>
                             <form class="increase-bag-item-quantity-form"
                                   method="POST"
-                                  action="{% url 'increase-item-quantity' %}">
+                                  action="{% url 'api-increase-item-quantity' %}">
                                 {% csrf_token %}
                                 <input type="hidden" name="product_id" value="{{ item.product.id }}">
                                 <input type="hidden" name="size_id"    value="{{ item.size.id }}">

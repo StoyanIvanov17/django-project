@@ -3,7 +3,12 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.views import generic as views
 
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
 from project.bag.models import Bag, BagItem
+from project.bag.serializers import BagItemSerializer
 from project.products.models import Product, Size
 
 
@@ -46,11 +51,11 @@ class BagView(views.TemplateView):
         return context
 
 
-class AddToBagView(views.View):
+class AddToBagView(APIView):
     def post(self, request, *args, **kwargs):
-        product_id = request.POST.get('product_id')
-        size_id = request.POST.get('size_id')
-        quantity = int(request.POST.get('quantity', 1))
+        product_id = request.data.get('product_id')
+        size_id = request.data.get('size_id')
+        quantity = int(request.data.get('quantity', 1))
 
         product = get_object_or_404(Product, id=product_id)
         size = get_object_or_404(Size, id=size_id)
@@ -70,19 +75,18 @@ class AddToBagView(views.View):
         item.save()
 
         bag_size = bag.items.aggregate(total=Sum('quantity'))['total'] or 0
-        return JsonResponse({
-            'product_image_url': product.image.url,
-            'product_title': product.title,
-            'product_size': size.name,
-            'price': str(product.price),
+        serializer = BagItemSerializer(item, context={'request': request})
+
+        return Response({
+            'bag_item': serializer.data,
             'bag_size': bag_size,
-        })
+        }, status=status.HTTP_200_OK)
 
 
-class RemoveFromBagView(views.View):
+class RemoveFromBagView(APIView):
     def post(self, request, *args, **kwargs):
-        product_id = request.POST.get('product_id')
-        size_id = request.POST.get('size_id')
+        product_id = request.data.get('product_id')
+        size_id = request.data.get('size_id')
 
         product = get_object_or_404(Product, id=product_id)
         size = get_object_or_404(Size, id=size_id)
@@ -106,32 +110,49 @@ class RemoveFromBagView(views.View):
 
             bag_size = bag.items.aggregate(total=Sum('quantity'))['total'] or 0
 
-            return JsonResponse({'success': True, 'bag_size': bag_size, 'quantity': quantity})
+            return Response({
+                'success': True,
+                'bag_size': bag_size,
+                'quantity': quantity
+            }, status=status.HTTP_200_OK)
 
         except BagItem.DoesNotExist:
-            return JsonResponse({'success': False, 'error': 'Item not found'}, status=404)
+            return Response({
+                'success': False,
+                'error': 'Item not found'
+            }, status=status.HTTP_404_NOT_FOUND)
 
 
-class IncreaseBagItemQuantity(views.View):
+class IncreaseBagItemQuantity(APIView):
     def post(self, request, *args, **kwargs):
-        product_id = request.POST.get('product_id')
-        size_id = request.POST.get('size_id')
+        product_id = request.data.get('product_id')
+        size_id = request.data.get('size_id')
 
         product = get_object_or_404(Product, id=product_id)
         size = get_object_or_404(Size, id=size_id)
 
         bag = authentication_check(request)
 
-        item = BagItem.objects.get(
-            bag=bag,
-            product=product,
-            size=size
-        )
+        try:
+            item = BagItem.objects.get(
+                bag=bag,
+                product=product,
+                size=size
+            )
 
-        item.quantity += 1
-        item.save()
-        quantity = item.quantity
+            item.quantity += 1
+            item.save()
+            quantity = item.quantity
 
-        bag_size = bag.items.aggregate(total=Sum('quantity'))['total'] or 0
+            bag_size = bag.items.aggregate(total=Sum('quantity'))['total'] or 0
 
-        return JsonResponse({'success': True, 'bag_size': bag_size, 'quantity': quantity})
+            return Response({
+                'success': True,
+                'bag_size': bag_size,
+                'quantity': quantity
+            }, status=status.HTTP_200_OK)
+        except BagItem.DoesNotExist:
+            return Response({
+                'success': False,
+                'error': 'Item not found'
+            }, status=status.HTTP_404_NOT_FOUND)
