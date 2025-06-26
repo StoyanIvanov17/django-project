@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.text import slugify
 
@@ -49,7 +50,13 @@ class ItemType(models.Model):
         super().save(*args, **kwargs)
 
 
-class ItemStyle(models.Model):
+class ItemTypeValue(models.Model):
+    item_type = models.ForeignKey(
+        ItemType,
+        on_delete=models.CASCADE,
+        related_name='values'
+    )
+
     name = models.CharField(
         max_length=100
     )
@@ -59,19 +66,13 @@ class ItemStyle(models.Model):
         blank=True
     )
 
-    item_type = models.ForeignKey(
-        ItemType,
-        on_delete=models.CASCADE,
-        related_name='specific_item_types'
-    )
-
-    def __str__(self):
-        return self.name
-
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
         super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
 
 
 class Size(models.Model):
@@ -122,30 +123,6 @@ class Tag(models.Model):
         return self.name
 
 
-class ProductAttribute(models.Model):
-    name = models.CharField(
-        max_length=100
-    )
-
-    def __str__(self):
-        return self.name
-
-
-class AttributeValue(models.Model):
-    attribute = models.ForeignKey(
-        ProductAttribute,
-        on_delete=models.CASCADE,
-        related_name='values'
-    )
-
-    value = models.CharField(
-        max_length=100
-    )
-
-    def __str__(self):
-        return f"{self.attribute.name}: {self.value}"
-
-
 class Product(models.Model):
     class Gender(models.TextChoices):
         MEN = 'men', 'Men'
@@ -162,13 +139,13 @@ class Product(models.Model):
     item_type = models.ForeignKey(
         ItemType,
         on_delete=models.CASCADE,
-        related_name='products'
+        related_name='products_type'
     )
 
-    item_type_model = models.ForeignKey(
-        ItemStyle,
+    item_type_value = models.ForeignKey(
+        ItemTypeValue,
         on_delete=models.CASCADE,
-        related_name='products'
+        related_name='products_value'
     )
 
     title = models.CharField(
@@ -241,12 +218,6 @@ class Product(models.Model):
         unique=True, blank=True
     )
 
-    attribute_values = models.ManyToManyField(
-        AttributeValue,
-        blank=True,
-        related_name='products'
-    )
-
     def save(self, *args, **kwargs):
         if not self.slug:
             slug_base = f"{self.title}-{self.color}"
@@ -270,3 +241,82 @@ class ProductImage(models.Model):
 
     def __str__(self):
         return f"Image for {self.product}"
+
+
+class Material(models.Model):
+    name = models.CharField(
+        max_length=100,
+        unique=True
+    )
+
+    def __str__(self):
+        return self.name
+
+
+class ProductMaterial(models.Model):
+    product = models.ForeignKey(
+        Product,
+        on_delete=models.CASCADE,
+        related_name='material_composition'
+    )
+
+    material = models.ForeignKey(
+        Material,
+        on_delete=models.CASCADE,
+    )
+
+    percentage = models.DecimalField(
+        max_digits=5,
+        decimal_places=2,
+    )
+
+    class Meta:
+        unique_together = ('product', 'material')
+
+    def clean(self):
+        if not self.product or not self.product.pk:
+            return
+
+        total = sum(
+            pm.percentage for pm in ProductMaterial.objects.filter(product=self.product)
+            if self.pk is None or pm.pk != self.pk
+        )
+
+        if total + self.percentage > 100:
+            raise ValidationError(f"Total percentage for {self.product} exceeds 100%.")
+
+    def save(self, *args, **kwargs):
+        self.clean()
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.product} - {self.material} ({self.percentage})"
+
+
+class ProductAttribute(models.Model):
+    name = models.CharField(
+        max_length=100
+    )
+
+    def __str__(self):
+        return self.name
+
+
+class AttributeValue(models.Model):
+    product = models.ForeignKey(
+        Product,
+        on_delete=models.CASCADE,
+        related_name='attribute_values'
+    )
+
+    attribute = models.ForeignKey(
+        ProductAttribute,
+        on_delete=models.CASCADE,
+    )
+
+    value = models.CharField(
+        max_length=100
+    )
+
+    def __str__(self):
+        return f"{self.attribute.name}: {self.value}"

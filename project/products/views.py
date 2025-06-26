@@ -14,7 +14,7 @@ class ProductsListView(views.ListView):
     def filter_products(self, queryset):
         category = self.request.GET.get('category', '')
         item_type_slug = self.request.GET.get('item_type', '')
-        item_type_model_slug = self.request.GET.get('item_type_model', '')
+        item_type_value_slug = self.request.GET.get('item_type_value', '')
         recent = self.request.GET.get('recent', '')
 
         query = Q()
@@ -25,8 +25,8 @@ class ProductsListView(views.ListView):
         if item_type_slug:
             query &= Q(item_type__slug=item_type_slug)
 
-        if item_type_model_slug:
-            query &= Q(item_type_model__slug=item_type_model_slug)
+        if item_type_value_slug:
+            query &= Q(item_type_value__slug=item_type_value_slug)
 
         if recent == 'true':
             query &= Q(created_at__gte=now() - timedelta(days=14))
@@ -42,7 +42,7 @@ class ProductsListView(views.ListView):
 
         item_type_slug = self.request.GET.get('item_type', '')
         item_type = None
-        item_type_models = []
+        item_type_values = []
 
         is_view_all = self.request.path == '/products/view-all/'
 
@@ -51,12 +51,12 @@ class ProductsListView(views.ListView):
 
         if item_type_slug:
             item_type = get_object_or_404(ItemType, slug=item_type_slug)
-            item_type_models = item_type.specific_item_types.all()
+            item_type_values = item_type.values.all()
 
         context['all_item_types'] = ItemType.objects.all()
         context['products'] = self.get_queryset()
         context['item_type'] = item_type
-        context['item_type_models'] = item_type_models
+        context['item_type_values'] = item_type_values
 
         return context
 

@@ -1,23 +1,39 @@
 from django.contrib import admin
 
-from .models import Category, ItemType, ItemStyle, Product, ProductGroup, Tag, Size, ProductImage, ProductAttribute, AttributeValue
+from .models import (
+    Category, ItemType, ItemTypeValue, Product, ProductGroup, Tag, Size,
+    ProductImage, ProductMaterial, Material, AttributeValue, ProductAttribute
+)
+
+
+class AttributeValueInline(admin.TabularInline):
+    model = AttributeValue
+    extra = 1
+
+
+class ProductMaterialInline(admin.TabularInline):
+    model = ProductMaterial
+    extra = 1
+
+
+class ProductImageInline(admin.TabularInline):
+    model = ProductImage
+    extra = 1
+
+
+class ItemTypeValueInline(admin.TabularInline):
+    model = ItemTypeValue
+    extra = 1
 
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('title', 'category', 'item_type', 'item_type_model', 'price', 'stock', 'is_active')
-    list_filter = ('category', 'item_type', 'item_type_model', 'gender', 'tags', 'is_active')
-    search_fields = ('title', 'category__name', 'item_type__name', 'item_type_model__name', 'tags__name')
+    list_display = ('title', 'category', 'item_type', 'item_type_value', 'price', 'stock', 'is_active')
+    list_filter = ('category', 'item_type', 'item_type_value', 'gender', 'tags', 'is_active')
+    search_fields = ('title', 'category__name', 'item_type__name', 'item_type_value__name', 'tags__name')
     list_editable = ('is_active', 'price')
-    prepopulated_fields = {'slug': ('title',)}
-
-
-@admin.register(ItemStyle)
-class ItemStyleModelAdmin(admin.ModelAdmin):
-    list_display = ('name', 'item_type',)
-    list_filter = ('item_type',)
-    search_fields = ('name', 'item_type__name')
-    prepopulated_fields = {'slug': ('name',)}
+    exclude = ('slug', )
+    inlines = [ProductMaterialInline, ProductImageInline, AttributeValueInline]
 
 
 @admin.register(ItemType)
@@ -25,6 +41,15 @@ class ItemTypeAdmin(admin.ModelAdmin):
     list_display = ('name', 'category',)
     list_filter = ('category',)
     search_fields = ('name', 'category__name')
+    prepopulated_fields = {'slug': ('name',)}
+    inlines = [ItemTypeValueInline]
+
+
+@admin.register(ItemTypeValue)
+class ItemTypeValueAdmin(admin.ModelAdmin):
+    list_display = ('name', 'item_type',)
+    list_filter = ('item_type',)
+    search_fields = ('name', 'item_type__name')
     prepopulated_fields = {'slug': ('name',)}
 
 
@@ -61,13 +86,7 @@ class ProductAttributeAdmin(admin.ModelAdmin):
     search_fields = ('name',)
 
 
-@admin.register(AttributeValue)
-class AttributeValueAdmin(admin.ModelAdmin):
-    list_display = ('attribute', 'value')
-    list_filter = ('attribute',)
-    search_fields = ('attribute__name', 'value')
-
-
-@admin.register(ProductImage)
-class ProductImageAdmin(admin.ModelAdmin):
-    list_display = ('image',)
+@admin.register(Material)
+class MaterialAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+    search_fields = ('name',)
