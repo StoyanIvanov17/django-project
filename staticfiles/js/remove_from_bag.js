@@ -7,14 +7,18 @@ document.addEventListener('DOMContentLoaded', function () {
         form.addEventListener('submit', function (e) {
             e.preventDefault();
 
-            const formData = new FormData(form);
+            const data = {
+                product_id: form.querySelector('[name=product_id]').value,
+                size_id: form.querySelector('[name=size_id]').value,
+            }
 
             fetch(form.action, {
                 method: 'POST',
                 headers: {
-                    'X-CSRFToken': formData.get('csrfmiddlewaretoken'),
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
                 },
-                body: formData
+                body: JSON.stringify(data)
             })
             .then(r => r.json())
             .then(data => {

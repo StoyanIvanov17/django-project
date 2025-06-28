@@ -14,21 +14,28 @@ document.addEventListener('DOMContentLoaded', function () {
     form.addEventListener('submit', function (e) {
     e.preventDefault();
 
-    const formData = new FormData(this);
+    const data = {
+        product_id: form.querySelector('[name="product_id"]').value,
+        size_id: form.querySelector('[name="size_id"]').value,
+        quantity: form.querySelector('[name="quantity"]').value,
+    };
 
     fetch(this.action, {
       method: 'POST',
       headers: {
-        'X-CSRFToken': formData.get('csrfmiddlewaretoken'),
+          'Content-Type': 'application/json',
+          'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
       },
-      body: formData
+      body: JSON.stringify(data)
     })
         .then(response => response.json())
         .then(data => {
-            document.getElementById('bag-modal-product-image').src = data.product_image_url;
-            document.querySelector('.bag-modal-product-title').textContent = data.product_title;
-            document.querySelector('.bag-modal-product-size').textContent = `Size: ${data.product_size}`;
-            document.querySelector('.bag-modal-product-price').textContent = `BGN: ${data.price}`;
+            console.log('Response data:', data);
+
+            document.getElementById('bag-modal-product-image').src = data.bag_item.product.image_url;
+            document.querySelector('.bag-modal-product-title').textContent = data.bag_item.product.title;
+            document.querySelector('.bag-modal-product-size').textContent = `Size: ${data.bag_item.size.name}`;
+            document.querySelector('.bag-modal-product-price').textContent = `BGN: ${data.bag_item.product.price}`;
 
             const bagLink = document.getElementById('view-bag-link');
             const checkoutLink = document.getElementById('checkout-link');

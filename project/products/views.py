@@ -76,5 +76,3 @@ class ProductDetailsView(views.DetailView):
         context['sizes'] = product.sizes.all()
 
         return context
-
-

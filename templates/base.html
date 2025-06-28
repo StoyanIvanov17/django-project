@@ -24,134 +24,106 @@
                         <a href="#" data-dropdown="KIDS">Kids</a>
                     </div>
 
-                    <div class="mega-dropdown-container" id="megaDropdownContainer">
+                    <div class="mega-dropdown-container">
                         <div class="mega-dropdown" id="womenDropdown">
                             <div class="mega-content">
-
-                                <div class="dropdown-column category-container">
-                                    <div class="category-view main-categories active" id="womenMainCategories">
-                                        <h2 class="category-heading">FOR HER</h2>
-                                        <div class="category-main-layout">
-                                            <ul class="category-list">
-                                                <li data-preview="clothing">
-                                                    <a href="#" class="category-link" data-category="clothing">Clothing</a>
-                                                </li>
-                                                <li data-preview="accessories">
-                                                    <a href="#" class="category-link" data-category="accessories">Accessories</a>
-                                                </li>
-                                                <li data-preview="shoes">
-                                                    <a href="#" class="category-link" data-category="shoes">Shoes</a>
-                                                </li>
-                                                <li data-preview="cosmetics">
-                                                    <a href="#" class="category-link" data-category="cosmetics">Cosmetics</a>
-                                                </li>
-                                                <li data-preview="sports">
-                                                    <a href="#" class="category-link" data-category="sports">Sports</a>
-                                                </li>
-                                            </ul>
-
-                                            <div class="category-preview">
-                                                <img id="categoryPreviewImage" src="{% static 'images/jewellery.jpg' %}" alt="Preview" />
-                                                <div class="preview-label">New Arrivals</div>
-                                                <img id="categoryPreviewImage" src="{% static 'images/jewellery.jpg' %}" alt="Preview" />
-                                                <div class="preview-label">New Arrivals</div>
-                                                <img id="categoryPreviewImage" src="{% static 'images/jewellery.jpg' %}" alt="Preview" />
-                                                <div class="preview-label">New Arrivals</div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="category-view subcategories" id="clothingSubcategories">
-                                        <a href="{% url 'all-products' %}"><h2 class="category-heading">VIEW ALL</h2></a>
-                                        <a href="#" class="back-button"><i class="fa-solid fa-arrow-left"></i></a>
-                                        <div class="subcategory-group">
-                                            <h2 class="title">Tops</h2>
-                                            <a href="#">T-Shirts</a>
-                                            <a href="#">Crop Tops</a>
-                                            <a href="#">Blouses</a>
-                                            <a href="{% url 'all-products' %}?item_type=shirts">Shirts</a>
-                                            <a href="#">Sweaters</a>
-                                            <a href="#">Hoodies</a>
-                                            <a href="#">Sweatshirts</a>
-                                            <a href="#">Tank Tops</a>
-                                            <a href="#">Camisoles</a>
-                                        </div>
-                                        <div class="subcategory-group">
-                                            
-                                            <h2 class="title">Bottoms</h2>
-                                            <a href="{% url 'all-products' %}?item_type=jeans">Jeans</a>
-                                            <a href="#">Trousers</a>
-                                            <a href="#">Pants</a>
-                                            <a href="#">Shorts</a>
-                                            <a href="{% url 'all-products' %}?item_type=skirts">Skirts</a>
-                                            <a href="#">Leggings</a>
-                                            <a href="#">Joggers</a>
-                                            <a href="#">Culottes</a>
-                                        </div>
-                                        <div class="subcategory-group">
-                                            <h2 class="title">Outerwear</h2>
-                                            <a href="#">Jackets</a>
-                                            <a href="#">Coats</a>
-                                            <a href="#">Blazers</a>
-                                            <a href="#">Vests</a>
-                                            <a href="#">Ponchos</a>
-                                        </div>
-                                        <div class="subcategory-group">
-                                            <h2 class="title">Dresses & One-Pieces</h2>
-                                            <a href="#">Dresses</a>
-                                            <a href="#">Jumpsuits</a>
-                                            <a href="#">Rompers</a>
-                                            <a href="#">Overalls</a>
-                                        </div>
-                                        <div class="subcategory-group">
-                                            <h2 class="title">Lingerie & Intimates</h2>
-                                            <a href="#">Bras</a>
-                                            <a href="#">Panties</a>
-                                            <a href="#">Bralettes</a>
-                                            <a href="#">Bodysuits</a>
-                                            <a href="#">Shapewear</a>
-                                        </div>
-                                        <div class="subcategory-group">
-                                            <h2 class="title">Activewear</h2>
-                                            <a href="#">Sports Bras</a>
-                                            <a href="#">Gym Tops</a>
-                                            <a href="#">Leggings</a>
-                                            <a href="#">Joggers</a>
-                                            <a href="#">Tracksuits</a>
-                                        </div>
-                                        <div class="subcategory-group">
-                                            <h2 class="title">Swimwear</h2>
-                                            <a href="#">Bikinis</a>
-                                            <a href="#">One-Pieces</a>
-                                            <a href="#">Cover-Ups</a>
-                                        </div>
-                                        <div class="subcategory-group">
-                                            <h2 class="title">Loungewear</h2>
-                                            <a href="#">Pajamas</a>
-                                            <a href="#">Nightgowns</a>
-                                            <a href="#">Robes</a>
-                                            <a href="#">Loungewear Sets</a>
-                                        </div>
-                                    </div>
-
-                                    </div>
+                                <div class="dropdown-column">
+                                    <a href="#" class="dropdown-column-title">Featured</a>
+                                    <a href="#">New Releases</a>
+                                    <a href="#">Best Sellers</a>
+                                    <a href="#">Brand's Special</a>
+                                    <a href="#">Bringing Back</a>
+                                </div>
+                                <div class="dropdown-column">
+                                    <a href="#" class="dropdown-column-title">Shoes</a>
+                                    <a href="#">All Shoes</a>
+                                    <a href="#">Lifestyle</a>
+                                    <a href="#">Running</a>
+                                    <a href="#">Football</a>
+                                    <a href="#">Basketball</a>
+                                    <a href="#">Training and Gym</a>
+                                </div>
+                                <div class="dropdown-column">
+                                    <a href="{% url 'all-products' %}?category=clothing" class="dropdown-column-title">Clothing</a>
+                                    <a href="#">Tops & T-Shirts</a>
+                                    <a href="#">Jeans & Pants</a>
+                                    <a href="{% url 'all-products' %}?item_type=shorts&item_type=skirts">Shorts & Skirts</a>
+                                    <a href="#">Swimwear & Beachwear</a>
+                                    <a href="#">Shirts & Blouses</a>
+                                    <a href="#">Cardigans & Sweaters</a>
+                                    <a href="#">Underwear & Sleepwear</a>
+                                    <a href="#">Socks & Tights</a>
+                                    <a href="#">Dresses</a>
+                                    <a href="#">Lingerie</a>
+                                </div>
+                                <div class="dropdown-column">
+                                    <a href="#" class="dropdown-column-title">Discover Sport</a>
+                                    <a href="#">Running</a>
+                                    <a href="#">Football</a>
+                                    <a href="#">Basketball</a>
+                                    <a href="#">Training and Gym</a>
+                                    <a href="#">Tennis</a>
+                                    <a href="#">Golf</a>
+                                </div>
+                                <div class="dropdown-column">
+                                    <a href="#" class="dropdown-column-title">Fashion & Accessories</a>
+                                    <a href="#">All Fashion & Accessories</a>
+                                    <a href="#">Fashion Accessories</a>
+                                    <a href="#">Footwear Accessories</a>
+                                    <a href="#">Activewear Accessories</a>
                                 </div>
                             </div>
                         </div>
                         <div class="mega-dropdown" id="menDropdown">
                             <div class="mega-content">
                                 <div class="dropdown-column">
+                                    <a href="#" class="dropdown-column-title">Featured</a>
+                                    <a href="#">New Releases</a>
+                                    <a href="#">Best Sellers</a>
+                                    <a href="#">Brand's Special</a>
+                                    <a href="#">Bringing Back</a>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="mega-dropdown" id="kidsDropdown">
-                            <div class="mega-content">
                                 <div class="dropdown-column">
+                                    <a href="#" class="dropdown-column-title">Shoes</a>
+                                    <a href="#">All Shoes</a>
+                                    <a href="#">Lifestyle</a>
+                                    <a href="#">Running</a>
+                                    <a href="#">Football</a>
+                                    <a href="#">Basketball</a>
+                                    <a href="#">Training and Gym</a>
+                                </div>
+                                <div class="dropdown-column">
+                                    <a href="#" class="dropdown-column-title">Clothing</a>
+                                    <a href="#">All Clothing</a>
+                                    <a href="#">Tops</a>
+                                    <a href="#">Bottoms</a>
+                                    <a href="#">Outerwear</a>
+                                    <a href="#">Activewear</a>
+                                    <a href="#">Underwear & Loungewear</a>
+                                    <a href="#">Swimwear</a>
+                                    <a href="#">Occasion Wear</a>
+                                </div>
+                                <div class="dropdown-column">
+                                    <a href="#" class="dropdown-column-title">Discover Sport</a>
+                                    <a href="#">Running</a>
+                                    <a href="#">Football</a>
+                                    <a href="#">Basketball</a>
+                                    <a href="#">Training and Gym</a>
+                                    <a href="#">Tennis</a>
+                                    <a href="#">Golf</a>
+                                </div>
+                                <div class="dropdown-column">
+                                    <a href="#" class="dropdown-column-title">Fashion & Accessories</a>
+                                    <a href="#">All Fashion & Accessories</a>
+                                    <a href="#">Fashion Accessories</a>
+                                    <a href="#">Footwear Accessories</a>
+                                    <a href="#">Activewear Accessories</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="navbar-right">
                     <div class="nav-icons">
                         <div class="search-box">
