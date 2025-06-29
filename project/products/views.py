@@ -1,10 +1,10 @@
 from datetime import timedelta
 
-from django.db.models import Q
+from django.db.models import Q, Exists, OuterRef
 from django.utils.timezone import now
 from django.views import generic as views
 
-from project.products.models import Product, ItemType
+from project.products.models import Product, ItemType, ProductGroup
 
 
 class ProductsListView(views.ListView):
@@ -43,9 +43,22 @@ class ProductsListView(views.ListView):
         item_type_slugs = self.request.GET.getlist('item_type')
         item_type_value_slugs = self.request.GET.getlist('item_type_value')
 
+        item_types_with_products = ItemType.objects.annotate(
+            has_products=Exists(
+                Product.objects.filter(item_type=OuterRef('pk'))
+            )
+        ).filter(has_products=True)
+
+        for item_type in item_types_with_products:
+            item_type.filtered_values = item_type.values.annotate(
+                has_products=Exists(
+                    Product.objects.filter(item_type_value=OuterRef('pk'))
+                )
+            ).filter(has_products=True)
+
         context['item_type_slugs'] = item_type_slugs
         context['item_type_value_slugs'] = item_type_value_slugs
-        context['all_item_types'] = ItemType.objects.all()
+        context['all_item_types'] = item_types_with_products
 
         return context
 

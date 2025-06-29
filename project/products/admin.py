@@ -32,7 +32,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_filter = ('category', 'item_type', 'item_type_value', 'gender', 'tags', 'is_active')
     search_fields = ('title', 'category__name', 'item_type__name', 'item_type_value__name', 'tags__name')
     list_editable = ('is_active', 'price')
-    exclude = ('slug', )
+    exclude = ('slug', 'group', )
     inlines = [ProductMaterialInline, ProductImageInline, AttributeValueInline]
 
 

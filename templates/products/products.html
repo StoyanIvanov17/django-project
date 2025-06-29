@@ -4,59 +4,55 @@
 {% block main_class %}with-padding{% endblock %}
 
 {% block main_content %}
-    <div class="products-gallery-wrapper">
-        <div id="filter-panel">
-            <h3>Filters</h3>
-            <p><label><input type="checkbox"> Size M</label></p>
-            <p><label><input type="checkbox"> Black</label></p>
-            <p><label><input type="checkbox"> Price Under 100</label></p>
-        </div>
 
-        <div class="category-pills">
-            {% if item_type_slugs %}
-                <a href="#" class="pill back-arrow" onclick="event.preventDefault(); history.back();">←</a>
-                {% for item_type in all_item_types %}
-                    {% if item_type.slug in item_type_slugs %}
-                        <a href="?item_type={{ item_type.slug }}"
-                           class="pill {% if item_type.slug in item_type_slugs and not request.GET.item_type_value %}active{% endif %}">
-                            {{ item_type.name }}
-                        </a>
-                        {% for value in item_type.values.all %}
-                            <a href="?item_type={{ item_type.slug }}&item_type_value={{ value.slug }}"
-                               class="pill {% if request.GET.item_type_value == value.slug %}active{% endif %}">
-                                {{ value.name }}
-                            </a>
-                        {% endfor %}
-                    {% endif %}
-                {% endfor %}
-            {% else %}
-                {% for item_type in all_item_types %}
+    <div class="category-pills">
+        {% if item_type_slugs %}
+            <a href="#" class="pill back-arrow" onclick="event.preventDefault(); history.back();">←</a>
+            {% for item_type in all_item_types %}
+                {% if item_type.slug in item_type_slugs %}
                     <a href="?item_type={{ item_type.slug }}"
-                       class="pill">
+                       class="pill {% if item_type.slug in item_type_slugs and not request.GET.item_type_value %}active{% endif %}">
                         {{ item_type.name }}
                     </a>
-                {% endfor %}
-            {% endif %}
-        </div>
-
-        <div class="sort-filter">
-            <a href="">Sort By <i class="fa-solid fa-plus"></i></a>
-            <a href="#" id="toggle-filter">Show Filters <i class="fa-solid fa-filter"></i></a>
-        </div>
-
-        <div class="products-gallery">
-            {% for product in products %}
-                <div class="product-card">
-                    <div class="product-image-container">
-                        <a href="{% url 'product-details' pk=product.pk gender=product.gender slug=product.slug %}">
-                            <img src="{{ product.image.url }}" alt="{{ product.title }}" class="product-img">
+                    {% for value in item_type.filtered_values %}
+                        <a href="?item_type={{ item_type.slug }}&item_type_value={{ value.slug }}"
+                           class="pill {% if request.GET.item_type_value == value.slug %}active{% endif %}">
+                            {{ value.name }}
                         </a>
-                    </div>
-                    <h3 class="product-title">{{ product.title }}</h3>
-                    <p class="product-color-count">{{ product.group.variants.count }} Colors</p>
-                    <p class="product-price">{{ product.price }} BGN</p>
-                </div>
+                    {% endfor %}
+                {% endif %}
             {% endfor %}
+        {% else %}
+            {% for item_type in all_item_types %}
+                <a href="?item_type={{ item_type.slug }}" class="pill">
+                    {{ item_type.name }}
+                </a>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    <div class="sort-filter">
+        <a href="">Sort By <i class="fa-solid fa-plus"></i></a>
+        <a href="#" id="toggle-filter">Show Filters <i class="fa-solid fa-filter"></i></a>
+    </div>
+
+    <div class="products-gallery-wrapper">
+        <div class="products-gallery-main-content">
+            <div class="products-gallery">
+                {% for product in products %}
+                    <div class="product-card">
+                        <div class="product-image-container">
+                            <a href="{% url 'product-details' pk=product.pk gender=product.gender slug=product.slug %}">
+                                <img src="{{ product.image.url }}" alt="{{ product.title }}" class="product-img">
+                            </a>
+                        </div>
+                        <h3 class="product-title">{{ product.title }}</h3>
+                        <p class="product-color-count">{{ product.group.variants.count }} Colors</p>
+                        <p class="product-price">{{ product.price }} BGN</p>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
+
 {% endblock %}

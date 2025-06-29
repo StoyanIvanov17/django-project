@@ -19,7 +19,7 @@
                 </a>
 
                 <div class="nav-links">
-                    <a href="#" data-dropdown="WOMEN">Women</a>
+                    <a href="{% url 'all-products' %}?category=clothing" data-dropdown="WOMEN">Women</a>
                     <a href="#" data-dropdown="MEN">Men</a>
                     <a href="#" data-dropdown="KIDS">Kids</a>
                 </div>
@@ -44,16 +44,16 @@
                                 <a href="#">Training and Gym</a>
                             </div>
                             <div class="dropdown-column">
-                                <a href="{% url 'all-products' %}?category=clothing" class="dropdown-column-title">Clothing</a>
-                                <a href="#">Tops & T-Shirts</a>
-                                <a href="{% url 'all-products' %}?item_type=shirts&item_type=blouses">Shirts & Blouses</a>
-                                <a href="#">Cardigans & Sweaters</a>
-                                <a href="{% url 'all-products' %}?item_type=shorts&item_type=skirts">Shorts & Skirts</a>
-                                <a href="#">Leggings</a>
-                                <a href="#">Dresses</a>
-                                <a href="#">Lingerie & Sleepwear</a>
-                                <a href="#">Swimwear & Beachwear</a>
-                                <a href="#">Socks & Tights</a>
+                                <a href="{% url 'all-products' %}?category=clothing" class="dropdown-column-title"><span>Clothing</span></a>
+                                <a href="#"><span>Tops & T-Shirts</span></a>
+                                <a href="{% url 'all-products' %}?item_type=shirts&item_type=blouses"><span>Shirts & Blouses</span></a>
+                                <a href="#"><span>Cardigans & Sweaters</span></a>
+                                <a href="{% url 'all-products' %}?item_type=shorts&item_type=skirts"><span>Shorts & Skirts</span></a>
+                                <a href="#"><span>Leggings</span></a>
+                                <a href="#"><span>Dresses</span></a>
+                                <a href="#"><span>Lingerie & Sleepwear</span></a>
+                                <a href="#"><span>Swimwear & Beachwear</span></a>
+                                <a href="#"><span>Socks & Tights</span></a>
                             </div>
                             <div class="dropdown-column">
                                 <a href="#" class="dropdown-column-title">Discover Sport</a>

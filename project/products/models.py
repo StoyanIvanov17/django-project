@@ -219,9 +219,17 @@ class Product(models.Model):
     )
 
     def save(self, *args, **kwargs):
+        if not self.group_id:
+            group, created = ProductGroup.objects.get_or_create(
+                name=self.title,
+                defaults={'slug': slugify(self.title)}
+            )
+            self.group = group
+
         if not self.slug:
             slug_base = f"{self.title}-{self.color}"
             self.slug = slugify(slug_base)
+
         super().save(*args, **kwargs)
 
     def __str__(self):
