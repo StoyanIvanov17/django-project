@@ -1,7 +1,6 @@
 from datetime import timedelta
 
 from django.db.models import Q
-from django.shortcuts import get_object_or_404
 from django.utils.timezone import now
 from django.views import generic as views
 
@@ -9,11 +8,13 @@ from project.products.models import Product, ItemType
 
 
 class ProductsListView(views.ListView):
+    model = Product
     template_name = 'products/products.html'
+    context_object_name = 'products'
 
     def filter_products(self, queryset):
         category = self.request.GET.get('category', '')
-        item_type_slug = self.request.GET.get('item_type', '')
+        item_type_slugs = self.request.GET.getlist('item_type')
         item_type_value_slug = self.request.GET.get('item_type_value', '')
         recent = self.request.GET.get('recent', '')
 
@@ -22,8 +23,8 @@ class ProductsListView(views.ListView):
         if category:
             query &= Q(category__slug=category)
 
-        if item_type_slug:
-            query &= Q(item_type__slug=item_type_slug)
+        if item_type_slugs:
+            query &= Q(item_type__slug__in=item_type_slugs)
 
         if item_type_value_slug:
             query &= Q(item_type_value__slug=item_type_value_slug)
@@ -39,24 +40,12 @@ class ProductsListView(views.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        item_type_slugs = self.request.GET.getlist('item_type')
+        item_type_value_slugs = self.request.GET.getlist('item_type_value')
 
-        item_type_slug = self.request.GET.get('item_type', '')
-        item_type = None
-        item_type_values = []
-
-        is_view_all = self.request.path == '/products/view-all/'
-
-        if is_view_all:
-            context['all_item_types'] = ItemType.objects.all()
-
-        if item_type_slug:
-            item_type = get_object_or_404(ItemType, slug=item_type_slug)
-            item_type_values = item_type.values.all()
-
+        context['item_type_slugs'] = item_type_slugs
+        context['item_type_value_slugs'] = item_type_value_slugs
         context['all_item_types'] = ItemType.objects.all()
-        context['products'] = self.get_queryset()
-        context['item_type'] = item_type
-        context['item_type_values'] = item_type_values
 
         return context
 

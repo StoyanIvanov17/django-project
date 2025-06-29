@@ -13,22 +13,27 @@
         </div>
 
         <div class="category-pills">
-            {% if all_item_types and not item_type %}
-                {% for item in all_item_types %}
-                    <a href="?item_type={{ item.slug }}"
-                       class="pill {% if request.GET.item_type == item.slug and not request.GET.item_type_value %}active{% endif %}">
-                        {{ item.name }}
-                    </a>
+            {% if item_type_slugs %}
+                <a href="#" class="pill back-arrow" onclick="event.preventDefault(); history.back();">←</a>
+                {% for item_type in all_item_types %}
+                    {% if item_type.slug in item_type_slugs %}
+                        <a href="?item_type={{ item_type.slug }}"
+                           class="pill {% if item_type.slug in item_type_slugs and not request.GET.item_type_value %}active{% endif %}">
+                            {{ item_type.name }}
+                        </a>
+                        {% for value in item_type.values.all %}
+                            <a href="?item_type={{ item_type.slug }}&item_type_value={{ value.slug }}"
+                               class="pill {% if request.GET.item_type_value == value.slug %}active{% endif %}">
+                                {{ value.name }}
+                            </a>
+                        {% endfor %}
+                    {% endif %}
                 {% endfor %}
-            {% elif item_type %}
-                <a href="?item_type={{ item_type.slug }}"
-                   class="pill {% if not request.GET.item_type_value %}active{% endif %}">
-                    {{ item_type.name }}
-                </a>
-                {% for value in item_type_values %}
-                    <a href="?item_type={{ item_type.slug }}&item_type_value={{ value.slug }}"
-                       class="pill {% if request.GET.item_type_value == value.slug %}active{% endif %}">
-                        {{ value.name }}
+            {% else %}
+                {% for item_type in all_item_types %}
+                    <a href="?item_type={{ item_type.slug }}"
+                       class="pill">
+                        {{ item_type.name }}
                     </a>
                 {% endfor %}
             {% endif %}

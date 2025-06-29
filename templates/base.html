@@ -1,193 +1,191 @@
-    {% load static %}
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Home</title>
-        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    </head>
-    <body>
-        <nav class="navbar">
-            <div class="navbar-container">
-                <div class="nav-hover-area">
-                    <a href="{% url 'homepage' %}">
-                        <span class="logo">
-                            <img src="{% static 'images/logo.jpg' %}" alt="">
-                        </span>
-                    </a>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="nav-hover-area">
+                <a href="{% url 'homepage' %}">
+                    <span class="logo">
+                        <img src="{% static 'images/logo.jpg' %}" alt="">
+                    </span>
+                </a>
 
-                    <div class="nav-links">
-                        <a href="#" data-dropdown="WOMEN">Women</a>
-                        <a href="#" data-dropdown="MEN">Men</a>
-                        <a href="#" data-dropdown="KIDS">Kids</a>
-                    </div>
-
-                    <div class="mega-dropdown-container">
-                        <div class="mega-dropdown" id="womenDropdown">
-                            <div class="mega-content">
-                                <div class="dropdown-column">
-                                    <a href="#" class="dropdown-column-title">Featured</a>
-                                    <a href="#">New Releases</a>
-                                    <a href="#">Best Sellers</a>
-                                    <a href="#">Brand's Special</a>
-                                    <a href="#">Bringing Back</a>
-                                </div>
-                                <div class="dropdown-column">
-                                    <a href="#" class="dropdown-column-title">Shoes</a>
-                                    <a href="#">All Shoes</a>
-                                    <a href="#">Lifestyle</a>
-                                    <a href="#">Running</a>
-                                    <a href="#">Football</a>
-                                    <a href="#">Basketball</a>
-                                    <a href="#">Training and Gym</a>
-                                </div>
-                                <div class="dropdown-column">
-                                    <a href="{% url 'all-products' %}?category=clothing" class="dropdown-column-title">Clothing</a>
-                                    <a href="#">Tops & T-Shirts</a>
-                                    <a href="#">Jeans & Pants</a>
-                                    <a href="{% url 'all-products' %}?item_type=shorts&item_type=skirts">Shorts & Skirts</a>
-                                    <a href="#">Swimwear & Beachwear</a>
-                                    <a href="#">Shirts & Blouses</a>
-                                    <a href="#">Cardigans & Sweaters</a>
-                                    <a href="#">Underwear & Sleepwear</a>
-                                    <a href="#">Socks & Tights</a>
-                                    <a href="#">Dresses</a>
-                                    <a href="#">Lingerie</a>
-                                </div>
-                                <div class="dropdown-column">
-                                    <a href="#" class="dropdown-column-title">Discover Sport</a>
-                                    <a href="#">Running</a>
-                                    <a href="#">Football</a>
-                                    <a href="#">Basketball</a>
-                                    <a href="#">Training and Gym</a>
-                                    <a href="#">Tennis</a>
-                                    <a href="#">Golf</a>
-                                </div>
-                                <div class="dropdown-column">
-                                    <a href="#" class="dropdown-column-title">Fashion & Accessories</a>
-                                    <a href="#">All Fashion & Accessories</a>
-                                    <a href="#">Fashion Accessories</a>
-                                    <a href="#">Footwear Accessories</a>
-                                    <a href="#">Activewear Accessories</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mega-dropdown" id="menDropdown">
-                            <div class="mega-content">
-                                <div class="dropdown-column">
-                                    <a href="#" class="dropdown-column-title">Featured</a>
-                                    <a href="#">New Releases</a>
-                                    <a href="#">Best Sellers</a>
-                                    <a href="#">Brand's Special</a>
-                                    <a href="#">Bringing Back</a>
-                                </div>
-                                <div class="dropdown-column">
-                                    <a href="#" class="dropdown-column-title">Shoes</a>
-                                    <a href="#">All Shoes</a>
-                                    <a href="#">Lifestyle</a>
-                                    <a href="#">Running</a>
-                                    <a href="#">Football</a>
-                                    <a href="#">Basketball</a>
-                                    <a href="#">Training and Gym</a>
-                                </div>
-                                <div class="dropdown-column">
-                                    <a href="#" class="dropdown-column-title">Clothing</a>
-                                    <a href="#">All Clothing</a>
-                                    <a href="#">Tops</a>
-                                    <a href="#">Bottoms</a>
-                                    <a href="#">Outerwear</a>
-                                    <a href="#">Activewear</a>
-                                    <a href="#">Underwear & Loungewear</a>
-                                    <a href="#">Swimwear</a>
-                                    <a href="#">Occasion Wear</a>
-                                </div>
-                                <div class="dropdown-column">
-                                    <a href="#" class="dropdown-column-title">Discover Sport</a>
-                                    <a href="#">Running</a>
-                                    <a href="#">Football</a>
-                                    <a href="#">Basketball</a>
-                                    <a href="#">Training and Gym</a>
-                                    <a href="#">Tennis</a>
-                                    <a href="#">Golf</a>
-                                </div>
-                                <div class="dropdown-column">
-                                    <a href="#" class="dropdown-column-title">Fashion & Accessories</a>
-                                    <a href="#">All Fashion & Accessories</a>
-                                    <a href="#">Fashion Accessories</a>
-                                    <a href="#">Footwear Accessories</a>
-                                    <a href="#">Activewear Accessories</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="nav-links">
+                    <a href="#" data-dropdown="WOMEN">Women</a>
+                    <a href="#" data-dropdown="MEN">Men</a>
+                    <a href="#" data-dropdown="KIDS">Kids</a>
                 </div>
 
-                <div class="navbar-right">
-                    <div class="nav-icons">
-                        <div class="search-box">
-                            <a href="#"><i class="fa-solid fa-magnifying-glass"></i></a>
-                            <label><input type="text" placeholder="Search" /></label>
+                <div class="mega-dropdown-container">
+                    <div class="mega-dropdown" id="womenDropdown">
+                        <div class="mega-content">
+                            <div class="dropdown-column">
+                                <a href="#" class="dropdown-column-title">Featured</a>
+                                <a href="#">New Releases</a>
+                                <a href="#">Best Sellers</a>
+                                <a href="#">Brand's Special</a>
+                                <a href="#">Bringing Back</a>
+                            </div>
+                            <div class="dropdown-column">
+                                <a href="#" class="dropdown-column-title">Shoes</a>
+                                <a href="#">All Shoes</a>
+                                <a href="#">Lifestyle</a>
+                                <a href="#">Running</a>
+                                <a href="#">Football</a>
+                                <a href="#">Basketball</a>
+                                <a href="#">Training and Gym</a>
+                            </div>
+                            <div class="dropdown-column">
+                                <a href="{% url 'all-products' %}?category=clothing" class="dropdown-column-title">Clothing</a>
+                                <a href="#">Tops & T-Shirts</a>
+                                <a href="{% url 'all-products' %}?item_type=shirts&item_type=blouses">Shirts & Blouses</a>
+                                <a href="#">Cardigans & Sweaters</a>
+                                <a href="{% url 'all-products' %}?item_type=shorts&item_type=skirts">Shorts & Skirts</a>
+                                <a href="#">Leggings</a>
+                                <a href="#">Dresses</a>
+                                <a href="#">Lingerie & Sleepwear</a>
+                                <a href="#">Swimwear & Beachwear</a>
+                                <a href="#">Socks & Tights</a>
+                            </div>
+                            <div class="dropdown-column">
+                                <a href="#" class="dropdown-column-title">Discover Sport</a>
+                                <a href="#">Running</a>
+                                <a href="#">Football</a>
+                                <a href="#">Basketball</a>
+                                <a href="#">Training and Gym</a>
+                                <a href="#">Tennis</a>
+                                <a href="#">Golf</a>
+                            </div>
+                            <div class="dropdown-column">
+                                <a href="#" class="dropdown-column-title">Fashion & Accessories</a>
+                                <a href="#">Fashion Accessories</a>
+                                <a href="#">Footwear Accessories</a>
+                                <a href="#">Activewear Accessories</a>
+                            </div>
                         </div>
-                        <div class="user-icons">
-                            <a href="{% url 'bag' %}"><i class="fa-solid fa-bag-shopping"></i></a>
-                            <a><i class="fa-regular fa-heart"></i></a>
-                            {% if not user.is_authenticated %}
-                                <a id="userIcon"><i class="fa-regular fa-user"></i></a>
-                            {% else %}
-                                <a id="profileIcon"><i class="fa-regular fa-user"></i></a>
-                            {% endif %}
+                    </div>
+                    <div class="mega-dropdown" id="menDropdown">
+                        <div class="mega-content">
+                            <div class="dropdown-column">
+                                <a href="#" class="dropdown-column-title">Featured</a>
+                                <a href="#">New Releases</a>
+                                <a href="#">Best Sellers</a>
+                                <a href="#">Brand's Special</a>
+                                <a href="#">Bringing Back</a>
+                            </div>
+                            <div class="dropdown-column">
+                                <a href="#" class="dropdown-column-title">Shoes</a>
+                                <a href="#">All Shoes</a>
+                                <a href="#">Lifestyle</a>
+                                <a href="#">Running</a>
+                                <a href="#">Football</a>
+                                <a href="#">Basketball</a>
+                                <a href="#">Training and Gym</a>
+                            </div>
+                            <div class="dropdown-column">
+                                <a href="#" class="dropdown-column-title">Clothing</a>
+                                <a href="#">All Clothing</a>
+                                <a href="#">Tops</a>
+                                <a href="#">Bottoms</a>
+                                <a href="#">Outerwear</a>
+                                <a href="#">Activewear</a>
+                                <a href="#">Underwear & Loungewear</a>
+                                <a href="#">Swimwear</a>
+                                <a href="#">Occasion Wear</a>
+                            </div>
+                            <div class="dropdown-column">
+                                <a href="#" class="dropdown-column-title">Discover Sport</a>
+                                <a href="#">Running</a>
+                                <a href="#">Football</a>
+                                <a href="#">Basketball</a>
+                                <a href="#">Training and Gym</a>
+                                <a href="#">Tennis</a>
+                                <a href="#">Golf</a>
+                            </div>
+                            <div class="dropdown-column">
+                                <a href="#" class="dropdown-column-title">Fashion & Accessories</a>
+                                <a href="#">All Fashion & Accessories</a>
+                                <a href="#">Fashion Accessories</a>
+                                <a href="#">Footwear Accessories</a>
+                                <a href="#">Activewear Accessories</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </nav>
 
-        {% include 'accounts/auth_modal.html' %}
-        {% include 'accounts/profile_modal.html' %}
-
-        {% block hero_section %}{% endblock %}
-
-        <main class="main-content {% block main_class %}{% endblock %}">
-            {% block main_content %}
-            {% endblock %}
-        </main>
-
-        <div id="bag-modal" class="bag-modal hidden">
-            <div class="bag-modal-content">
-                <button class="bag-modal-close">×</button>
-                <div class="bag-modal-header">
-                    <span class="bag-modal-check">✔</span>
-                    <span class="bag-modal-message">Added to Bag</span>
-                </div>
-                <div class="bag-modal-body">
-                    <img id="bag-modal-product-image" src="" alt="">
-                    <div class="bag-modal-details">
-                        <h3 class="bag-modal-product-title">{{ object.title }}</h3>
-                        <p class="bag-modal-product-size">Size: {{ object.size }}</p>
-                        <p class="bag-modal-product-price">BGN {{ object.price }}</p>
+            <div class="navbar-right">
+                <div class="nav-icons">
+                    <div class="search-box">
+                        <a href="#"><i class="fa-solid fa-magnifying-glass"></i></a>
+                        <label><input type="text" placeholder="Search" /></label>
                     </div>
-                </div>
-                <div class="bag-modal-actions">
-                    <a id="view-bag-link" class="bag-btn outline" data-url="{% url 'bag' %}">View Bag ({{ bag_size }})</a>
-                    <a id="checkout-link" class="bag-btn primary" data-url="#">Checkout</a>
+                    <div class="user-icons">
+                        <a href="{% url 'bag' %}"><i class="fa-solid fa-bag-shopping"></i></a>
+                        <a><i class="fa-regular fa-heart"></i></a>
+                        {% if not user.is_authenticated %}
+                            <a id="userIcon"><i class="fa-regular fa-user"></i></a>
+                        {% else %}
+                            <a id="profileIcon"><i class="fa-regular fa-user"></i></a>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
         </div>
+    </nav>
 
-        <script src="{% static 'js/navbar.js' %}"></script>
-        <script src="{% static 'js/film_wrapper.js' %}"></script>
-        <script src="{% static 'js/auth_modal.js' %}"></script>
-        <script src="{% static 'js/profile_modal.js' %}"></script>
-        <script src="{% static 'js/main_image_swap.js' %}"></script>
-        <script src="{% static 'js/select_size.js' %}"></script>
-        <script src="{% static 'js/add_to_bag.js' %}"></script>
-        <script src="{% static 'js/zoomModal.js' %}"></script>
-        <script src="{% static 'js/dropdown_navbar.js' %}"></script>
-        <script src="{% static 'js/toggle_filter.js' %}"></script>
-        <script src="{% static 'js/remove_from_bag.js' %}"></script>
-        <script src="{% static 'js/increase_bag_item_quantity.js' %}"></script>
+    {% include 'accounts/auth_modal.html' %}
+    {% include 'accounts/profile_modal.html' %}
 
-    </body>
-    </html>
+    {% block hero_section %}{% endblock %}
+
+    <main class="main-content {% block main_class %}{% endblock %}">
+        {% block main_content %}
+        {% endblock %}
+    </main>
+
+    <div id="bag-modal" class="bag-modal hidden">
+        <div class="bag-modal-content">
+            <button class="bag-modal-close">×</button>
+            <div class="bag-modal-header">
+                <span class="bag-modal-check">✔</span>
+                <span class="bag-modal-message">Added to Bag</span>
+            </div>
+            <div class="bag-modal-body">
+                <img id="bag-modal-product-image" src="" alt="">
+                <div class="bag-modal-details">
+                    <h3 class="bag-modal-product-title">{{ object.title }}</h3>
+                    <p class="bag-modal-product-size">Size: {{ object.size }}</p>
+                    <p class="bag-modal-product-price">BGN {{ object.price }}</p>
+                </div>
+            </div>
+            <div class="bag-modal-actions">
+                <a id="view-bag-link" class="bag-btn outline" data-url="{% url 'bag' %}">View Bag ({{ bag_size }})</a>
+                <a id="checkout-link" class="bag-btn primary" data-url="#">Checkout</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/navbar.js' %}"></script>
+    <script src="{% static 'js/film_wrapper.js' %}"></script>
+    <script src="{% static 'js/auth_modal.js' %}"></script>
+    <script src="{% static 'js/profile_modal.js' %}"></script>
+    <script src="{% static 'js/main_image_swap.js' %}"></script>
+    <script src="{% static 'js/select_size.js' %}"></script>
+    <script src="{% static 'js/add_to_bag.js' %}"></script>
+    <script src="{% static 'js/zoomModal.js' %}"></script>
+    <script src="{% static 'js/dropdown_navbar.js' %}"></script>
+    <script src="{% static 'js/toggle_filter.js' %}"></script>
+    <script src="{% static 'js/remove_from_bag.js' %}"></script>
+    <script src="{% static 'js/increase_bag_item_quantity.js' %}"></script>
+
+</body>
+</html>
