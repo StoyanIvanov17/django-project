@@ -170,7 +170,8 @@ class Product(models.Model):
 
     sizes = models.ManyToManyField(
         Size,
-        blank=True)
+        blank=True
+    )
 
     color = models.CharField(
         max_length=50

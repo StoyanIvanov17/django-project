@@ -4,7 +4,7 @@ from django.db.models import Q, Exists, OuterRef
 from django.utils.timezone import now
 from django.views import generic as views
 
-from project.products.models import Product, ItemType, ProductGroup
+from project.products.models import Product, ItemType, Size, Material, AttributeValue
 
 
 class ProductsListView(views.ListView):
@@ -16,7 +16,12 @@ class ProductsListView(views.ListView):
         category = self.request.GET.get('category', '')
         item_type_slugs = self.request.GET.getlist('item_type')
         item_type_value_slug = self.request.GET.get('item_type_value', '')
+
         recent = self.request.GET.get('recent', '')
+
+        sizes = self.request.GET.getlist('size')
+        colors = self.request.GET.getlist('color')
+        materials = self.request.GET.getlist('material')
 
         query = Q()
 
@@ -32,7 +37,16 @@ class ProductsListView(views.ListView):
         if recent == 'true':
             query &= Q(created_at__gte=now() - timedelta(days=14))
 
-        return queryset.filter(query)
+        if sizes:
+            query &= Q(sizes__name__in=sizes)
+
+        if colors:
+            query &= Q(color__in=colors)
+
+        if materials:
+            query &= Q(material_composition__material__name__in=materials)
+
+        return queryset.filter(query).distinct()
 
     def get_queryset(self):
         queryset = Product.objects.all()
@@ -42,6 +56,29 @@ class ProductsListView(views.ListView):
         context = super().get_context_data(**kwargs)
         item_type_slugs = self.request.GET.getlist('item_type')
         item_type_value_slugs = self.request.GET.getlist('item_type_value')
+
+        products = context['products']
+
+        sizes = Size.objects.all().distinct()
+
+        colors = Product.objects.values_list('color', flat=True).distinct()
+
+        materials = Material.objects.all().distinct()
+
+        attribute_values = AttributeValue.objects.filter(
+            product__in=products
+        ).select_related('attribute')
+
+        attributes_dict = {}
+        for av in attribute_values:
+            attr_name = av.attribute.name
+
+            if attr_name not in attributes_dict:
+                attributes_dict[attr_name] = set()
+            attributes_dict[attr_name].add(av.value)
+
+        for key in attributes_dict:
+            attributes_dict[key] = sorted(attributes_dict[key])
 
         item_types_with_products = ItemType.objects.annotate(
             has_products=Exists(
@@ -56,9 +93,18 @@ class ProductsListView(views.ListView):
                 )
             ).filter(has_products=True)
 
+        context['sizes'] = sizes
+        context['colors'] = colors
+        context['materials'] = materials
+        context['attributes'] = attributes_dict
+
         context['item_type_slugs'] = item_type_slugs
         context['item_type_value_slugs'] = item_type_value_slugs
         context['all_item_types'] = item_types_with_products
+
+        context['selected_sizes'] = self.request.GET.getlist('size')
+        context['selected_colors'] = self.request.GET.getlist('color')
+        context['selected_materials'] = self.request.GET.getlist('material')
 
         return context
 

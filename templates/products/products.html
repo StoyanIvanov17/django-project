@@ -30,29 +30,88 @@
             {% endfor %}
         {% endif %}
     </div>
+    
+    <div id="content-wrapper">
+        <div class="sort-filter">
+            <a href="">Sort By <i class="fa-solid fa-plus"></i></a>
+            <a href="#" id="toggle-filter">Show Filters <i class="fa-solid fa-filter"></i></a>
+        </div>
+    
+        <form id="filter-form" method="GET">
+            <div class="filter-panel" id="filter-panel">
+                <div class="filter-group">
+                    <div class="filter-title">Sizes</div>
+                    <div class="filter-options">
+                        {% for size in sizes %}
+                            <label>
+                                <input type="checkbox" 
+                                       name="size" 
+                                       value="{{ size.name }}" 
+                                       {% if size.name in selected_sizes %}checked{% endif %}>
+                                {{ size.name }}
+                            </label>
+                        {% endfor %}
+                    </div>
+                </div>
 
-    <div class="sort-filter">
-        <a href="">Sort By <i class="fa-solid fa-plus"></i></a>
-        <a href="#" id="toggle-filter">Show Filters <i class="fa-solid fa-filter"></i></a>
-    </div>
+                <div class="filter-group">
+                    <div class="filter-title">Colors</div>
+                    <div class="filter-options">
+                        {% for color in colors %}
+                            <label>
+                                <input type="checkbox" 
+                                       name="color" 
+                                       value="{{ color }}"
+                                       {% if color in selected_colors %}checked{% endif %}>
+                                {{ color }}
+                            </label>
+                        {% endfor %}
+                    </div>
+                </div>
 
-    <div class="products-gallery-wrapper">
-        <div class="products-gallery-main-content">
-            <div class="products-gallery">
-                {% for product in products %}
-                    <div class="product-card">
-                        <div class="product-image-container">
-                            <a href="{% url 'product-details' pk=product.pk gender=product.gender slug=product.slug %}">
-                                <img src="{{ product.image.url }}" alt="{{ product.title }}" class="product-img">
-                            </a>
+                <div class="filter-group">
+                    <div class="filter-title">Materials</div>
+                    <div class="filter-options">
+                        {% for material in materials %}
+                            <label>
+                                <input type="checkbox" 
+                                       name="material" 
+                                       value="{{ material.name }}"
+                                       {% if material.name in selected_materials %}checked{% endif %}>
+                                {{ material.name }}
+                            </label>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                {% for attr_name, values in attributes.items %}
+                    <div class="filter-group">
+                        <div class="filter-title">{{ attr_name }}</div>
+                        <div class="filter-options">
+                            {% for value in values %}
+                                <label>
+                                    <input type="checkbox" name="{{ attr_name|slugify }}" value="{{ value }}">{{ value }}
+                                </label>
+                            {% endfor %}
                         </div>
-                        <h3 class="product-title">{{ product.title }}</h3>
-                        <p class="product-color-count">{{ product.group.variants.count }} Colors</p>
-                        <p class="product-price">{{ product.price }} BGN</p>
                     </div>
                 {% endfor %}
             </div>
+        </form>
+
+        <div id="products-gallery" class="products-gallery">
+            {% for product in products %}
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <a href="{% url 'product-details' pk=product.pk gender=product.gender slug=product.slug %}">
+                            <img src="{{ product.image.url }}" alt="{{ product.title }}" class="product-img">
+                        </a>
+                    </div>
+                    <h3 class="product-title">{{ product.title }}</h3>
+                    <p class="product-color-count">{{ product.group.variants.count }} Colors</p>
+                    <p class="product-price">€{{ product.price }}</p>
+                </div>
+            {% endfor %}
         </div>
     </div>
-
 {% endblock %}
