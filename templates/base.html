@@ -45,7 +45,7 @@
                             </div>
                             <div class="dropdown-column">
                                 <a href="{% url 'all-products' %}?category=clothing" class="dropdown-column-title"><span>Clothing</span></a>
-                                <a href="#"><span>Tops & T-Shirts</span></a>
+                                <a href="{% url 'all-products' %}?item_type=t-shirts&item_type=tops"><span>Tops & T-Shirts</span></a>
                                 <a href="{% url 'all-products' %}?item_type=shirts&item_type=blouses"><span>Shirts & Blouses</span></a>
                                 <a href="#"><span>Cardigans & Sweaters</span></a>
                                 <a href="{% url 'all-products' %}?item_type=shorts&item_type=skirts"><span>Shorts & Skirts</span></a>

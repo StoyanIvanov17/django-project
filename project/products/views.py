@@ -1,6 +1,7 @@
 from datetime import timedelta
 
 from django.db.models import Q, Exists, OuterRef
+from django.utils.text import slugify
 from django.utils.timezone import now
 from django.views import generic as views
 
@@ -46,6 +47,15 @@ class ProductsListView(views.ListView):
         if materials:
             query &= Q(material_composition__material__name__in=materials)
 
+        for attr_name, values in self.request.GET.items():
+            if attr_name in ['category', 'item_type', 'item_type_value', 'recent', 'size', 'color', 'material']:
+                continue
+
+            selected_values = self.request.GET.getlist(attr_name)
+            if selected_values:
+                query &= Q(attribute_values__attribute__name__iexact=attr_name) & Q(
+                    attribute_values__value__in=selected_values)
+
         return queryset.filter(query).distinct()
 
     def get_queryset(self):
@@ -57,22 +67,23 @@ class ProductsListView(views.ListView):
         item_type_slugs = self.request.GET.getlist('item_type')
         item_type_value_slugs = self.request.GET.getlist('item_type_value')
 
-        products = context['products']
+        base_queryset = Product.objects.all()
+
+        category_slug = self.request.GET.get('category')
+        if category_slug:
+            base_queryset = base_queryset.filter(category__slug=category_slug)
 
         sizes = Size.objects.all().distinct()
-
-        colors = Product.objects.values_list('color', flat=True).distinct()
-
+        colors = base_queryset.values_list('color', flat=True).distinct()
         materials = Material.objects.all().distinct()
 
         attribute_values = AttributeValue.objects.filter(
-            product__in=products
+            product__in=base_queryset
         ).select_related('attribute')
 
         attributes_dict = {}
         for av in attribute_values:
             attr_name = av.attribute.name
-
             if attr_name not in attributes_dict:
                 attributes_dict[attr_name] = set()
             attributes_dict[attr_name].add(av.value)
@@ -105,6 +116,14 @@ class ProductsListView(views.ListView):
         context['selected_sizes'] = self.request.GET.getlist('size')
         context['selected_colors'] = self.request.GET.getlist('color')
         context['selected_materials'] = self.request.GET.getlist('material')
+
+        selected_attributes = {}
+        for attr_name in context['attributes']:
+            param = self.request.GET.getlist(slugify(attr_name))
+            if param:
+                selected_attributes[attr_name] = param
+
+        context['selected_attributes'] = selected_attributes
 
         return context
 

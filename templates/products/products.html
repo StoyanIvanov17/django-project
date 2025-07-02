@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load custom_filters %}
 
 {% block main_class %}with-padding{% endblock %}
 
@@ -83,21 +84,25 @@
                         {% endfor %}
                     </div>
                 </div>
-
+                
                 {% for attr_name, values in attributes.items %}
                     <div class="filter-group">
                         <div class="filter-title">{{ attr_name }}</div>
                         <div class="filter-options">
                             {% for value in values %}
                                 <label>
-                                    <input type="checkbox" name="{{ attr_name|slugify }}" value="{{ value }}">{{ value }}
+                                    <input type="checkbox" 
+                                           name="{{ attr_name|slugify }}" 
+                                           value="{{ value }}" 
+                                           {% if selected_attributes|get_item:attr_name|default:'' and value in selected_attributes|get_item:attr_name %}checked{% endif %}>
+                                    {{ value }}
                                 </label>
                             {% endfor %}
                         </div>
                     </div>
                 {% endfor %}
             </div>
-        </form>
+       </form>
 
         <div id="products-gallery" class="products-gallery">
             {% for product in products %}
