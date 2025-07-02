@@ -177,6 +177,10 @@ class Product(models.Model):
         max_length=50
     )
 
+    color_hex = models.CharField(
+        max_length=7
+    )
+
     video = models.FileField(
         upload_to='product_videos/',
         null=True,

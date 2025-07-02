@@ -40,6 +40,22 @@
     
         <form id="filter-form" method="GET">
             <div class="filter-panel" id="filter-panel">
+
+                <div class="filter-group">
+                   <div class="price-range-wrapper">
+                       <label>Price Range</label>
+                       <div class="price-values">
+                           <span>€ <span id="min-value">{{ min_price|floatformat:2 }}</span></span>
+                           <span>€ <span id="max-value">{{ max_price|floatformat:2 }}</span></span>
+                       </div>
+
+                       <div class="slider">
+                           <input type="range" id="min-range" min="{{ min_price }}" max="{{ max_price }}" value="{{ min_price }}" step="0.01">
+                           <input type="range" id="max-range" min="{{ min_price }}" max="{{ max_price }}" value="{{ max_price }}" step="0.01">
+                       </div>
+                   </div>
+                </div>
+
                 <div class="filter-group">
                     <div class="filter-title">Sizes</div>
                     <div class="filter-options">
@@ -112,9 +128,24 @@
                             <img src="{{ product.image.url }}" alt="{{ product.title }}" class="product-img">
                         </a>
                     </div>
-                    <h3 class="product-title">{{ product.title }}</h3>
-                    <p class="product-color-count">{{ product.group.variants.count }} Colors</p>
-                    <p class="product-price">€{{ product.price }}</p>
+                    <div class="product-title-price">
+                        <span class="product-title">{{ product.title }}</span>
+                        <span class="product-price">€{{ product.price }}</span>
+                    </div>
+                        <div class="color-choices">
+                            <a href="{% url 'product-details' pk=product.pk gender=product.gender slug=product.slug %}" 
+                               class="color-choice" 
+                               style="background-color: {{ product.color_hex }};" 
+                               title="{{ product.color }}">
+                            </a>
+                            {% for variant in extra_colors_dict|get_item:product.id %}
+                                <a href="{% url 'product-details' pk=variant.pk gender=variant.gender slug=variant.slug %}" 
+                                   class="color-choice"
+                                   style="background-color: {{ variant.color_hex }};" 
+                                   title="{{ variant.color }}">
+                                </a>
+                            {% endfor %}
+                        </div>
                 </div>
             {% endfor %}
         </div>

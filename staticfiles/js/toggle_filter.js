@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const toggleBtn = document.getElementById('toggle-filter');
     const filterPanel = document.getElementById('filter-panel');
     const contentWrapper = document.getElementById('content-wrapper');
+
+    if (!filterPanel) return;
     const items = filterPanel.children;
 
     function openFilter() {

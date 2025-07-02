@@ -4,61 +4,71 @@
 {% block main_class %}with-padding{% endblock %}
 
 {% block main_content %}
-    <div class="product-page">
-        <section class="product-gallery">
-            <div class="thumbnail-images">
-                {% for image in extra_images %}
-                    <img class="thumbnail" src="{{ image.image.url }}" alt="{{ image.alt_text|default:object.title }}">
-                {% endfor %}
-            </div>
-            <div class="main-image">
-                <img id="main-product-image" src="{{ object.image.url }}" alt="{{ object.title }}">
-            </div>
-        </section>
+   <div class="product-page">
+    <section class="product-gallery">
+        <div class="thumbnail-images">
+            {% for image in extra_images %}
+                <img class="thumbnail" src="{{ image.image.url }}" alt="{{ image.alt_text|default:object.title }}">
+            {% endfor %}
+        </div>
+        <div class="main-image">
+            <img id="main-product-image" src="{{ object.image.url }}" alt="{{ object.title }}">
+        </div>
+    </section>
 
-        <section class="product-details">
+    <section class="product-details">
+        <div class="title-fav-row">
             <h1 class="details-title">{{ product.title }}</h1>
-            <p class="details-price">BGN {{ product.price }}</p>
-            <p class="color-shown">COLOR: {{ product.color }}</p>
+            <button class="favourite" aria-label="Add to favorites">♡</button>
+        </div>
 
-            <div class="more-colors">
-                {% for variant in extra_colors %}
-                    <a href="{% url 'product-details' pk=variant.pk gender=variant.gender slug=variant.slug %}">
-                        <img src="{{ variant.image.url }}" alt="{{ variant.color }}">
-                    </a>
+        <p class="details-price">BGN {{ product.price }}</p>
+
+        <p class="description">
+            Our Cashmere Featherweight Polo is a testament to understated elegance, featuring a distinctive V collar detail. Crafted from lightweight cashmere for unparalleled softness, it’s designed with elastane in the collar and hem to ensure a perfect fit that maintains its shape over time. A classic piece redefined for contemporary wardrobes.
+        </p>
+
+        <div class="more-colors">
+            <a href="{% url 'product-details' pk=product.pk gender=product.gender slug=product.slug %}" class="color-swatch" style="background-color: {{ product.color_hex }};" title="{{ product.color }}"></a>
+            {% for variant in extra_colors %}
+                <a href="{% url 'product-details' pk=variant.pk gender=variant.gender slug=variant.slug %}" class="color-swatch" style="background-color: {{ variant.color_hex }};" title="{{ variant.color }}"></a>
+            {% endfor %}
+            <p>{{ product.color }}</p>
+        </div>
+
+        <div class="sizes">
+            <div class="size-buttons">
+                {% for size in sizes %}
+                    <a href="#" class="size-btn" data-size-id="{{ size.id }}">{{ size }}</a>
                 {% endfor %}
+                <p class="size-guide"><u>SIZE GUIDE</u></p>
             </div>
+        </div>
 
-            <div class="sizes">
-                <div class="size-options">
-                    <p>Select Size</p>
-                    <p><i class="fa-solid fa-ruler"></i>Size Guide</p>
-                </div>
-                <div class="size-buttons">
-                    {% for size in sizes %}
-                        <button type="button" class="size-btn" data-size-id="{{ size.id }}">{{ size }}</button>
-                    {% endfor %}
-                </div>
-            </div>
+        <div class="actions">
+            <form id="addToBagForm" method="POST" action="{% url 'api-add-to-bag' %}">
+                {% csrf_token %}
+                <input type="hidden" name="product_id" value="{{ product.id }}">
+                <input type="hidden" name="size_id" id="size_id" value="">
+                <input type="hidden" name="quantity" value="1">
+                <button type="submit" class="add-to-bag">Add to Cart</button>
+            </form>
+        </div>
 
-            <div class="actions">
-                <form id="addToBagForm" method="POST" action="{% url 'api-add-to-bag' %}">
-                    {% csrf_token %}
-                    <input type="hidden" name="product_id" value="{{ product.id }}">
-                    <input type="hidden" name="size_id" id="size_id" value="">
-                    <input type="hidden" name="quantity" value="1">
-                    <button type="submit" class="add-to-bag">Add to Bag</button>
-                </form>
-                <button class="favourite">♡ Favourite</button>
-            </div>
+        <div class="extra-info-links">
+            <a href="#">SIZE/FIT</a>
+            <a href="#">COMPOSITION</a>
+            <a href="#">CARE</a>
+            <a href="#">IN STORE AVAILABILITY</a>
+        </div>
 
-            <p>Description +</p>
-            <p>Reviews +</p>
-            <p>Materials +</p>
-            <p>Care Guide +</p>
-            <p>Store Availability +</p>
-        </section>
-    </div>
+        <div class="bottom-links">
+            <p>Express shipping and returns</p>
+            <p>Need help ?</p>
+        </div>
+    </section>
+</div>
+
 
     <div id="zoomImageModal" class="image-modal">
         <span class="close">&times;</span>

@@ -11,13 +11,17 @@ document.addEventListener("DOMContentLoaded", function () {
         const dropdownType = link.getAttribute("data-dropdown");
         if (dropdowns[dropdownType]) {
             link.addEventListener("mouseenter", function () {
-                megaContainer.classList.add("show");
+                if (megaContainer) {
+                    megaContainer.classList.add("show");
+                }
 
                 for (let key in dropdowns) {
-                    if (key === dropdownType) {
-                        dropdowns[key].classList.add("show");
-                    } else {
-                        dropdowns[key].classList.remove("show");
+                    if (dropdowns[key]) {
+                        if (key === dropdownType) {
+                            dropdowns[key].classList.add("show");
+                        } else {
+                            dropdowns[key].classList.remove("show");
+                        }
                     }
                 }
             });
@@ -26,11 +30,14 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    megaContainer.addEventListener("mouseleave", () => {
-        console.log('Mouse left mega menu');
-        megaContainer.classList.remove("show");
-        for (let key in dropdowns) {
-            dropdowns[key].classList.remove("show");
-        }
-    });
+    if (megaContainer) {
+        megaContainer.addEventListener("mouseleave", () => {
+            megaContainer.classList.remove("show");
+            for (let key in dropdowns) {
+                if (dropdowns[key]) {
+                    dropdowns[key].classList.remove("show");
+                }
+            }
+        });
+    }
 });
