@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    if (localStorage.getItem('filterPanelOpen') === 'true') {
+    if (sessionStorage.getItem('filterPanelOpen') === 'true') {
         openFilter();
     } else {
         closeFilter();
@@ -34,10 +34,10 @@ document.addEventListener('DOMContentLoaded', function () {
         e.preventDefault();
         if (filterPanel.classList.contains('open')) {
             closeFilter();
-            localStorage.setItem('filterPanelOpen', 'false');
+            sessionStorage.setItem('filterPanelOpen', 'false');
         } else {
             openFilter();
-            localStorage.setItem('filterPanelOpen', 'true');
+            sessionStorage.setItem('filterPanelOpen', 'true');
         }
     });
 

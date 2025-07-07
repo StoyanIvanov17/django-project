@@ -5,7 +5,7 @@ from django.utils.text import slugify
 from django.utils.timezone import now
 from django.views import generic as views
 
-from project.products.models import Product, ItemType, Size, Material, AttributeValue
+from project.products.models import Product, ItemType, Size, Material, AttributeValue, ProductGroup
 
 
 class ProductsListView(views.ListView):
@@ -42,13 +42,13 @@ class ProductsListView(views.ListView):
             query &= Q(created_at__gte=now() - timedelta(days=14))
 
         if sizes:
-            query &= Q(sizes__name__in=sizes)
+            query &= Q(size_stocks__size__name__in=sizes, size_stocks__stock__gte=1)
 
         if colors:
             query &= Q(color__in=colors)
 
         if materials:
-            query &= Q(material_composition__material__name__in=materials)
+            query &= Q(group__material_composition__material__name__in=materials)
 
         if min_price:
             query &= Q(price__gte=min_price)
@@ -56,14 +56,40 @@ class ProductsListView(views.ListView):
         if max_price:
             query &= Q(price__lte=max_price)
 
-        for attr_name, values in self.request.GET.items():
-            if attr_name in ['category', 'item_type', 'item_type_value', 'recent', 'size', 'color', 'material']:
+        attribute_names_qs = AttributeValue.objects.filter(
+            product_group__in=queryset.values_list('group_id', flat=True)
+        ).values_list('attribute__name', flat=True).distinct()
+        attributes_dict = {name for name in attribute_names_qs}
+
+        slug_to_attr_name = {slugify(name): name for name in attributes_dict}
+
+        excluded_params = ['category', 'item_type', 'item_type_value', 'recent', 'size', 'color', 'material',
+                           'min_price', 'max_price']
+        custom_attr_slugs = [
+            key for key in self.request.GET.keys()
+            if key not in excluded_params
+        ]
+
+        for attr_slug in custom_attr_slugs:
+            original_attr_name = slug_to_attr_name.get(attr_slug)
+            if not original_attr_name:
                 continue
 
-            selected_values = self.request.GET.getlist(attr_name)
-            if selected_values:
-                query &= Q(attribute_values__attribute__name__iexact=attr_name) & Q(
-                    attribute_values__value__in=selected_values)
+            selected_values = self.request.GET.getlist(attr_slug)
+            if not selected_values:
+                continue
+
+            subquery = AttributeValue.objects.filter(
+                product_group=OuterRef('group_id'),
+                attribute__name__iexact=original_attr_name,
+                value__in=selected_values
+            )
+
+            queryset = queryset.annotate(**{
+                f'has_{attr_slug}': Exists(subquery)
+            }).filter(**{
+                f'has_{attr_slug}': True
+            })
 
         return queryset.filter(query).distinct()
 
@@ -72,7 +98,7 @@ class ProductsListView(views.ListView):
         return queryset.prefetch_related(
             'group__variants',
             'extra_images',
-            'sizes',
+            'group__sizes',
         )
 
     def get_context_data(self, **kwargs):
@@ -87,12 +113,17 @@ class ProductsListView(views.ListView):
         if category_slug:
             base_queryset = base_queryset.filter(category__slug=category_slug)
 
-        sizes = Size.objects.all().distinct()
+        sizes = Size.objects.filter(
+            product_stocks__product__in=base_queryset,
+            product_stocks__stock__gte=1
+        ).distinct()
+
         colors = base_queryset.values_list('color', flat=True).distinct()
+
         materials = Material.objects.all().distinct()
 
         attribute_values = AttributeValue.objects.filter(
-            product__in=base_queryset
+            product_group__in=base_queryset.values_list('group_id', flat=True)
         ).select_related('attribute')
 
         attributes_dict = {}
@@ -118,8 +149,8 @@ class ProductsListView(views.ListView):
                 )
             ).filter(has_products=True)
 
-        context['max_price'] = Product.objects.aggregate(Max('price'))['price__max'] or 0
-        context['min_price'] = Product.objects.aggregate(Min('price'))['price__min'] or 0
+        context['max_price'] = ProductGroup.objects.aggregate(Max('price'))['price__max'] or 0
+        context['min_price'] = ProductGroup.objects.aggregate(Min('price'))['price__min'] or 0
 
         context['sizes'] = sizes
         context['colors'] = colors
@@ -166,6 +197,5 @@ class ProductDetailsView(views.DetailView):
 
         context['extra_images'] = product.extra_images.all()
         context['extra_colors'] = color_variants
-        context['sizes'] = product.sizes.all()
-
+        context['sizes'] = product.size_stocks.filter(stock__gt=0)
         return context

@@ -8,7 +8,7 @@
     <section class="product-gallery">
         <div class="thumbnail-images">
             {% for image in extra_images %}
-                <img class="thumbnail" src="{{ image.image.url }}" alt="{{ image.alt_text|default:object.title }}">
+                <img class="thumbnail" src="{{ image.image.url }}" alt="#">
             {% endfor %}
         </div>
         <div class="main-image">
@@ -18,11 +18,11 @@
 
     <section class="product-details">
         <div class="title-fav-row">
-            <h1 class="details-title">{{ product.title }}</h1>
+            <h1 class="details-title">{{ product.group.name }}</h1>
             <button class="favourite" aria-label="Add to favorites">♡</button>
         </div>
 
-        <p class="details-price">BGN {{ product.price }}</p>
+        <p class="details-price">€{{ product.group.price }}</p>
 
         <p class="description">
             Our Cashmere Featherweight Polo is a testament to understated elegance, featuring a distinctive V collar detail. Crafted from lightweight cashmere for unparalleled softness, it’s designed with elastane in the collar and hem to ensure a perfect fit that maintains its shape over time. A classic piece redefined for contemporary wardrobes.
@@ -39,7 +39,7 @@
         <div class="sizes">
             <div class="size-buttons">
                 {% for size in sizes %}
-                    <a href="#" class="size-btn" data-size-id="{{ size.id }}">{{ size }}</a>
+                    <a href="#" class="size-btn" data-size-id="{{ size.size.id }}">{{ size.size.name }}</a>
                 {% endfor %}
                 <p class="size-guide"><u>SIZE GUIDE</u></p>
             </div>

@@ -33,9 +33,9 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log('Response data:', data);
 
             document.getElementById('bag-modal-product-image').src = data.bag_item.product.image_url;
-            document.querySelector('.bag-modal-product-title').textContent = data.bag_item.product.title;
+            document.querySelector('.bag-modal-product-title').textContent = data.bag_item.product.group.name;
             document.querySelector('.bag-modal-product-size').textContent = `Size: ${data.bag_item.size.name}`;
-            document.querySelector('.bag-modal-product-price').textContent = `BGN: ${data.bag_item.product.price}`;
+            document.querySelector('.bag-modal-product-price').textContent = `BGN: ${data.bag_item.product.group.price}`;
 
             const bagLink = document.getElementById('view-bag-link');
             const checkoutLink = document.getElementById('checkout-link');

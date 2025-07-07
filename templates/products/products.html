@@ -129,8 +129,8 @@
                         </a>
                     </div>
                     <div class="product-title-price">
-                        <span class="product-title">{{ product.title }}</span>
-                        <span class="product-price">€{{ product.price }}</span>
+                        <span class="product-title">{{ product.group.name }}</span>
+                        <span class="product-price">€{{ product.group.price }}</span>
                     </div>
                         <div class="color-choices">
                             <a href="{% url 'product-details' pk=product.pk gender=product.gender slug=product.slug %}" 

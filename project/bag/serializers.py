@@ -1,14 +1,21 @@
 from rest_framework import serializers
-from project.products.models import Product, Size
+from project.products.models import Product, Size, ProductGroup
 from project.bag.models import BagItem
 
 
+class ProductGroupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductGroup
+        fields = ['name', 'price']
+
+
 class ProductSerializer(serializers.ModelSerializer):
+    group = ProductGroupSerializer(read_only=True)
     image_url = serializers.SerializerMethodField()
 
     class Meta:
         model = Product
-        fields = ['title', 'image_url', 'price']
+        fields = ['group', 'image_url']
 
     def get_image_url(self, obj):
         request = self.context.get('request')
@@ -27,8 +34,13 @@ class SizeSerializer(serializers.ModelSerializer):
 
 
 class BagItemSerializer(serializers.ModelSerializer):
-    product = ProductSerializer(read_only=True)
-    size = SizeSerializer(read_only=True)
+    product = ProductSerializer(
+        read_only=True
+    )
+
+    size = SizeSerializer(
+        read_only=True
+    )
 
     class Meta:
         model = BagItem
