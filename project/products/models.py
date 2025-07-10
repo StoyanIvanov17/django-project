@@ -84,6 +84,26 @@ class Size(models.Model):
         return self.name
 
 
+class Tag(models.Model):
+    name = models.CharField(
+        max_length=50,
+        unique=True
+    )
+
+    slug = models.SlugField(
+        unique=True,
+        blank=True
+    )
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
+
+
 class ProductGroup(models.Model):
     name = models.CharField(
         max_length=255,
@@ -110,24 +130,10 @@ class ProductGroup(models.Model):
         related_name='product_groups'
     )
 
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.name)
-        super().save(*args, **kwargs)
-
-    def __str__(self):
-        return self.name
-
-
-class Tag(models.Model):
-    name = models.CharField(
-        max_length=50,
-        unique=True
-    )
-
-    slug = models.SlugField(
-        unique=True,
-        blank=True
+    tags = models.ManyToManyField(
+        Tag,
+        blank=True,
+        related_name='products'
     )
 
     def save(self, *args, **kwargs):
@@ -168,12 +174,6 @@ class Product(models.Model):
         max_length=10,
         choices=Gender.choices)
 
-    tags = models.ManyToManyField(
-        Tag,
-        blank=True,
-        related_name='products'
-    )
-
     group = models.ForeignKey(
         ProductGroup,
         on_delete=models.CASCADE,
@@ -203,6 +203,11 @@ class Product(models.Model):
 
     image = models.ImageField(
         upload_to='product_images/'
+    )
+
+    model_size = models.CharField(
+        max_length=50,
+        blank=True,
     )
 
     created_at = models.DateTimeField(

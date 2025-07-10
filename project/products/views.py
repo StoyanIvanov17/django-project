@@ -51,10 +51,10 @@ class ProductsListView(views.ListView):
             query &= Q(group__material_composition__material__name__in=materials)
 
         if min_price:
-            query &= Q(price__gte=min_price)
+            query &= Q(group__price__gte=min_price)
 
         if max_price:
-            query &= Q(price__lte=max_price)
+            query &= Q(group__price__lte=max_price)
 
         attribute_names_qs = AttributeValue.objects.filter(
             product_group__in=queryset.values_list('group_id', flat=True)
@@ -149,8 +149,17 @@ class ProductsListView(views.ListView):
                 )
             ).filter(has_products=True)
 
-        context['max_price'] = ProductGroup.objects.aggregate(Max('price'))['price__max'] or 0
-        context['min_price'] = ProductGroup.objects.aggregate(Min('price'))['price__min'] or 0
+        absolute_max_price = ProductGroup.objects.aggregate(Max('price'))['price__max'] or 0
+        absolute_min_price = ProductGroup.objects.aggregate(Min('price'))['price__min'] or 0
+
+        selected_min_price = self.request.GET.get('min_price') or absolute_min_price
+        selected_max_price = self.request.GET.get('max_price') or absolute_max_price
+
+        context['min_price'] = selected_min_price
+        context['max_price'] = selected_max_price
+
+        context['absolute_min_price'] = absolute_min_price
+        context['absolute_max_price'] = absolute_max_price
 
         context['sizes'] = sizes
         context['colors'] = colors

@@ -56,7 +56,7 @@ class ProductAdmin(admin.ModelAdmin):
 
     list_filter = (
         'category', 'item_type', 'item_type_value',
-        'gender', 'tags', 'is_active'
+        'gender', 'is_active'
     )
 
     search_fields = (
@@ -106,13 +106,15 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(ProductGroup)
 class ProductGroupAdmin(admin.ModelAdmin):
-    list_display = ('name', 'slug')
+    list_display = ('name', 'slug',)
 
     prepopulated_fields = {'slug': ('name',)}
 
     search_fields = ('name',)
 
     inlines = [ProductMaterialInline, AttributeValueInline]
+
+    fields = ('name', 'slug', 'price', 'description', 'sizes', 'tags')
 
 
 @admin.register(Tag)

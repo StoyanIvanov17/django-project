@@ -50,8 +50,21 @@
                        </div>
 
                        <div class="slider">
-                           <input type="range" id="min-range" min="{{ min_price }}" max="{{ max_price }}" value="{{ min_price }}" step="0.01">
-                           <input type="range" id="max-range" min="{{ min_price }}" max="{{ max_price }}" value="{{ max_price }}" step="0.01">
+                           <div class="slider-track"></div>
+                           <div class="slider-range"></div>
+                           <input type="range"
+                                  id="min-range"
+                                  min="{{ absolute_min_price }}"
+                                  max="{{ absolute_max_price }}"
+                                  value="{{ min_price }}"
+                                  step="0.01">
+
+                           <input type="range"
+                                  id="max-range"
+                                  min="{{ absolute_min_price }}"
+                                  max="{{ absolute_max_price }}"
+                                  value="{{ max_price }}"
+                                  step="0.01">
                        </div>
                    </div>
                 </div>

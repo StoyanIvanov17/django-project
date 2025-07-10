@@ -2,33 +2,34 @@
 {% load static %}
 
 {% block hero_section %}
-    <section class="hero-video-section">
-            <video autoplay muted loop playsinline class="hero-video">
-                <source src="{% static 'videos/hero_video.mp4' %}" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-            <div class="hero-overlay">
-                <h1>Your Headline Here</h1>
-                <p>Your subheading or call-to-action.</p>
-            </div>
-        </section>
+    {% include 'partials/hero_section_video.html' %}
 {% endblock %}
 
 {% block main_content %}
     <div class="home-gallery">
         <div class="home-gallery-image-wrapper">
-            <img src="{% static 'images/clothes.jpg' %}" alt="Clothes">
+            <img src="{% static 'images/homepage_dress.png' %}" alt="Clothes">
+            <div class="overlay">WOMEN'S DRESSES</div>
         </div>
         <div class="home-gallery-image-wrapper">
-            <img src="{% static 'images/jewellery.jpg' %}" alt="Jewellery">
+            <img src="{% static 'images/homepage_skirt.png' %}" alt="Jewellery">
+            <div class="overlay">WOMEN'S SKIRTS</div>
         </div>
         <div class="home-gallery-image-wrapper">
-            <img src="{% static 'images/make up.jpg' %}" alt="Makeup">
+            <img src="{% static 'images/homepage_shirt.png' %}" alt="Makeup">
+            <div class="overlay">MEN'S SHIRTS</div>
         </div>
         <div class="home-gallery-image-wrapper">
-            <img src="{% static 'images/shoes.jpg' %}" alt="Shoes">
+            <img src="{% static 'images/homepage_shorts.png' %}" alt="Shoes">
+            <div class="overlay">MEN'S SHORTS</div>
         </div>
     </div>
+    
+    {% include 'partials/hero_section_image.html' %}
+    
+    <div class="two-image-set">
+        <img src="{% static 'images/Twist-Detail Dress - White.png' %}" alt="">
+        <img src="{% static 'images/Knit Cardigan - Cream 2.png' %}" alt="">
+    </div>
 {% endblock %}
-
 
