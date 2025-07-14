@@ -7,29 +7,80 @@
 
 {% block main_content %}
     <div class="home-gallery">
-        <div class="home-gallery-image-wrapper">
-            <img src="{% static 'images/homepage_dress.png' %}" alt="Clothes">
-            <div class="overlay">WOMEN'S DRESSES</div>
-        </div>
-        <div class="home-gallery-image-wrapper">
-            <img src="{% static 'images/homepage_skirt.png' %}" alt="Jewellery">
-            <div class="overlay">WOMEN'S SKIRTS</div>
-        </div>
-        <div class="home-gallery-image-wrapper">
-            <img src="{% static 'images/homepage_shirt.png' %}" alt="Makeup">
-            <div class="overlay">MEN'S SHIRTS</div>
-        </div>
-        <div class="home-gallery-image-wrapper">
-            <img src="{% static 'images/homepage_shorts.png' %}" alt="Shoes">
-            <div class="overlay">MEN'S SHORTS</div>
-        </div>
+        <a href="#" class="home-gallery-link">
+            <div class="home-gallery-image-wrapper">
+                <img src="{% static 'images/homepage_dress.png' %}" alt="">
+            </div>
+            <h1>DRESSES</h1>
+        </a>
+        <a href="#" class="home-gallery-link">
+            <div class="home-gallery-image-wrapper">
+                <img src="{% static 'images/homepage_skirt.png' %}" alt="">
+            </div>
+            <h1>SKIRTS</h1>
+        </a>
+        <a href="#" class="home-gallery-link">
+            <div class="home-gallery-image-wrapper">
+                <img src="{% static 'images/homepage_shirt.png' %}" alt="">
+            </div>
+            <h1>SHIRTS</h1>
+        </a>
+        <a href="#" class="home-gallery-link">
+            <div class="home-gallery-image-wrapper">
+                <img src="{% static 'images/homepage_shorts.png' %}" alt="">
+            </div>
+            <h1>SHORTS</h1>
+        </a>
     </div>
     
     {% include 'partials/hero_section_image.html' %}
     
-    <div class="two-image-set">
-        <img src="{% static 'images/Twist-Detail Dress - White.png' %}" alt="">
-        <img src="{% static 'images/Knit Cardigan - Cream 2.png' %}" alt="">
+    <div class="quick-preview">
+        <a href="#" class="pinpoint one">
+            <svg width="25" height="30" viewBox="0 0 24 24" stroke="#333" stroke-width="1" fill="none">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+        </a>
+        <a href="#" class="pinpoint two">
+            <svg width="25" height="30" viewBox="0 0 24 24" stroke="#333" stroke-width="1" fill="none">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+        </a>
+        <a href="#" class="pinpoint three">
+            <svg width="25" height="30" viewBox="0 0 24 24" stroke="#333" stroke-width="1" fill="none">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+        </a>
+
+        <img src="{% static 'images/Untitled.png' %}" alt="">
+
+        <div href="" class="image-preview"></div>
     </div>
+
+    <script>
+        window.pinpointData = {
+            one: {
+                image: "{{ maxi_shirt.last_extra_image.image.url }}",
+                url: "{{ maxi_shirt.get_absolute_url }}",
+                name: "{{ maxi_shirt.group.name }}",
+                price: "{{ maxi_shirt.group.price }}"
+            },
+            two: {
+                image: "{{ vinales_cotton_shorts.last_extra_image.image.url }}",
+                url: "{{ vinales_cotton_shorts.get_absolute_url }}",
+                name: "{{ vinales_cotton_shorts.group.name }}",
+                price: "{{ vinales_cotton_shorts.group.price }}"
+            },
+            three: {
+                image: "{{ boucle_knit_shirt.last_extra_image.image.url }}",
+                url: "{{ boucle_knit_shirt.get_absolute_url }}",
+                name: "{{ boucle_knit_shirt.group.name }}",
+                price: "{{ boucle_knit_shirt.group.price }}"
+            },
+        };
+    </script>
 {% endblock %}
 

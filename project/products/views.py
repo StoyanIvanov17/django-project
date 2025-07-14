@@ -15,6 +15,7 @@ class ProductsListView(views.ListView):
 
     def filter_products(self, queryset):
         category = self.request.GET.get('category', '')
+        gender = self.request.GET.get('gender', '')
         item_type_slugs = self.request.GET.getlist('item_type')
         item_type_value_slug = self.request.GET.get('item_type_value', '')
 
@@ -31,6 +32,9 @@ class ProductsListView(views.ListView):
 
         if category:
             query &= Q(category__slug=category)
+
+        if gender:
+            query &= Q(group__gender=gender)
 
         if item_type_slugs:
             query &= Q(item_type__slug__in=item_type_slugs)
@@ -136,16 +140,29 @@ class ProductsListView(views.ListView):
         for key in attributes_dict:
             attributes_dict[key] = sorted(attributes_dict[key])
 
+        gender_slug = self.request.GET.get('gender')
+        category_slug = self.request.GET.get('category')
+
+        product_filter = Q()
+        if gender_slug:
+            product_filter &= Q(group__gender=gender_slug)
+        if category_slug:
+            product_filter &= Q(category__slug=category_slug)
+
         item_types_with_products = ItemType.objects.annotate(
             has_products=Exists(
-                Product.objects.filter(item_type=OuterRef('pk'))
+                Product.objects.filter(
+                    item_type=OuterRef('pk')
+                ).filter(product_filter)
             )
         ).filter(has_products=True)
 
         for item_type in item_types_with_products:
             item_type.filtered_values = item_type.values.annotate(
                 has_products=Exists(
-                    Product.objects.filter(item_type_value=OuterRef('pk'))
+                    Product.objects.filter(
+                        item_type_value=OuterRef('pk')
+                    ).filter(product_filter)
                 )
             ).filter(has_products=True)
 

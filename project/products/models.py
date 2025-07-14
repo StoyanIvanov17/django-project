@@ -1,5 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.urls import reverse
 from django.utils.text import slugify
 
 
@@ -105,6 +106,10 @@ class Tag(models.Model):
 
 
 class ProductGroup(models.Model):
+    class Gender(models.TextChoices):
+        MEN = 'men', 'Men'
+        WOMEN = 'women', 'Women'
+
     name = models.CharField(
         max_length=255,
         unique=True
@@ -113,6 +118,11 @@ class ProductGroup(models.Model):
     slug = models.SlugField(
         unique=True,
         blank=True
+    )
+
+    gender = models.CharField(
+        max_length=10,
+        choices=Gender.choices
     )
 
     price = models.DecimalField(
@@ -138,7 +148,8 @@ class ProductGroup(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.name)
+            base_slug = f"{self.name} {self.gender}"
+            self.slug = slugify(base_slug)
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -146,12 +157,6 @@ class ProductGroup(models.Model):
 
 
 class Product(models.Model):
-    class Gender(models.TextChoices):
-        MEN = 'men', 'Men'
-        WOMEN = 'women', 'Women'
-        UNISEX = 'unisex', 'Unisex'
-        KIDS = 'kids', 'Kids'
-
     category = models.ForeignKey(
         Category,
         on_delete=models.CASCADE,
@@ -169,10 +174,6 @@ class Product(models.Model):
         on_delete=models.CASCADE,
         related_name='products_value'
     )
-
-    gender = models.CharField(
-        max_length=10,
-        choices=Gender.choices)
 
     group = models.ForeignKey(
         ProductGroup,
@@ -225,6 +226,13 @@ class Product(models.Model):
     slug = models.SlugField(
         unique=True, blank=True
     )
+
+    def get_absolute_url(self):
+        return reverse('product-details', kwargs={
+            'pk': self.pk,
+            'gender': self.group.gender,
+            'slug': self.slug
+        })
 
     def __str__(self):
         return f"{self.group.name} ({self.color})"

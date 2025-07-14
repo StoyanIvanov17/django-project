@@ -30,7 +30,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 20px;
+    padding: 15px;
     width: 100%;
 }
 
@@ -57,7 +57,7 @@ body {
     display: flex;
     gap: 30px;
     justify-content: center;
-    margin: 10px 0 0 50px;
+    margin: 20px 0 0 50px;
     font-size: 16px;
 }
 
@@ -82,6 +82,7 @@ body {
 .nav-icons a {
     text-decoration: none;
     color: #000000;
+    font-family: 'Garamond', 'sans-serif';
 }
 
 .nav-links a:hover,

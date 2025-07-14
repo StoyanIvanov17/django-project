@@ -19,8 +19,8 @@
                 </a>
 
                 <div class="nav-links">
-                    <a href="{% url 'all-products' %}?category=clothing" data-dropdown="WOMEN">WOMEN</a>
-                    <a href="#" data-dropdown="MEN">MEN</a>
+                    <a href="{% url 'all-products' %}?category=clothing&gender=women" data-dropdown="WOMEN">WOMEN</a>
+                    <a href="{% url 'all-products' %}?category=clothing&gender=men" data-dropdown="MEN">MEN</a>
                 </div>
 
                 <div class="mega-dropdown-container">
@@ -43,15 +43,15 @@
                                 <a href="#">Training and Gym</a>
                             </div>
                             <div class="dropdown-column">
-                                <a href="{% url 'all-products' %}?category=clothing" class="dropdown-column-title"><span>Clothing</span></a>
-                                <a href="{% url 'all-products' %}?item_type=t-shirts&item_type=tops"><span>Tops & T-Shirts</span></a>
-                                <a href="{% url 'all-products' %}?item_type=shirts&item_type=blouses"><span>Shirts & Blouses</span></a>
-                                <a href="{% url 'all-products' %}?item_type=cardigans&item_type=sweaters"><span>Cardigans & Sweaters</span></a>
-                                <a href="{% url 'all-products' %}?item_type=shorts&item_type=skirts"><span>Shorts & Skirts</span></a>
+                                <a href="{% url 'all-products' %}?category=clothing&gender=women" class="dropdown-column-title"><span>Clothing</span></a>
+                                <a href="{% url 'all-products' %}?item_type=t-shirts&item_type=tops&gender=women"><span>Tops & T-Shirts</span></a>
+                                <a href="{% url 'all-products' %}?item_type=shirts&item_type=blouses&gender=women"><span>Shirts & Blouses</span></a>
+                                <a href="{% url 'all-products' %}?item_type=cardigans&item_type=sweaters&gender=women"><span>Cardigans & Sweaters</span></a>
+                                <a href="{% url 'all-products' %}?item_type=shorts&item_type=skirts&gender=women"><span>Shorts & Skirts</span></a>
                                 <a href="#"><span>Leggings</span></a>
-                                <a href="{% url 'all-products' %}?item_type=dresses"><span>Dresses</span></a>
+                                <a href="{% url 'all-products' %}?item_type=dresses&gender=women"><span>Dresses</span></a>
                                 <a href="#"><span>Lingerie & Sleepwear</span></a>
-                                <a href="{% url 'all-products' %}?item_type=beachwear&item_type=swimwear"><span>Swimwear & Beachwear</span></a>
+                                <a href="{% url 'all-products' %}?item_type=beachwear&item_type=swimwear&gender=women"><span>Swimwear & Beachwear</span></a>
                                 <a href="#"><span>Socks & Tights</span></a>
                             </div>
                             <div class="dropdown-column">
@@ -90,8 +90,7 @@
                                 <a href="#">Training and Gym</a>
                             </div>
                             <div class="dropdown-column">
-                                <a href="#" class="dropdown-column-title">Clothing</a>
-                                <a href="#">All Clothing</a>
+                                <a href="{% url 'all-products' %}?category=clothing&gender=men" class="dropdown-column-title">Clothing</a>
                                 <a href="#">Tops</a>
                                 <a href="#">Bottoms</a>
                                 <a href="#">Outerwear</a>
@@ -186,6 +185,7 @@
     <script src="{% static 'js/remove_from_bag.js' %}"></script>
     <script src="{% static 'js/increase_bag_item_quantity.js' %}"></script>
     <script src="{% static 'js/price_range.js' %}"></script>
+    <script src="{% static 'js/pinpoint_preview.js' %}"></script>
 
 </body>
 </html>

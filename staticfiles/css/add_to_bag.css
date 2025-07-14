@@ -112,6 +112,7 @@
     font-size: 14px;
     cursor: pointer;
     border: none;
+    color: black;
 }
 
 .bag-modal-actions a#view-bag-link:visited {

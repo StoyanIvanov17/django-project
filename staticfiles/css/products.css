@@ -81,7 +81,7 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 40px;
-    padding: 50px 30px 0 30px;
+    padding: 50px 30px 20px 30px;
 }
 
 .product-card {
@@ -227,17 +227,35 @@
 
 .slider {
     position: relative;
+    height: 10px;
+}
+
+.slider-track {
+    position: absolute;
+    height: 1px;
+    background: #999;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    border-radius: 1px;
+}
+
+.slider-range {
+    position: absolute;
     height: 4px;
-    background: transparent;
+    background: #353535;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 2px;
 }
 
 .slider input[type="range"] {
     -webkit-appearance: none;
+    position: absolute;
+    pointer-events: none;
     width: 100%;
     height: 10px;
     background: transparent;
-    position: absolute;
-    pointer-events: none;
 }
 
 .slider input[type="range"]::-webkit-slider-thumb {
@@ -246,15 +264,13 @@
     width: 12px;
     height: 12px;
     background: #353535;
-    border-radius: 10px;
+    border-radius: 50%;
     cursor: pointer;
-    margin-top: -8px;
 }
 
 .slider input[type="range"]::-webkit-slider-runnable-track {
-    height: 4px;
-    background: #353535;
-    border-radius: 2px;
+    height: 10px;
+    background: transparent;
 }
 
 .slider input[type="range"]::-moz-range-thumb {
@@ -262,14 +278,13 @@
     width: 12px;
     height: 12px;
     background: #353535;
-    border-radius: 10px;
+    border-radius: 50%;
     cursor: pointer;
 }
 
 .slider input[type="range"]::-moz-range-track {
-    height: 4px;
-    background: #353535;
-    border-radius: 2px;
+    height: 10px;
+    background: transparent;
 }
 
 .color-choices {

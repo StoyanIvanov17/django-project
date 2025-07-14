@@ -29,9 +29,9 @@
         </p>
 
         <div class="more-colors">
-            <a href="{% url 'product-details' pk=product.pk gender=product.gender slug=product.slug %}" class="color-swatch" style="background-color: {{ product.color_hex }};" title="{{ product.color }}"></a>
+            <a href="{% url 'product-details' pk=product.pk gender=product.group.gender slug=product.slug %}" class="color-swatch" style="background-color: {{ product.color_hex }};" title="{{ product.color }}"></a>
             {% for variant in extra_colors %}
-                <a href="{% url 'product-details' pk=variant.pk gender=variant.gender slug=variant.slug %}" class="color-swatch" style="background-color: {{ variant.color_hex }};" title="{{ variant.color }}"></a>
+                <a href="{% url 'product-details' pk=variant.pk gender=variant.group.gender slug=variant.slug %}" class="color-swatch" style="background-color: {{ variant.color_hex }};" title="{{ variant.color }}"></a>
             {% endfor %}
             <p>{{ product.color }}</p>
         </div>
