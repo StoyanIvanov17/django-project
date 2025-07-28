@@ -203,7 +203,8 @@ class Product(models.Model):
     )
 
     image = models.ImageField(
-        upload_to='product_images/'
+        upload_to='product_images/',
+        blank=True,
     )
 
     model_size = models.CharField(
@@ -240,12 +241,7 @@ class Product(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             base_slug = f"{self.group.name} {self.color}"
-            slug_candidate = slugify(base_slug)
-            counter = 1
-            while Product.objects.filter(slug=slug_candidate).exclude(pk=self.pk).exists():
-                slug_candidate = slugify(f"{base_slug} {counter}")
-                counter += 1
-            self.slug = slug_candidate
+            self.slug = slugify(base_slug)
         super().save(*args, **kwargs)
 
 
@@ -292,7 +288,12 @@ class ProductMaterial(models.Model):
     )
 
     class Meta:
-        unique_together = ('product_group', 'material')
+        constraints = [
+            models.UniqueConstraint(
+                fields=['product_group', 'material'],
+                name='unique_product_material'
+            )
+        ]
 
     def clean(self):
         if not self.product_group or not self.product_group.pk:
@@ -303,7 +304,7 @@ class ProductMaterial(models.Model):
             if self.pk is None or pm.pk != self.pk
         )
 
-        if total + self.percentage > 100:
+        if total + self.percentage > self.percentage.__class__(100):
             raise ValidationError(f"Total percentage for {self.product_group} exceeds 100%.")
 
     def save(self, *args, **kwargs):
