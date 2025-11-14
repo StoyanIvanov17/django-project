@@ -2,172 +2,64 @@
     scroll-behavior: smooth;
 }
 
-.home-gallery {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    padding: 20px 20px 20px 20px;
-    gap: 20px;
-}
-
-.home-gallery-link {
-    display: block;
-    text-decoration: none;
-    color: black;
-}
-
-.home-gallery-image-wrapper {
-    position: relative;
-    aspect-ratio: 1 / 1;
-    text-decoration: none;
-    overflow: hidden;
-}
-
-.home-gallery-image-wrapper img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.3s ease;
-}
-
-.home-gallery-link:hover .home-gallery-image-wrapper img {
-    transform: scale(1.05);
-}
-
-.home-gallery-link h1 {
-    margin-top: 20px;
-    text-align: center;
-    font-size: 24px;
-    font-family: 'Dubai Light', 'sans-serif';
-    font-weight: normal;
-}
-
-.home-gallery-link:visited {
-    color: black;
-}
-
-.quick-preview {
-    padding: 10px;
-    width: 60%;
+.social-media-icons {
     display: flex;
-    position: relative;
-    margin-bottom: 20px;
+    gap: 30px;
+    margin-left: 700px;
 }
 
-.quick-preview img {
-    width: 100%;
-    height: auto;
-}
-
-.pinpoint {
-    position: absolute;
-    width: 30px;
-    height: 30px;
-    background: #ffffff;
-    border-radius: 50%;
+.icon {
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    width: 25px;
+    height: 25px;
+    border-radius: 20%;
+    color: dimgrey;
     text-decoration: none;
-    z-index: 999;
+    font-size: 15px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.plus {
-    font-size: 30px;
-    font-weight: 300;
-    color: black;
-    line-height: 1;
-    font-family: Arial, sans-serif;
-}
-
-@keyframes pulsate {
-    0% {
-        transform: scale(1);
-        opacity: 0.7;
-    }
-    50% {
-        transform: scale(1.5);
-        opacity: 0;
-    }
-    100% {
-        transform: scale(1);
-        opacity: 0.7;
-    }
-}
-
-.pinpoint::after {
-    content: "";
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    background: rgba(255, 255, 255, 0.5);
-    border-radius: 50%;
-    z-index: -1;
-}
-
-.pinpoint.pulsate::after {
-    animation: pulsate 2s infinite;
-}
-
-.pinpoint.one {
-    left: 22%;
-    top: 38%;
-}
-
-.pinpoint.two {
-    left: 20%;
-    top: 95%;
-}
-
-.pinpoint.three {
-    left: 80%;
-    top: 50%;
-}
-
-.image-preview {
-    position: absolute;
-    left: 110%;
-    width: 400px;
-    top: 20%;
-}
-
-.image-preview img {
-    width: 100%;
-    height: auto;
-    display: block;
-}
-
-.product-info {
-    text-align: center;
-}
-
-.product-info h3 {
-    font-family: 'Dubai Light', 'sans-serif';
-    margin-top: 1rem;
-    font-weight: normal;
-    font-size: 1.3rem;
-    text-transform: uppercase;
-}
-
-.product-info p {
-    font-family: 'Dubai Light', 'sans-serif';
-    margin: 0.25rem 0;
-    text-transform: uppercase;
-    font-size: 1.3rem;
-}
-
-.product-info .button {
-    font-family: 'Dubai Light', 'sans-serif';
-    display: inline-block;
-    margin-top: 2rem;
-    padding: 0.6rem 2.5rem;
-    background-color: black;
-    color: white;
-    text-decoration: none;
-    text-transform: uppercase;
-    transition: transform 0.3s ease;
-}
-
-.product-info .button:hover {
+.icon:hover {
     transform: scale(1.1);
+}
+
+.facebook,
+.linkedin,
+.instagram,
+.twitter,
+.youtube,
+.pinterest {
+    background-color: white;
+}
+
+.facebook:hover {
+    background-color: #2d4373;
+    color: white;
+}
+
+.twitter:hover {
+    background-color: #0d8bf0;
+    color: white;
+}
+
+.instagram:hover {
+    background: radial-gradient(circle at 30% 30%, #fcb045, #d6249f, #833ab4, #405de6);
+    color: white;
+}
+
+.linkedin:hover {
+    background-color: #005582;
+    color: white;
+}
+
+.youtube:hover {
+    background-color: #d10037;
+    color: white;
+}
+
+.pinterest:hover {
+    background-color: #ff004d;
+    color: white;
 }

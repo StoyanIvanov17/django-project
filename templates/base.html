@@ -9,15 +9,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <nav class="announcement">
+        <h1>Winter Sale Is Here! Enjoy 10% OFF Winter Products!</h1>
+    </nav>
     <nav class="navbar">
         <div class="navbar-container">
             <div class="nav-hover-area">
-                <a href="{% url 'homepage' %}">
-                    <span class="logo">
-                        <img src="{% static 'images/logo.png' %}" alt="">
-                    </span>
-                </a>
-
                 <div class="nav-links">
                     <a href="{% url 'all-products' %}?category=clothing&gender=women" data-dropdown="WOMEN">WOMEN</a>
                     <a href="{% url 'all-products' %}?category=clothing&gender=men" data-dropdown="MEN">MEN</a>
@@ -26,22 +23,6 @@
                 <div class="mega-dropdown-container">
                     <div class="mega-dropdown" id="womenDropdown">
                         <div class="mega-content">
-                            <div class="dropdown-column">
-                                <a href="#" class="dropdown-column-title">Featured</a>
-                                <a href="#">New Releases</a>
-                                <a href="#">Best Sellers</a>
-                                <a href="#">Brand's Special</a>
-                                <a href="#">Bringing Back</a>
-                            </div>
-                            <div class="dropdown-column">
-                                <a href="#" class="dropdown-column-title">Shoes</a>
-                                <a href="#">All Shoes</a>
-                                <a href="#">Lifestyle</a>
-                                <a href="#">Running</a>
-                                <a href="#">Football</a>
-                                <a href="#">Basketball</a>
-                                <a href="#">Training and Gym</a>
-                            </div>
                             <div class="dropdown-column">
                                 <a href="{% url 'all-products' %}?category=clothing&gender=women" class="dropdown-column-title"><span>Clothing</span></a>
                                 <a href="{% url 'all-products' %}?item_type=t-shirts&item_type=tops&gender=women"><span>Tops & T-Shirts</span></a>
@@ -55,15 +36,6 @@
                                 <a href="#"><span>Socks & Tights</span></a>
                             </div>
                             <div class="dropdown-column">
-                                <a href="#" class="dropdown-column-title">Discover Sport</a>
-                                <a href="#">Running</a>
-                                <a href="#">Football</a>
-                                <a href="#">Basketball</a>
-                                <a href="#">Training and Gym</a>
-                                <a href="#">Tennis</a>
-                                <a href="#">Golf</a>
-                            </div>
-                            <div class="dropdown-column">
                                 <a href="#" class="dropdown-column-title">Fashion & Accessories</a>
                                 <a href="#">Fashion Accessories</a>
                                 <a href="#">Footwear Accessories</a>
@@ -73,22 +45,6 @@
                     </div>
                     <div class="mega-dropdown" id="menDropdown">
                         <div class="mega-content">
-                            <div class="dropdown-column">
-                                <a href="#" class="dropdown-column-title">Featured</a>
-                                <a href="#">New Releases</a>
-                                <a href="#">Best Sellers</a>
-                                <a href="#">Brand's Special</a>
-                                <a href="#">Bringing Back</a>
-                            </div>
-                            <div class="dropdown-column">
-                                <a href="#" class="dropdown-column-title">Shoes</a>
-                                <a href="#">All Shoes</a>
-                                <a href="#">Lifestyle</a>
-                                <a href="#">Running</a>
-                                <a href="#">Football</a>
-                                <a href="#">Basketball</a>
-                                <a href="#">Training and Gym</a>
-                            </div>
                             <div class="dropdown-column">
                                 <a href="{% url 'all-products' %}?category=clothing&gender=men" class="dropdown-column-title">Clothing</a>
                                 <a href="#">Tops</a>
@@ -100,15 +56,6 @@
                                 <a href="#">Occasion Wear</a>
                             </div>
                             <div class="dropdown-column">
-                                <a href="#" class="dropdown-column-title">Discover Sport</a>
-                                <a href="#">Running</a>
-                                <a href="#">Football</a>
-                                <a href="#">Basketball</a>
-                                <a href="#">Training and Gym</a>
-                                <a href="#">Tennis</a>
-                                <a href="#">Golf</a>
-                            </div>
-                            <div class="dropdown-column">
                                 <a href="#" class="dropdown-column-title">Fashion & Accessories</a>
                                 <a href="#">All Fashion & Accessories</a>
                                 <a href="#">Fashion Accessories</a>
@@ -118,6 +65,10 @@
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <div class="left-nav">
+                <a href="{% url 'homepage' %}"><h1>Cloth Genius</h1></a>
             </div>
 
             <div class="navbar-right">
@@ -132,7 +83,7 @@
                         {% if not user.is_authenticated %}
                             <a id="userIcon"><i class="fa-regular fa-user"></i></a>
                         {% else %}
-                            <a id="profileIcon"><i class="fa-regular fa-user"></i></a>
+                            <a href="{% url 'account-details' %}" id="profileIcon"><i class="fa-regular fa-user"></i></a>
                         {% endif %}
                     </div>
                 </div>
@@ -141,7 +92,6 @@
     </nav>
 
     {% include 'accounts/auth_modal.html' %}
-    {% include 'accounts/profile_modal.html' %}
 
     {% block hero_section %}{% endblock %}
 
@@ -175,7 +125,6 @@
     <script src="{% static 'js/navbar.js' %}"></script>
     <script src="{% static 'js/film_wrapper.js' %}"></script>
     <script src="{% static 'js/auth_modal.js' %}"></script>
-    <script src="{% static 'js/profile_modal.js' %}"></script>
     <script src="{% static 'js/main_image_swap.js' %}"></script>
     <script src="{% static 'js/select_size.js' %}"></script>
     <script src="{% static 'js/add_to_bag.js' %}"></script>
@@ -185,7 +134,6 @@
     <script src="{% static 'js/remove_from_bag.js' %}"></script>
     <script src="{% static 'js/increase_bag_item_quantity.js' %}"></script>
     <script src="{% static 'js/price_range.js' %}"></script>
-    <script src="{% static 'js/pinpoint_preview.js' %}"></script>
 
 </body>
 </html>

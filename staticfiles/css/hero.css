@@ -1,7 +1,7 @@
 .hero-video-section {
-    position: relative;
-    height: 99.8vh;
-    overflow: hidden;
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .hero-video {
@@ -22,7 +22,7 @@
   z-index: 1;
   color: white;
   text-align: center;
-  top: 80%;
+  top: 90%;
   right: 40%;
 }
 
@@ -38,7 +38,7 @@
   text-decoration: none;
   border: 1px solid white;
   padding: 20px;
-  font-size: 20px;
+  font-size: 18px;
   font-family: 'GGaramond', 'sans-serif';
   color: white;
 }
@@ -63,11 +63,11 @@
 
 .hero-overlay.image {
   position: relative;
-  top: 70%;
+  top: 85%;
   right: 40%;
 }
 
 .hero-overlay.image a {
   margin-right: 20px;
-  padding: 20px 50px 20px 50px;
+  padding: 20px;
 }

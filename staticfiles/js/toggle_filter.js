@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function closeFilter() {
         filterPanel.classList.remove('open');
         contentWrapper.classList.remove('shifted');
-        toggleBtn.innerHTML = 'Show Filters <i class="fa-solid fa-filter"></i>';
+        toggleBtn.innerHTML = 'Show Filters <i class="fa-solid fa-filter products-filter"></i>';
         for (let i = 0; i < items.length; i++) {
             items[i].style.transitionDelay = `0s`;
         }

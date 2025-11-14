@@ -205,6 +205,7 @@ class Product(models.Model):
     image = models.ImageField(
         upload_to='product_images/',
         blank=True,
+        max_length=1000
     )
 
     model_size = models.CharField(
@@ -253,7 +254,8 @@ class ProductImage(models.Model):
     )
 
     image = models.ImageField(
-        upload_to='product_images/'
+        upload_to='product_images/',
+        max_length=1000
     )
 
     def __str__(self):

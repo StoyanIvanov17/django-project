@@ -6,6 +6,7 @@ from django.views import generic as views
 from django.contrib.auth import views as auth_views, login, logout, get_user_model
 
 from project.accounts.forms import UserCreationForm, CustomAuthenticationForm
+from project.accounts.models import Customer, CustomUser
 
 UserModel = get_user_model()
 
@@ -30,11 +31,23 @@ class SignUpUserView(views.CreateView):
 
     def form_valid(self, form):
         response = super().form_valid(form)
-        login(self.request, self.object)
-        return response
+        user = self.object
 
-    def get_success_url(self):
-        return self.success_url
+        Customer.objects.create(
+            user=user,
+            first_name='',
+            last_name='',
+            phone_number='',
+            country='',
+            date_of_birth=user.date_of_birth,
+        )
+
+        login(self.request, user)
+        return redirect('homepage')
+
+    def form_invalid(self, form):
+        print("form_invalid called — errors:", form.errors)
+        return super().form_invalid(form)
 
 
 class CheckEmailView(views.View):
@@ -47,6 +60,24 @@ class CheckEmailView(views.View):
             else:
                 return JsonResponse({'exists': False})
         return JsonResponse({'error': 'Email not provided'}, status=400)
+
+
+class AccountDetailsView(views.DetailView):
+    model = Customer
+    template_name = 'accounts/profile_page.html'
+
+    def get_object(self, queryset=None):
+        customer, created = Customer.objects.get_or_create(
+            user=self.request.user,
+            defaults={
+                'first_name': '',
+                'last_name': '',
+                'phone_number': '',
+                'country': '',
+                'date_of_birth': self.request.user.date_of_birth,
+            }
+        )
+        return customer
 
 
 @login_required

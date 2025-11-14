@@ -43,28 +43,24 @@ class Customer(models.Model):
 
     first_name = models.CharField(
         max_length=MAX_NAME_LENGTH,
-        null=False,
-        blank=False,
+        null=True,
+        blank=True,
         verbose_name='First Name'
     )
 
     last_name = models.CharField(
         max_length=MAX_NAME_LENGTH,
-        null=False,
-        blank=False,
+        null=True,
+        blank=True,
         verbose_name='Last Name'
     )
 
-    address = models.CharField(
-        max_length=MAX_ADDRESS_LENGTH,
-        null=False,
-        blank=False,
-    )
+    date_of_birth = models.DateField()
 
     phone_number = models.CharField(
         max_length=MAX_PHONE_NUMBER_LENGTH,
-        null=False,
-        blank=False,
+        null=True,
+        blank=True,
         verbose_name='Phone Number'
     )
 

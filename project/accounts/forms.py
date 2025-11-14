@@ -8,33 +8,27 @@ UserModel = get_user_model()
 
 class UserCreationForm(auth_forms.UserCreationForm):
     MIN_PASSWORD_LENGTH = 8
-    usable_password = None
-    user = None
 
-    class Meta(auth_forms.UserCreationForm.Meta):
+    class Meta:
         model = UserModel
-        fields = ('email', 'date_of_birth')
+        fields = ('email', 'date_of_birth', 'password1')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        if 'password2' in self.fields:
+            del self.fields['password2']
         self.fields['email'].widget.attrs['readonly'] = True
 
-    def clean_password2(self):
+    def clean_password1(self):
         password1 = self.cleaned_data.get("password1")
-        password2 = self.cleaned_data.get("password2")
-
-        if password1 and password2 and password1 != password2:
-            raise ValidationError("Passwords do not match.")
 
         if len(password1) < self.MIN_PASSWORD_LENGTH:
-            raise ValidationError(
-                f"Password must be at least {self.MIN_PASSWORD_LENGTH} characters long."
-            )
+            raise ValidationError(f"Password must be at least {self.MIN_PASSWORD_LENGTH} characters long.")
 
         if not any(char.isalpha() for char in password1):
             raise ValidationError("Password must contain at least one letter.")
 
-        return password2
+        return password1
 
 
 class CustomAuthenticationForm(AuthenticationForm):
