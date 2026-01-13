@@ -5,139 +5,13 @@
 {% block main_class %}with-padding{% endblock %}
 
 {% block main_content %}
-
-    <div class="category-pills">
-        {% if item_type_slugs %}
-            <a href="#" class="pill back-arrow" onclick="event.preventDefault(); history.back();">←</a>
-            {% for item_type in all_item_types %}
-                {% if item_type.slug in item_type_slugs %}
-                    <a href="?item_type={{ item_type.slug }}"
-                       class="pill {% if item_type.slug in item_type_slugs and not request.GET.item_type_value %}active{% endif %}">
-                        {{ item_type.name }}
-                    </a>
-                    {% for value in item_type.filtered_values %}
-                        <a href="?item_type={{ item_type.slug }}&item_type_value={{ value.slug }}"
-                           class="pill {% if request.GET.item_type_value == value.slug %}active{% endif %}">
-                            {{ value.name }}
-                        </a>
-                    {% endfor %}
-                {% endif %}
-            {% endfor %}
-        {% else %}
-            {% for item_type in all_item_types %}
-                <a href="?item_type={{ item_type.slug }}" class="pill">
-                    {{ item_type.name }}
-                </a>
-            {% endfor %}
-        {% endif %}
-    </div>
-    
     <div id="content-wrapper">
-        <div class="sort-filter">
-            <a href="#" id="toggle-filter"><i class="fa-solid fa-filter"></i></a>
-        </div>
-    
-        <form id="filter-form" method="GET">
-            <div class="filter-panel" id="filter-panel">
-
-                <div class="filter-group">
-                   <div class="price-range-wrapper">
-                       <label>Price Range</label>
-                       <div class="price-values">
-                           <span>€ <span id="min-value">{{ min_price|floatformat:2 }}</span></span>
-                           <span>€ <span id="max-value">{{ max_price|floatformat:2 }}</span></span>
-                       </div>
-
-                       <div class="slider">
-                           <div class="slider-track"></div>
-                           <div class="slider-range"></div>
-                           <input type="range"
-                                  id="min-range"
-                                  min="{{ absolute_min_price }}"
-                                  max="{{ absolute_max_price }}"
-                                  value="{{ min_price }}"
-                                  step="0.01">
-
-                           <input type="range"
-                                  id="max-range"
-                                  min="{{ absolute_min_price }}"
-                                  max="{{ absolute_max_price }}"
-                                  value="{{ max_price }}"
-                                  step="0.01">
-                       </div>
-                   </div>
-                </div>
-
-                <div class="filter-group">
-                    <div class="filter-title">Sizes</div>
-                    <div class="filter-options">
-                        {% for size in sizes %}
-                            <label>
-                                <input type="checkbox" 
-                                       name="size" 
-                                       value="{{ size.name }}" 
-                                       {% if size.name in selected_sizes %}checked{% endif %}>
-                                {{ size.name }}
-                            </label>
-                        {% endfor %}
-                    </div>
-                </div>
-
-                <div class="filter-group">
-                    <div class="filter-title">Colors</div>
-                    <div class="filter-options">
-                        {% for color in colors %}
-                            <label>
-                                <input type="checkbox" 
-                                       name="color" 
-                                       value="{{ color }}"
-                                       {% if color in selected_colors %}checked{% endif %}>
-                                {{ color }}
-                            </label>
-                        {% endfor %}
-                    </div>
-                </div>
-
-                <div class="filter-group">
-                    <div class="filter-title">Materials</div>
-                    <div class="filter-options">
-                        {% for material in materials %}
-                            <label>
-                                <input type="checkbox" 
-                                       name="material" 
-                                       value="{{ material.name }}"
-                                       {% if material.name in selected_materials %}checked{% endif %}>
-                                {{ material.name }}
-                            </label>
-                        {% endfor %}
-                    </div>
-                </div>
-                
-                {% for attr_name, values in attributes.items %}
-                    <div class="filter-group">
-                        <div class="filter-title">{{ attr_name }}</div>
-                        <div class="filter-options">
-                            {% for value in values %}
-                                <label>
-                                    <input type="checkbox" 
-                                           name="{{ attr_name|slugify }}" 
-                                           value="{{ value }}" 
-                                           {% if selected_attributes|get_item:attr_name|default:'' and value in selected_attributes|get_item:attr_name %}checked{% endif %}>
-                                    {{ value }}
-                                </label>
-                            {% endfor %}
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
-       </form>
-
         <div id="products-gallery" class="products-gallery">
             {% for product in products %}
                 <div class="product-card">
                     <div class="product-image-container">
                         <a href="{% url 'product-details' pk=product.pk gender=product.group.gender slug=product.slug %}">
-                            <img src="{{ product.image.url }}" alt="{{ product.title }}" class="product-img">
+                            <img src="{{ product.main_image.image.url }}" alt="{{ product.group.name }}" class="product-img">
                         </a>
                     </div>
                     <div class="product-title-price">
@@ -145,17 +19,38 @@
                         <span class="product-price">€{{ product.group.price }}</span>
                     </div>
                         <div class="color-choices">
-                            <a href="{% url 'product-details' pk=product.pk gender=product.group.gender slug=product.slug %}" 
-                               class="color-choice" 
-                               style="background-color: {{ product.color_hex }};" 
-                               title="{{ product.color }}">
-                            </a>
-                            {% for variant in extra_colors_dict|get_item:product.id %}
-                                <a href="{% url 'product-details' pk=variant.pk gender=variant.group.gender slug=variant.slug %}" 
+                            {% with product.color_hexes|split:"," as colors %}
+                                <a href="{% url 'product-details' pk=product.pk gender=product.group.gender slug=product.slug %}"
                                    class="color-choice"
-                                   style="background-color: {{ variant.color_hex }};" 
-                                   title="{{ variant.color }}">
+                                   title="{{ product.color }}">
+                                    {% if colors|length > 1 %}
+                                        <span class="color-split"
+                                              style="background: linear-gradient(90deg, {{ colors.0|trim }} 50%, {{ colors.1|trim }} 50%);">
+                                        </span>
+                                    {% else %}
+                                        <span class="color-split"
+                                              style="background-color: {{ colors.0|trim|default:'#ccc' }};">
+                                        </span>
+                                    {% endif %}
                                 </a>
+                            {% endwith %}
+                        
+                            {% for variant in extra_colors_dict|get_item:product.id %}
+                                {% with variant.color_hexes|split:"," as colors %}
+                                    <a href="{% url 'product-details' pk=variant.pk gender=variant.group.gender slug=variant.slug %}"
+                                       class="color-choice"
+                                       title="{{ variant.color }}">
+                                        {% if colors|length > 1 %}
+                                            <span class="color-split"
+                                                  style="background: linear-gradient(90deg, {{ colors.0|trim }} 50%, {{ colors.1|trim }} 50%);">
+                                            </span>
+                                        {% else %}
+                                            <span class="color-split"
+                                                  style="background-color: {{ colors.0|trim|default:'#ccc' }};">
+                                            </span>
+                                        {% endif %}
+                                    </a>
+                                {% endwith %}
                             {% endfor %}
                         </div>
                 </div>

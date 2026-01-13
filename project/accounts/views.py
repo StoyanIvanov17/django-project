@@ -69,13 +69,6 @@ class AccountDetailsView(views.DetailView):
     def get_object(self, queryset=None):
         customer, created = Customer.objects.get_or_create(
             user=self.request.user,
-            defaults={
-                'first_name': '',
-                'last_name': '',
-                'phone_number': '',
-                'country': '',
-                'date_of_birth': self.request.user.date_of_birth,
-            }
         )
         return customer
 

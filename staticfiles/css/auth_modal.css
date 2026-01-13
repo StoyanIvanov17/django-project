@@ -118,19 +118,6 @@ body.modal-open {
     overflow: hidden;
 }
 
-.loyal-customer {
-    font-size: 14px;
-    margin: 20px 0 10px 0;
-    text-align: center;
-}
-
-.loyal-customer a,
-.loyal-customer a:visited {
-    text-decoration: underline;
-    color: black;
-    letter-spacing: 1px;
-}
-
 .auth-modal-content h4 {
     font-size: 14px;
     margin-bottom: 20px;

@@ -86,3 +86,9 @@ class Customer(models.Model):
         on_delete=models.CASCADE,
         unique=True,
     )
+
+    @property
+    def display_name(self):
+        if self.first_name:
+            return self.first_name
+        return self.user.email
