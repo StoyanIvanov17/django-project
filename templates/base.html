@@ -8,78 +8,95 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
-<body>
+<body
+    data-authenticated="{{ request.user.is_authenticated|yesno:'true,false' }}"
+    data-open-register-modal="{{ open_register_modal|yesno:'true,false' }}"
+    data-open-login-modal="{{ open_login_modal|yesno:'true,false' }}">
+
     <nav class="announcement">
         <h1>Winter Sale Is Here! Enjoy 10% OFF Winter Products!</h1>
     </nav>
     <nav class="navbar">
         <div class="navbar-container">
-            <div class="nav-hover-area">
-                <div class="nav-links">
-                    <a href="#" data-dropdown="WOMEN">WOMEN</a>
-                    <a href="#" data-dropdown="MEN">MEN</a>
-                </div>
 
-                <div class="mega-dropdown-container">
-                    <div class="mega-dropdown" id="womenDropdown">
-                        <div class="mega-content">
-                            <div class="dropdown-column">
-                                <a href="{% url 'all-products' %}?category=clothing&gender=women" class="dropdown-column-title"><span>Clothing</span></a>
-                                <a href="{% url 'all-products' %}?item_type=t-shirts&item_type=tops&gender=women"><span>Tops & T-Shirts</span></a>
-                                <a href="{% url 'all-products' %}?item_type=shirts&item_type=blouses&gender=women"><span>Shirts & Blouses</span></a>
-                            </div>
-                            <div class="dropdown-column">
-                                <a href="#" class="dropdown-column-title">Fashion & Accessories</a>
-                                <a href="#">Fashion Accessories</a>
-                                <a href="#">Footwear Accessories</a>
-                                <a href="#">Activewear Accessories</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mega-dropdown" id="menDropdown">
-                        <div class="mega-content">
-                            <div class="dropdown-column">
-                                <a href="{% url 'all-products' %}?category=clothing&gender=men" class="dropdown-column-title">Clothing</a>
-                                <a href="#">Tops</a>
-                                <a href="#">Bottoms</a>
-                                <a href="#">Outerwear</a>
-                                <a href="#">Activewear</a>
-                                <a href="#">Underwear & Loungewear</a>
-                                <a href="#">Swimwear</a>
-                                <a href="#">Occasion Wear</a>
-                            </div>
-                            <div class="dropdown-column">
-                                <a href="#" class="dropdown-column-title">Fashion & Accessories</a>
-                                <a href="#">All Fashion & Accessories</a>
-                                <a href="#">Fashion Accessories</a>
-                                <a href="#">Footwear Accessories</a>
-                                <a href="#">Activewear Accessories</a>
-                            </div>
-                        </div>
-                    </div>
+            <div class="nav-left">
+                <a href="#" data-dropdown="WOMEN">WOMEN</a>
+                <a href="#" data-dropdown="MEN">MEN</a>
+            </div>
+        </div>
+
+        <div class="nav-mid">
+            <a href="{% url 'homepage' %}"><h1>Cloth Genius</h1></a>
+        </div>
+
+        <div class="nav-right">
+            <div class="nav-icons">
+                <a href="#"><i class="fa-solid fa-magnifying-glass"></i></a>
+                <div class="user-icons">
+                    <a href="#"><i class="fa-solid fa-bag-shopping"></i></a>
+                    <a><i class="fa-regular fa-heart"></i></a>
+                    <a id="userIcon"><i class="fa-regular fa-user"></i></a>
                 </div>
             </div>
+        </div>
 
-            <div class="left-nav">
-                <a href="{% url 'homepage' %}"><h1>Cloth Genius</h1></a>
-            </div>
+        <div class="nav-dropdown-container">
 
-            <div class="navbar-right">
-                <div class="nav-icons">
-                    <div class="search-box">
-                        <a href="#"><i class="fa-solid fa-magnifying-glass"></i></a>
-                        <label><input type="text" placeholder="Search" /></label>
+            <div class="nav-dropdown" id="womenDropdown">
+                <div class="nav-dropdown-inner">
+
+                    <div class="nav-dropdown-columns">
+                        <div class="nav-dropdown-column">
+                            <h4>Type</h4>
+                            <a href="{% url 'all-products' %}?gender=Women&type=Knitwear">Knitwear</a>
+                            <a href="#">Outerwear</a>
+                            <a href="#">Apparel</a>
+                        </div>
+
+                        <div class="nav-dropdown-column">
+                            <h4>Knitwear</h4>
+                            <a href="{% url 'all-products' %}?gender=Women&type=Knitwear&style=Cosy Merino Sweaters">Cosy Merino Sweaters</a>
+                            <a href="#">Lightweight Merino Sweaters</a>
+                            <a href="#">Merino Tees</a>
+                        </div>
+
+                        <div class="nav-dropdown-column">
+                            <h4>Outerwear</h4>
+                            <a href="#">Ski Jackets</a>
+                            <a href="#">Ski Pants</a>
+                        </div>
+
+                        <div class="nav-dropdown-column">
+                            <h4>Apparel</h4>
+                            <a href="#">Cotton Tees</a>
+                            <a href="#">Cotton Hoodies</a>
+                            <a href="#">Cotton Sweatshirts</a>
+                        </div>
                     </div>
-                    <div class="user-icons">
-                        <a href="#"><i class="fa-solid fa-bag-shopping"></i></a>
-                        <a><i class="fa-regular fa-heart"></i></a>
-                        {% if not user.is_authenticated %}
-                            <a id="userIcon"><i class="fa-regular fa-user"></i></a>
-                        {% else %}
-                            <a href="{% url 'account-details' %}" id="profileIcon"><i class="fa-regular fa-user"></i></a>
-                        {% endif %}
+
+                    <div class="nav-dropdown-items">
+                        <div class="nav-featured-item">
+                            <img src="{% static 'img/item1.jpg' %}">
+                            <p class="title">Lightweight Merino Sweaters</p>
+                            <p class="subtitle">Luxury for all seasons.</p>
+                            <a href="#">Shop now</a>
+                        </div>
+
+                        <div class="nav-featured-item">
+                            <img src="{% static 'img/item2.jpg' %}">
+                            <p class="title">Merino Tees</p>
+                            <p class="subtitle">The exceptional everyday staple.</p>
+                            <a href="#">Shop now</a>
+                        </div>
                     </div>
                 </div>
+                
+                <div class="nav-dropdown-footer">
+                    <a href="{% url 'all-products' %}?gender=women">
+                        Shop all Women
+                    </a>
+                </div>
+                
             </div>
         </div>
     </nav>
@@ -92,20 +109,11 @@
         {% block main_content %}
         {% endblock %}
     </main>
-    
+
 
     <script src="{% static 'js/navbar.js' %}"></script>
-    <script src="{% static 'js/film_wrapper.js' %}"></script>
     <script src="{% static 'js/auth_modal.js' %}"></script>
-    <script src="{% static 'js/main_image_swap.js' %}"></script>
-    <script src="{% static 'js/select_size.js' %}"></script>
-    <script src="{% static 'js/add_to_bag.js' %}"></script>
-    <script src="{% static 'js/zoomModal.js' %}"></script>
     <script src="{% static 'js/dropdown_navbar.js' %}"></script>
-    <script src="{% static 'js/toggle_filter.js' %}"></script>
-    <script src="{% static 'js/remove_from_bag.js' %}"></script>
-    <script src="{% static 'js/increase_bag_item_quantity.js' %}"></script>
-    <script src="{% static 'js/price_range.js' %}"></script>
 
 </body>
 </html>

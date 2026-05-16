@@ -5,56 +5,88 @@
 {% block main_class %}with-padding{% endblock %}
 
 {% block main_content %}
-    <div id="content-wrapper">
-        <div id="products-gallery" class="products-gallery">
-            {% for product in products %}
-                <div class="product-card">
-                    <div class="product-image-container">
-                        <a href="{% url 'product-details' pk=product.pk gender=product.group.gender slug=product.slug %}">
-                            <img src="{{ product.main_image.image.url }}" alt="{{ product.group.name }}" class="product-img">
-                        </a>
-                    </div>
-                    <div class="product-title-price">
-                        <span class="product-title">{{ product.group.name }}</span>
-                        <span class="product-price">€{{ product.group.price }}</span>
-                    </div>
-                        <div class="color-choices">
-                            {% with product.color_hexes|split:"," as colors %}
-                                <a href="{% url 'product-details' pk=product.pk gender=product.group.gender slug=product.slug %}"
-                                   class="color-choice"
-                                   title="{{ product.color }}">
-                                    {% if colors|length > 1 %}
-                                        <span class="color-split"
-                                              style="background: linear-gradient(90deg, {{ colors.0|trim }} 50%, {{ colors.1|trim }} 50%);">
-                                        </span>
-                                    {% else %}
-                                        <span class="color-split"
-                                              style="background-color: {{ colors.0|trim|default:'#ccc' }};">
-                                        </span>
-                                    {% endif %}
-                                </a>
-                            {% endwith %}
-                        
-                            {% for variant in extra_colors_dict|get_item:product.id %}
-                                {% with variant.color_hexes|split:"," as colors %}
-                                    <a href="{% url 'product-details' pk=variant.pk gender=variant.group.gender slug=variant.slug %}"
-                                       class="color-choice"
-                                       title="{{ variant.color }}">
-                                        {% if colors|length > 1 %}
-                                            <span class="color-split"
-                                                  style="background: linear-gradient(90deg, {{ colors.0|trim }} 50%, {{ colors.1|trim }} 50%);">
-                                            </span>
-                                        {% else %}
-                                            <span class="color-split"
-                                                  style="background-color: {{ colors.0|trim|default:'#ccc' }};">
-                                            </span>
-                                        {% endif %}
-                                    </a>
-                                {% endwith %}
-                            {% endfor %}
-                        </div>
-                </div>
-            {% endfor %}
-        </div>
+<div class="products-page">
+
+    <div class="products-intro">
+        <h1 class="">{{ group_gender|capfirst }}</h1>
+        <p class="">All our {{ group_gender_plural }} collection is designed in Switzerland
+            and crafted in Europe, where precision, heritage, and exceptional quality define every detail.</p>
     </div>
+
+    <div class="products-amount-and-filter">
+        <p>Showing {{ products_amount }} of {{ products_amount }} products</p>
+        {% if show_breadcrumbs %}
+            <div class="products-breadcrumb">
+                {{ group_gender|capfirst }}
+                →
+                {{ product_type }}
+                {% if product_style %}
+                    →
+                    {{ product_style }}
+                {% endif %}
+            </div>
+        {% endif %}
+        <div class="filter-sort">Filter & Sort</div>
+    </div>
+
+    <div id="products-gallery" class="products-gallery">
+        {% for product in products %}
+            <div class="product-card">
+                <div class="product-image-container">
+                    <a href="{% url 'product-details' pk=product.pk gender=product.group.gender slug=product.slug %}">
+                        <img src="{{ product.main_image.image.url }}" alt="{{ product.group.name }}" class="product-img">
+                    </a>
+                </div>
+
+                <div class="product-title">
+                    <span class="product-title">{{ product.group.name }}</span>
+                </div>
+
+                <div class="product-subtitle">
+                    <span class="product-subtitle">{{ product.group.style.name }}</span>
+                </div>
+
+                <div class="product-price">
+                    <span class="product-price">€{{ product.group.price }}</span>
+                </div>
+
+                <div class="color-choices">
+                    {% with product.color_hexes|split:"," as colors %}
+                        <a href="{% url 'product-details' pk=product.pk gender=product.group.gender slug=product.slug %}"
+                           class="color-choice"
+                           title="{{ product.color }}">
+                            {% if colors|length > 1 %}
+                                <span class="color-split"
+                                      style="background: linear-gradient(90deg, {{ colors.0|trim }} 50%, {{ colors.1|trim }} 50%);">
+                                </span>
+                            {% else %}
+                                <span class="color-split"
+                                      style="background-color: {{ colors.0|trim|default:'#ccc' }};">
+                                </span>
+                            {% endif %}
+                        </a>
+                    {% endwith %}
+
+                    {% for variant in extra_colors_dict|get_item:product.id %}
+                        {% with variant.color_hexes|split:"," as colors %}
+                            <a href="{% url 'product-details' pk=variant.pk gender=variant.group.gender slug=variant.slug %}"
+                               class="color-choice"
+                               title="{{ variant.color }}">
+                                {% if colors|length > 1 %}
+                                    <span class="color-split"
+                                          style="background: linear-gradient(90deg, {{ colors.0|trim }} 50%, {{ colors.1|trim }} 50%);">
+                                    </span>
+                                {% else %}
+                                    <span class="color-split"
+                                          style="background-color: {{ colors.0|trim|default:'#ccc' }};">
+                                    </span>
+                                {% endif %}
+                            </a>
+                        {% endwith %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}

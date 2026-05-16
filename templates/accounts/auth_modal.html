@@ -3,15 +3,28 @@
         <button class="auth-close-btn" id="authCloseBtn">&times;</button>
 
         <h2 class="auth-title">LOGIN</h2>
+
         <p class="auth-subtitle">
             Log in with an email address or register to become a member.
         </p>
 
         <form id="emailCheckForm">
             {% csrf_token %}
-            <label for="authEmail" class="auth-label">Email <span class="auth-required">*</span></label>
-            <input type="email" id="authEmail" name="email" class="auth-input" placeholder="Email" required>
-            <button type="submit" class="auth-submit-btn">NEXT</button>
+
+            <label for="authEmail" class="auth-label">
+                Email <span class="auth-required">*</span>
+            </label>
+
+            <input type="email"
+                   id="authEmail"
+                   name="email"
+                   class="auth-input"
+                   placeholder="Email"
+                   required>
+
+            <button type="submit" class="auth-submit-btn">
+                NEXT
+            </button>
         </form>
 
         <div class="auth-secure">
@@ -20,37 +33,70 @@
     </div>
 </div>
 
+
 <div id="loginModal" class="auth-modal" style="display: none;">
     <div class="auth-modal-content">
         <button class="auth-close-btn" id="loginCloseBtn">&times;</button>
+
         <h2 class="auth-title">Login</h2>
+
         <h4>Please log in with your email and password.</h4>
+
         <form method="POST" action="{% url 'account-login' %}">
             {% csrf_token %}
-            {{ login_form.non_field_errors }}
 
-            <label for="authEmail" class="auth-label">Email <span class="auth-required">*</span></label>
+            {% if login_non_field_errors %}
+                <div class="form-errors">
+                    {% for error in login_non_field_errors %}
+                        <p class="form-error">{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <label for="loginEmailInput" class="auth-label">
+                Email <span class="auth-required">*</span>
+            </label>
+
             <input type="email"
                    id="loginEmailInput"
                    name="username"
                    placeholder="Email"
-                   value="{{ login_form.username.value }}"
+                   value="{{ auth_email }}"
                    readonly
                    class="auth-input greyed-out">
 
-            {{ login_form.username.errors }}
+            <label class="auth-label-form">
+                Password <span class="auth-required">*</span>
+            </label>
 
-            <label class="auth-label-form">Password <span class="auth-required">*</span></label>
             <input type="password"
                    name="password"
                    placeholder="Password"
                    required
                    autocomplete="new-password"
                    class="auth-input">
-            {{ login_form.password.errors }}
 
-            <button type="submit" class="auth-submit-btn">NEXT</button>
-            <button type="button" id="backToLoginFromLogin" class="auth-back-btn">BACK TO LOGIN</button>
+            {% if login_errors %}
+                <div class="form-errors">
+                    {% for field, errors in login_errors.items %}
+                        {% for error in errors %}
+                            <p class="form-error">
+                                {{ error.message }}
+                            </p>
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <button type="submit" class="auth-submit-btn">
+                NEXT
+            </button>
+
+            <button type="button"
+                    id="backToLoginFromLogin"
+                    class="auth-back-btn">
+                BACK TO LOGIN
+            </button>
         </form>
     </div>
 </div>
@@ -59,38 +105,65 @@
 <div id="registerModal" class="auth-modal" style="display: none;">
     <div class="auth-modal-content">
         <button class="auth-close-btn" id="registerCloseBtn">&times;</button>
+
         <h2 class="auth-title">BECOME A MEMBER</h2>
+
         <form method="POST" action="{% url 'account-register' %}">
             {% csrf_token %}
-            {{ register_form.non_field_errors }}
 
-            <label for="authEmail" class="auth-label">Email <span class="auth-required">*</span></label>
+            <label for="registerEmailInput" class="auth-label">
+                Email <span class="auth-required">*</span>
+            </label>
+
             <input type="email"
                    id="registerEmailInput"
                    name="email"
                    placeholder="Email"
-                   value="{{ register_form.email.value }}"
+                   value="{{ auth_email }}"
                    readonly
                    class="auth-input greyed-out">
-            {{ register_form.email.errors }}
 
-            <label class="auth-label-form">Create a password <span class="auth-required">*</span></label>
-            <input type="password" 
-                   name="password1" 
-                   placeholder="Password" 
-                   required class="auth-input"
-                   autocomplete="new-password">
-            {{ register_form.password1.errors }}
+            <label class="auth-label-form">
+                Create a password <span class="auth-required">*</span>
+            </label>
 
-            <label class="auth-label-form">Date of birth <span class="auth-required">*</span></label>
-            <input type="date" 
-                   name="date_of_birth" 
-                   placeholder="Date of Birth" 
-                   required class="auth-input">
-            {{ register_form.date_of_birth.errors }}
+            <input type="password"
+                   name="password1"
+                   placeholder="Password"
+                   required
+                   autocomplete="new-password"
+                   class="auth-input">
 
-            <button type="submit" class="auth-submit-btn">BECOME A MEMBER</button>
-            <button type="button" id="backToLoginFromRegister" class="auth-back-btn">BACK TO LOGIN</button>
+            <label class="auth-label-form">
+                Date of birth <span class="auth-required">*</span>
+            </label>
+
+            <input type="date"
+                   name="date_of_birth"
+                   required
+                   class="auth-input">
+
+            {% if register_errors %}
+                <div class="form-errors">
+                    {% for field, errors in register_errors.items %}
+                        {% for error in errors %}
+                            <p class="form-error">
+                                {{ error.message }}
+                            </p>
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <button type="submit" class="auth-submit-btn">
+                BECOME A MEMBER
+            </button>
+
+            <button type="button"
+                    id="backToLoginFromRegister"
+                    class="auth-back-btn">
+                BACK TO LOGIN
+            </button>
         </form>
     </div>
 </div>
