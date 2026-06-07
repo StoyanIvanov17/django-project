@@ -44,3 +44,20 @@ class ProductDetailsView(views.DetailView):
     model = Product
     template_name = 'products/product_details.html'
     context_object_name = 'product_details'
+
+    def get_queryset(self):
+        return (
+            Product.objects
+            .select_related(
+                'group',
+            )
+            .prefetch_related(
+                'images',
+            )
+        )
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['variants'] = Product.objects.filter(group=self.object.group)
+        return context

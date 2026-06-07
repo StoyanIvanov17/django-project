@@ -3,15 +3,61 @@ from django.urls import reverse
 from django.utils.text import slugify
 
 
-class Type(models.Model):
+class Activity(models.Model):
     name = models.CharField(
-        max_length=50
+        max_length=50,
+        unique=True
     )
 
     slug = models.SlugField(
         unique=True,
         blank=True
     )
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
+
+
+class Fabric(models.Model):
+    name = models.CharField(
+        max_length=100,
+        unique=True
+    )
+
+    slug = models.SlugField(
+        unique=True,
+        blank=True
+    )
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
+
+
+class Fit(models.Model):
+    name = models.CharField(
+        max_length=50,
+        unique=True
+    )
+
+    slug = models.SlugField(
+        unique=True,
+        blank=True
+    )
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name
@@ -27,12 +73,6 @@ class Category(models.Model):
         blank=True
     )
 
-    type = models.ForeignKey(
-        Type,
-        on_delete=models.CASCADE,
-        related_name='categories',
-    )
-
     class Meta:
         verbose_name_plural = 'Categories'
 
@@ -44,35 +84,13 @@ class Category(models.Model):
             base_slug = slugify(self.name)
             slug = base_slug
             counter = 1
+
             while Category.objects.filter(slug=slug).exists():
                 slug = f"{base_slug}-{counter}"
                 counter += 1
+
             self.slug = slug
-        super().save(*args, **kwargs)
 
-
-class Style(models.Model):
-    name = models.CharField(
-        max_length=100
-    )
-
-    slug = models.SlugField(
-        unique=True,
-        blank=True
-    )
-
-    category = models.ForeignKey(
-        Category,
-        on_delete=models.CASCADE,
-        related_name='item_types'
-    )
-
-    def __str__(self):
-        return self.name
-
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.name)
         super().save(*args, **kwargs)
 
 
@@ -91,9 +109,6 @@ class ProductLabel(models.TextChoices):
     SALE = "sale", "On Sale"
     TRENDING = "trending", "Trending"
 
-    def __str__(self):
-        return self.name
-
 
 class ProductGroup(models.Model):
     class Gender(models.TextChoices):
@@ -106,10 +121,26 @@ class ProductGroup(models.Model):
         related_name='products'
     )
 
-    style = models.ForeignKey(
-        Style,
-        on_delete=models.CASCADE,
-        related_name='products_type'
+    fabric = models.ForeignKey(
+        Fabric,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='products'
+    )
+
+    fit = models.ForeignKey(
+        Fit,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='products'
+    )
+
+    activities = models.ManyToManyField(
+        Activity,
+        blank=True,
+        related_name='products'
     )
 
     name = models.CharField(
@@ -124,7 +155,7 @@ class ProductGroup(models.Model):
 
     price = models.DecimalField(
         max_digits=8,
-        decimal_places=2,
+        decimal_places=2
     )
 
     sizes = models.ManyToManyField(
@@ -142,7 +173,7 @@ class ProductGroup(models.Model):
 
     features = models.TextField(
         blank=True,
-        help_text="Hand-written features & specifications (one bullet per line)."
+        help_text="One feature per line."
     )
 
     slug = models.SlugField(
@@ -155,10 +186,13 @@ class ProductGroup(models.Model):
             base_slug = slugify(f"{self.name}-{self.gender}")
             slug = base_slug
             counter = 1
+
             while ProductGroup.objects.filter(slug=slug).exists():
                 slug = f"{base_slug}-{counter}"
                 counter += 1
+
             self.slug = slug
+
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -169,20 +203,33 @@ class Product(models.Model):
     group = models.ForeignKey(
         ProductGroup,
         on_delete=models.CASCADE,
-        related_name='variants'
+        related_name='product_variants'
     )
 
-    color = models.CharField(max_length=50)
+    color = models.CharField(
+        max_length=50
+    )
 
-    color_hexes = models.CharField(max_length=50)
+    color_hexes = models.CharField(
+        max_length=50
+    )
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
 
-    updated_at = models.DateTimeField(auto_now=True)
+    updated_at = models.DateTimeField(
+        auto_now=True
+    )
 
-    is_active = models.BooleanField(default=True)
+    is_active = models.BooleanField(
+        default=True
+    )
 
-    slug = models.SlugField(unique=True, blank=True)
+    slug = models.SlugField(
+        unique=True,
+        blank=True
+    )
 
     sale_price = models.DecimalField(
         max_digits=8,
@@ -192,11 +239,14 @@ class Product(models.Model):
     )
 
     def get_absolute_url(self):
-        return reverse('product-details', kwargs={
-            'pk': self.pk,
-            'gender': self.group.gender,
-            'slug': self.slug
-        })
+        return reverse(
+            'product-details',
+            kwargs={
+                'pk': self.pk,
+                'gender': self.group.gender,
+                'slug': self.slug
+            }
+        )
 
     def __str__(self):
         return f"{self.group.name} ({self.color})"
@@ -206,15 +256,28 @@ class Product(models.Model):
             base_slug = slugify(f"{self.group.name}-{self.color}")
             slug = base_slug
             counter = 1
+
             while Product.objects.filter(slug=slug).exists():
                 slug = f"{base_slug}-{counter}"
                 counter += 1
+
             self.slug = slug
+
         super().save(*args, **kwargs)
 
     @property
     def main_image(self):
-        return self.images.filter(is_main=True).first() or self.images.first()
+        return self.images.filter(
+            is_main=True
+        ).first() or self.images.first()
+
+    @property
+    def available_sizes(self):
+        return (
+            self.size_stocks
+            .filter(stock__gt=0)
+            .select_related('size')
+        )
 
 
 class ProductImage(models.Model):
@@ -224,11 +287,18 @@ class ProductImage(models.Model):
         related_name='images'
     )
 
-    image = models.ImageField(upload_to='product_images/', max_length=1000)
+    image = models.ImageField(
+        upload_to='product_images/',
+        max_length=1000
+    )
 
-    order = models.PositiveIntegerField(default=0)
+    order = models.PositiveIntegerField(
+        default=0
+    )
 
-    is_main = models.BooleanField(default=False)
+    is_main = models.BooleanField(
+        default=False
+    )
 
     class Meta:
         ordering = ['order']
@@ -241,7 +311,12 @@ class ProductImage(models.Model):
             ProductImage.objects.filter(
                 product=self.product,
                 is_main=True
-            ).exclude(pk=self.pk).update(is_main=False)
+            ).exclude(
+                pk=self.pk
+            ).update(
+                is_main=False
+            )
+
         super().save(*args, **kwargs)
 
 
@@ -260,9 +335,9 @@ class ProductSizeStock(models.Model):
 
     stock = models.PositiveIntegerField()
 
-    def __str__(self):
-        return f"{self.product} - {self.size}: {self.stock}"
-
     class Meta:
         unique_together = ('product', 'size')
+
+    def __str__(self):
+        return f"{self.product} - {self.size}: {self.stock}"
 

@@ -44,41 +44,42 @@
 
             <div class="nav-dropdown" id="womenDropdown">
                 <div class="nav-dropdown-inner">
-
                     <div class="nav-dropdown-columns">
                         <div class="nav-dropdown-column">
-                            <h4>Type</h4>
-                            <a href="{% url 'all-products' %}?gender=Women&type=Knitwear">Knitwear</a>
-                            <a href="#">Outerwear</a>
-                            <a href="#">Apparel</a>
+                            <h4>Activity</h4>
+
+                            <a href="{% url 'all-products' %}?gender=women&activity=golf">Golf</a>
+                            <a href="{% url 'all-products' %}?gender=women&activity=ski">Ski</a>
+                            <a href="{% url 'all-products' %}?gender=women&activity=tennis">Tennis</a>
+                            <a href="{% url 'all-products' %}?gender=women&activity=everyday">Everyday</a>
+                            <a href="{% url 'all-products' %}?gender=women&activity=travel">Travel</a>
                         </div>
 
                         <div class="nav-dropdown-column">
-                            <h4>Knitwear</h4>
-                            <a href="{% url 'all-products' %}?gender=Women&type=Knitwear&style=Cosy Merino Sweaters">Cosy Merino Sweaters</a>
-                            <a href="#">Lightweight Merino Sweaters</a>
-                            <a href="#">Merino Tees</a>
+                            <h4>Collection</h4>
+
+                            <a href="{% url 'all-products' %}?gender=women&category=polos">Polos</a>
+                            <a href="{% url 'all-products' %}?gender=women&category=knitwear">Knitwear</a>
+                            <a href="{% url 'all-products' %}?gender=women&category=outerwear">Outerwear</a>
+                            <a href="{% url 'all-products' %}?gender=women&category=trousers">Trousers</a>
+                            <a href="{% url 'all-products' %}?gender=women&category=shorts">Shorts</a>
                         </div>
 
                         <div class="nav-dropdown-column">
-                            <h4>Outerwear</h4>
-                            <a href="#">Ski Jackets</a>
-                            <a href="#">Ski Pants</a>
-                        </div>
+                            <h4>Fabric</h4>
 
-                        <div class="nav-dropdown-column">
-                            <h4>Apparel</h4>
-                            <a href="#">Cotton Tees</a>
-                            <a href="#">Cotton Hoodies</a>
-                            <a href="#">Cotton Sweatshirts</a>
+                            <a href="{% url 'all-products' %}?gender=women&fabric=piqué">Piqué</a>
+                            <a href="{% url 'all-products' %}?gender=women&fabric=merino-wool">Merino Wool</a>
+                            <a href="{% url 'all-products' %}?gender=women&fabric=cashmere">Cashmere</a>
+                            <a href="{% url 'all-products' %}?gender=women&fabric=technical-knit">Technical Knit</a>
                         </div>
                     </div>
 
                     <div class="nav-dropdown-items">
                         <div class="nav-featured-item">
-                            <img src="{% static 'img/item1.jpg' %}">
-                            <p class="title">Lightweight Merino Sweaters</p>
-                            <p class="subtitle">Luxury for all seasons.</p>
+                            <img src="{% static 'images/pique_garden_gala_1.jpg' %}">
+                            <p class="title">Performance Polo</p>
+                            <p class="subtitle">Women's Performance Polo</p>
                             <a href="#">Shop now</a>
                         </div>
 
@@ -90,13 +91,13 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="nav-dropdown-footer">
                     <a href="{% url 'all-products' %}?gender=women">
                         Shop all Women
                     </a>
                 </div>
-                
+
             </div>
         </div>
     </nav>
@@ -114,6 +115,7 @@
     <script src="{% static 'js/navbar.js' %}"></script>
     <script src="{% static 'js/auth_modal.js' %}"></script>
     <script src="{% static 'js/dropdown_navbar.js' %}"></script>
+    <script src="{% static 'js/profile_page.js' %}"></script>
 
 </body>
 </html>

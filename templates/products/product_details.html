@@ -6,7 +6,54 @@
 
 {% block main_content %}
     <div class="product-page">
-    
+        <div class="product-gallery">
+            {% for product_image in product_details.images.all %}
+                <img
+                        src="{{ product_image.image.url }}"
+                        alt="{{ product_details.group.name }}"
+                        class="gallery-image"
+                >
+            {% endfor %}
+        </div>
+
+        <div class="product-info">
+            <h1 class="product-info-title">{{ product_details.group.name }}</h1>
+
+            <h2 class="product-info-subtitle">
+                {{ product_details.group.gender|capfirst }}'s {{ product_details.group.name }}
+            </h2>
+
+            <p class="product-info-price">€{{ product_details.group.price }}</p>
+
+            <div class="product-info-sizes">
+                {% for size_stock in product_details.available_sizes %}
+                    <button type="button" class="size-option" data-size="{{ size_stock.size.name }}">
+                        {{ size_stock.size.name }}
+                    </button>
+                {% endfor %}
+            </div>
+        
+            <div class="product-info-colors">
+                {% for variant in variants %}
+                    {% with variant.color_hexes|split:"," as colors %}
+                        <a href="{% url 'product-details' pk=variant.pk gender=variant.group.gender slug=variant.slug %}" 
+                           class="color-choice" 
+                           title="{{ variant.color }}">
+                            
+                            {% if colors|length > 1 %}
+                                <span class="color-split" 
+                                      style="background: linear-gradient(90deg, {{ colors.0|trim }} 50%, {{ colors.1|trim }} 50%);">
+                                </span>
+                            {% else %}
+                                <span class="color-split" 
+                                      style="background-color: {{ colors.0|trim|default:'#ccc' }};">
+                                </span>
+                            {% endif %}
+                        </a>
+                    {% endwith %}
+                {% endfor %}
+            </div>
+        </div>
     </div>
 {% endblock %}
 
