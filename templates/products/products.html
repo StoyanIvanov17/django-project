@@ -38,17 +38,11 @@
                     </a>
                 </div>
 
-                <div class="product-title">
-                    <span class="product-title">{{ product.group.name }}</span>
-                </div>
+                <div class="product-title">{{ product.group.name }}</div>
 
-                <div class="product-subtitle">
-                    <span class="product-subtitle">{{ product.group.gender|capfirst }}'s {{ product.group.name }}</span>
-                </div>
+                <div class="product-subtitle">{{ product.group.gender|capfirst }}'s {{ product.group.name }}</div>
 
-                <div class="product-price">
-                    <span class="product-price">€{{ product.group.price }}</span>
-                </div>
+                <div class="product-price">€{{ product.group.price }}</div>
 
                 <div class="color-choices">
                     {% with product.color_hexes|split:"," as colors %}
