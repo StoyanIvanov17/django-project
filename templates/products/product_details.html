@@ -54,13 +54,23 @@
                 {% endfor %}
             </div>
 
-            <p class="size-nav">
-                <span class="size-links">
-                    <span>Size</span>
+            <div class="size-nav">
+                <div class="size-links">
+                    <p>Size</p>
                     <a href="#" class="size-guide">SIZE GUIDE</a>
-                </span>
-                
-            </p>
+                </div>
+
+                <div class="size-options">
+                    {% for size_stock in product_details.available_sizes %}
+                        <button
+                            type="button"
+                            class="size-option"
+                            data-size="{{ size_stock.size.name }}">
+                            {{ size_stock.size.name }}
+                        </button>
+                    {% endfor %}
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}
