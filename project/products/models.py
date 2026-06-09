@@ -176,6 +176,14 @@ class ProductGroup(models.Model):
         help_text="One feature per line."
     )
 
+    sizing = models.TextField(
+        blank=True
+    )
+
+    materials_and_care = models.TextField(
+        blank=True
+    )
+
     slug = models.SlugField(
         unique=True,
         blank=True

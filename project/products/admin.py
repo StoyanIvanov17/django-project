@@ -10,17 +10,27 @@ from .models import (
 class ProductSizeStockInline(admin.TabularInline):
     model = ProductSizeStock
     extra = 0
-    min_num = 1
 
 
 class ProductImageInline(admin.TabularInline):
     model = ProductImage
-    extra = 0
+    extra = 3
     ordering = ('order',)
 
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
+    def save_model(self, request, obj, form, change):
+        super().save_model(request, obj, form, change)
+
+        sizes = list(Size.objects.all())
+
+        if not change:
+            ProductSizeStock.objects.bulk_create([
+                ProductSizeStock(product=obj, size=size, stock=5)
+                for size in sizes
+            ])
+
     list_display = ('group', 'color', 'is_active', 'created_at')
     list_filter = ('is_active', 'created_at', 'group__category')
     search_fields = (
@@ -31,7 +41,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_editable = ('is_active',)
     exclude = ('slug',)
 
-    inlines = [ProductImageInline, ProductSizeStockInline]
+    inlines = [ProductSizeStockInline, ProductImageInline]
 
 
 @admin.register(ProductGroup)
@@ -40,20 +50,26 @@ class ProductGroupAdmin(admin.ModelAdmin):
         'name',
         'category',
         'fabric',
+        'fit',
         'gender',
+        'price',
+        'label',
     )
 
     list_filter = (
         'category',
         'fabric',
+        'fit',
         'gender',
         'activities',
+        'label',
     )
 
     search_fields = (
         'name',
         'category__name',
         'fabric__name',
+        'fit__name',
     )
 
     filter_horizontal = (
@@ -61,20 +77,48 @@ class ProductGroupAdmin(admin.ModelAdmin):
         'activities',
     )
 
-    prepopulated_fields = {'slug': ('name', 'gender')}
+    readonly_fields = ('slug',)
 
-    fields = (
-        'name',
-        'category',
-        'fabric',
-        'fit',
-        'activities',
-        'gender',
-        'price',
-        'sizes',
-        'label',
-        'features',
-        'slug',
+    fieldsets = (
+        (
+            'Basic Information',
+            {
+                'fields': (
+                    'name',
+                    'category',
+                    'gender',
+                    'label',
+                    'price',
+                )
+            }
+        ),
+        (
+            'Product Attributes',
+            {
+                'fields': (
+                    'fabric',
+                    'fit',
+                    'activities',
+                    'sizes',
+                )
+            }
+        ),
+        (
+            'Product Details',
+            {
+                'fields': (
+                    'features',
+                    'sizing',
+                    'materials_and_care',
+                )
+            }
+        ),
+        (
+            'System',
+            {
+                'fields': ('slug',),
+            }
+        ),
     )
 
 
