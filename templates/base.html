@@ -17,7 +17,7 @@
     data-open-login-modal="{{ open_login_modal|yesno:'true,false' }}">
 
     <nav class="announcement">
-        <h1>Winter Sale Is Here! Enjoy 10% OFF Winter Products!</h1>
+        <h1>Buy any 2 products get 15% off! Free shipping over 150€</h1>
     </nav>
     <nav class="navbar">
         <div class="navbar-container">
@@ -62,20 +62,12 @@
                             <h4>Collection</h4>
 
                             <a href="{% url 'all-products' %}?gender=women&category=polos">Polos</a>
-                            <a href="{% url 'all-products' %}?gender=women&category=knitwear">Knitwear</a>
+                            <a href="{% url 'all-products' %}?gender=women&category=knitwear">Layers</a>
                             <a href="{% url 'all-products' %}?gender=women&category=outerwear">Outerwear</a>
-                            <a href="{% url 'all-products' %}?gender=women&category=trousers">Trousers</a>
-                            <a href="{% url 'all-products' %}?gender=women&category=shorts">Shorts</a>
+                            <a href="{% url 'all-products' %}?gender=women&category=trousers">Bottoms</a>
+                            <a href="{% url 'all-products' %}?gender=women&category=shorts">Shop All</a>
                         </div>
-
-                        <div class="nav-dropdown-column">
-                            <h4>Fabric</h4>
-
-                            <a href="{% url 'all-products' %}?gender=women&fabric=piqué">Piqué</a>
-                            <a href="{% url 'all-products' %}?gender=women&fabric=merino-wool">Merino Wool</a>
-                            <a href="{% url 'all-products' %}?gender=women&fabric=cashmere">Cashmere</a>
-                            <a href="{% url 'all-products' %}?gender=women&fabric=technical-knit">Technical Knit</a>
-                        </div>
+                        
                     </div>
 
                     <div class="nav-dropdown-items">

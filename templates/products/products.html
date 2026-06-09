@@ -40,7 +40,13 @@
 
                 <div class="product-title">{{ product.group.name }}</div>
 
-                <div class="product-subtitle">{{ product.group.gender|capfirst }}'s {{ product.group.name }}</div>
+                <div class="product-subtitle">
+                    {{ product.group.gender|capfirst }}'s
+                    {% if product.group.fabric %}
+                        {{ product.group.fabric }}
+                    {% endif %}
+                    {{ product.group.name }}
+                </div>
 
                 <div class="product-price">€{{ product.group.price }}</div>
 
