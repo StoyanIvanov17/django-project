@@ -6,5 +6,8 @@
 {% endblock %}
 
 {% block main_content %}
+    {% for section in sections %}
+        {% include 'partials/homepage_categories.html' %}
+    {% endfor %}
 {% endblock %}
 

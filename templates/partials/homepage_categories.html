@@ -1,0 +1,18 @@
+{% load static %}
+
+<section class="hero">
+    <div class="hero-content">
+        <h1>{{ section.title }}</h1>
+        <p>{{ section.description }}</p>
+
+        <div class="hero-buttons">
+            <a href="{{ section.button_url }}">
+                {{ section.button_text }}
+            </a>
+        </div>
+    </div>
+
+    <div class="hero-wrapper">
+        <img src="{% static section.image %}" alt="{{ section.title }}">
+    </div>
+</section>
