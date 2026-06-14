@@ -137,7 +137,15 @@ class SizeAdmin(admin.ModelAdmin):
 
 @admin.register(Activity)
 class ActivityAdmin(admin.ModelAdmin):
-    list_display = ('name',)
+    list_display = (
+        'name',
+        'featured_on_homepage',
+        'homepage_order'
+    )
+    list_editable = (
+        'featured_on_homepage',
+        'homepage_order'
+    )
     search_fields = ('name',)
     prepopulated_fields = {'slug': ('name',)}
 

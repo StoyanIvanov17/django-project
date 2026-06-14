@@ -2,17 +2,17 @@
 
 <section class="hero">
     <div class="hero-content">
-        <h1>{{ section.title }}</h1>
-        <p>{{ section.description }}</p>
+        <h1>{{ section.name }}</h1>
+        <p>{{ section.homepage_description }}</p>
 
         <div class="hero-buttons">
-            <a href="{{ section.button_url }}">
-                {{ section.button_text }}
+            <a href="#">
+                Shop {{ section.name}}
             </a>
         </div>
     </div>
 
     <div class="hero-wrapper">
-        <img src="{% static section.image %}" alt="{{ section.title }}">
+        <img src="{{ section.homepage_image.url }}" alt="{{ section.name }}">
     </div>
 </section>

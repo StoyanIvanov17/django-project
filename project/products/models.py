@@ -14,6 +14,26 @@ class Activity(models.Model):
         blank=True
     )
 
+    featured_on_homepage = models.BooleanField(
+        default=False
+    )
+
+    homepage_description = models.TextField(
+        blank=True
+    )
+
+    homepage_image = models.ImageField(
+        upload_to='homepage_categories/',
+    )
+
+    homepage_order = models.PositiveIntegerField(
+        default=0
+    )
+
+    class Meta:
+        verbose_name_plural = 'Activities'
+        ordering = ['homepage_order', 'name']
+
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
