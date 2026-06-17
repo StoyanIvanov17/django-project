@@ -6,9 +6,11 @@
     <title>Home</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
 </head>
 <body
@@ -23,8 +25,7 @@
         <div class="navbar-container">
 
             <div class="nav-left">
-                <a href="#" data-dropdown="WOMEN">WOMEN</a>
-                <a href="#" data-dropdown="MEN">MEN</a>
+                <a href="#" data-dropdown="MENU">☰</a>
             </div>
         </div>
 
@@ -45,43 +46,30 @@
 
         <div class="nav-dropdown-container">
 
-            <div class="nav-dropdown" id="womenDropdown">
+            <div class="nav-dropdown" id="menuDropdown">
                 <div class="nav-dropdown-inner">
                     <div class="nav-dropdown-columns">
                         <div class="nav-dropdown-column">
                             <h4>Activity</h4>
 
-                            <a href="{% url 'all-products' %}?gender=women&activity=golf">Golf</a>
-                            <a href="{% url 'all-products' %}?gender=women&activity=ski">Ski</a>
-                            <a href="{% url 'all-products' %}?gender=women&activity=tennis">Tennis</a>
-                            <a href="{% url 'all-products' %}?gender=women&activity=everyday">Everyday</a>
-                            <a href="{% url 'all-products' %}?gender=women&activity=travel">Travel</a>
+                            <a href="#">Golf</a>
+                            <a href="#">Ski</a>
+                            <a href="#">Tennis</a>
+                            <a href="#">Everyday</a>
+                            <a href="#">Travel</a>
                         </div>
-
-                        <div class="nav-dropdown-column">
-                            <h4>Collection</h4>
-
-                            <a href="{% url 'all-products' %}?gender=women&category=polos">Polos</a>
-                            <a href="{% url 'all-products' %}?gender=women&category=knitwear">Layers</a>
-                            <a href="{% url 'all-products' %}?gender=women&category=outerwear">Outerwear</a>
-                            <a href="{% url 'all-products' %}?gender=women&category=trousers">Bottoms</a>
-                            <a href="{% url 'all-products' %}?gender=women&category=shorts">Shop All</a>
-                        </div>
-                        
                     </div>
 
                     <div class="nav-dropdown-items">
                         <div class="nav-featured-item">
                             <img src="{% static 'images/pique_garden_gala_1.jpg' %}">
                             <p class="title">Performance Polo</p>
-                            <p class="subtitle">Women's Performance Polo</p>
                             <a href="#">Shop now</a>
                         </div>
 
                         <div class="nav-featured-item">
                             <img src="{% static 'images/Script Fleece Crewneck_4.png' %}">
                             <p class="title">Script Fleece Crewneck</p>
-                            <p class="subtitle">Women's Fleece Script Fleece Crewneck.</p>
                             <a href="#">Shop now</a>
                         </div>
                     </div>

@@ -59,5 +59,8 @@ class ProductDetailsView(views.DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
+        product = self.object
+
         context['variants'] = Product.objects.filter(group=self.object.group)
+        context['current_variant'] = product
         return context

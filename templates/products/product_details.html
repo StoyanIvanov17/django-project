@@ -17,27 +17,25 @@
         </div>
 
         <div class="product-details">
-            <h1 class="title">{{ product_details.group.name }}</h1>
+            <div class="title-and-save">
+                <h1 class="title">{{ product_details.group.name }}</h1>
+                <a><i class="fa-regular fa-heart"></i></a>
+            </div>
 
-            <h2 class="subtitle">
-                {{ product_details.group.gender|capfirst }}'s
-                {{ product_details.group.fabric }}
-                {{ product_details.group.name }}
-            </h2>
+            <p class="price">{{ product_details.group.price }} EUR</p>
 
-            <p class="price">€{{ product_details.group.price }}</p>
-        
-            <p class="features">{{ product_details.group.features }}</p>
+            <hr class="section-divider">
+
 
             <p class="current-color">
-                Colour: <span class="color-name">{{ product_details.color }}</span>
+                <span class="color-name">COLOR | {{ product_details.color }}</span>
             </p>
 
             <div class="colors">
                 {% for variant in variants %}
                     {% with variant.color_hexes|split:"," as colors %}
                         <a href="{% url 'product-details' pk=variant.pk gender=variant.group.gender slug=variant.slug %}"
-                           class="color-choice"
+                           class="color-choice {% if variant.pk == current_variant.pk %}is-selected{% endif %}"
                            title="{{ variant.color }}">
 
                             {% if colors|length > 1 %}
@@ -53,28 +51,17 @@
                     {% endwith %}
                 {% endfor %}
             </div>
-
-            <div class="size-nav">
-                <div class="size-links">
-                    <p>Size</p>
-                    <a href="#" class="size-guide">SIZE GUIDE</a>
-                </div>
-
-                <div class="size-options">
-                    {% for size_stock in product_details.available_sizes %}
-                        <button
-                            type="button"
-                            class="size-option"
-                            data-size="{{ size_stock.size.name }}">
-                            {{ size_stock.size.name }}
-                        </button>
-                    {% endfor %}
-                </div>
+        
+            <div class="size">
+                <h1 class="title">Select your size</h1>
             </div>
 
-            <div class="add-to-cart">
-                <button>Add to cart</button>
+            <div class="add-to-cart-or-pay">
+                <button class="add-to-cart">ADD TO CART</button>
+                <button class="pay">EXPRESS PAYMENT</button>
             </div>
+        
+            <p class="features">{{ product_details.group.features }}</p>
         </div>
     </div>
 {% endblock %}
