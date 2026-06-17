@@ -56,9 +56,21 @@
                 <h1 class="title">Select your size</h1>
             </div>
 
-            <div class="add-to-cart-or-pay">
-                <button class="add-to-cart">ADD TO CART</button>
-                <button class="pay">EXPRESS PAYMENT</button>
+            <div class="add-to-cart-or-express-payment">
+                <button class="add-to-cart">
+                    <span class="left">ADD TO CART</span>
+                    <span class="right">{{ product_details.group.price }} €</span>
+                </button>
+
+                <button class="express-payment">
+                    <span class="left">EXPRESS PAYMENT</span>
+
+                     <span class="right payment-icons">
+                        <i class="fa-brands fa-apple-pay"></i>
+                        <i class="fa-brands fa-cc-paypal"></i>
+                        <i class="fa-regular fa-credit-card"></i>
+                    </span>
+                </button>
             </div>
         
             <p class="features">{{ product_details.group.features }}</p>
