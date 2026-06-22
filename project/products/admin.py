@@ -3,7 +3,7 @@ from django.contrib import admin
 from .models import (
     Category, Product, ProductGroup, Size,
     ProductImage, ProductSizeStock,
-    Activity, Fabric, Fit
+    Activity, Fabric, Fit, StylingRecommendation
 )
 
 
@@ -44,8 +44,17 @@ class ProductAdmin(admin.ModelAdmin):
     inlines = [ProductSizeStockInline, ProductImageInline]
 
 
+class StylingRecommendationInline(admin.TabularInline):
+    model = StylingRecommendation
+    fk_name = 'source'
+    extra = 1
+    autocomplete_fields = ('target',)
+
+
 @admin.register(ProductGroup)
 class ProductGroupAdmin(admin.ModelAdmin):
+    inlines = [StylingRecommendationInline]
+
     list_display = (
         'name',
         'category',

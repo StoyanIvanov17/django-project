@@ -227,6 +227,31 @@ class ProductGroup(models.Model):
         return self.name
 
 
+class StylingRecommendation(models.Model):
+    source = models.ForeignKey(
+        ProductGroup,
+        on_delete=models.CASCADE,
+        related_name='styling_recommendations'
+    )
+
+    target = models.ForeignKey(
+        ProductGroup,
+        on_delete=models.CASCADE,
+        related_name='+'
+    )
+
+    order = models.PositiveIntegerField(
+        default=0
+    )
+
+    class Meta:
+        ordering = ['order']
+        unique_together = ('source', 'target')
+
+    def __str__(self):
+        return f"{self.source} → {self.target}"
+
+
 class Product(models.Model):
     group = models.ForeignKey(
         ProductGroup,
