@@ -72,8 +72,35 @@
                     </span>
                 </button>
             </div>
+
+        <div class="complete-look">
+            <h2 class="complete-look-title">Complete the Look</h2>
         
-            <p class="features">{{ product_details.group.features }}</p>
+            <div class="complete-look-items">
+                {% for recommendation in recommendations %}
+                    {% with product=recommendation.target.representative_product %}
+                        <a href="{{ product.get_absolute_url }}" class="look-item">
+                            <img
+                                src="{{ product.main_image.image.url }}"
+                                alt="{{ recommendation.target.name }}"
+                                class="look-image"
+                            >
+        
+                            <div class="look-info">
+                                <p class="look-name">
+                                    {{ recommendation.target.name }}
+                                </p>
+        
+                                <p class="look-price">
+                                    €{{ recommendation.target.price }}
+                                </p>
+                            </div>
+                        </a>
+                    {% endwith %}
+                {% endfor %}
+            </div>
+        </div>
+        
         </div>
     </div>
 {% endblock %}

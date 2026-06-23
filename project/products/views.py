@@ -60,7 +60,17 @@ class ProductDetailsView(views.DetailView):
         context = super().get_context_data(**kwargs)
 
         product = self.object
+        product_group = product.group
+
+        recommendations = (
+            product_group.styling_recommendations
+            .select_related('target')
+            .order_by('order')
+        )
 
         context['variants'] = Product.objects.filter(group=self.object.group)
         context['current_variant'] = product
+
+        context['recommendations'] = recommendations
+
         return context

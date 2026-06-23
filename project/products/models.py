@@ -226,6 +226,15 @@ class ProductGroup(models.Model):
     def __str__(self):
         return self.name
 
+    @property
+    def representative_product(self):
+        return (
+                self.product_variants
+                .filter(is_primary_variant=True)
+                .first()
+                or self.product_variants.first()
+        )
+
 
 class StylingRecommendation(models.Model):
     source = models.ForeignKey(
@@ -265,6 +274,10 @@ class Product(models.Model):
 
     color_hexes = models.CharField(
         max_length=50
+    )
+
+    is_primary_variant = models.BooleanField(
+        default=False
     )
 
     created_at = models.DateTimeField(
