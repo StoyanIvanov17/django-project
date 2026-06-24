@@ -1,0 +1,18 @@
+@import 'navbar.css';
+@import 'hero.css';
+@import 'home.css';
+@import 'auth_modal.css';
+@import 'products.css';
+@import 'product_details.css';
+@import 'profile_page.css';
+
+:root {
+    --color-primary: #253745;
+    --color-secondary: #737375;
+    --font-main: "Inter", sans-serif;
+}
+
+html, body {
+    font-family: var(--font-main), serif;
+    font-weight: 300;
+}

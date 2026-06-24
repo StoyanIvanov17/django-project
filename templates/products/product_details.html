@@ -74,14 +74,32 @@
             </div>
 
         <div class="complete-look">
-            <h2 class="complete-look-title">Complete the Look</h2>
+            <div class="complete-look-header">
+                <h2 class="complete-look-title">Complete the Look</h2>
+                
+                <div class="complete-look-pages">
+                    <button class="page-btn" aria-label="Previous">
+                        &#8249;
+                    </button>
+                    
+                    <div class="page-indicator">
+                        <span class="active">1</span>
+                        <span class="divider">|</span>
+                        <span>3</span>
+                    </div>
+                    
+                    <button class="page-btn" aria-label="Next">
+                        &#8250;
+                    </button>
+                </div>
+            </div>
         
             <div class="complete-look-items">
                 {% for recommendation in recommendations %}
                     {% with product=recommendation.target.representative_product %}
                         <a href="{{ product.get_absolute_url }}" class="look-item">
                             <img
-                                src="{{ product.main_image.image.url }}"
+                                src="{{ product.complete_look_image.image.url }}"
                                 alt="{{ recommendation.target.name }}"
                                 class="look-image"
                             >
@@ -94,6 +112,11 @@
                                 <p class="look-price">
                                     €{{ recommendation.target.price }}
                                 </p>
+
+                                <button class="look-button">
+                                    <i class="fa-solid fa-bag-shopping"></i>
+                                    <span>QUICK SHOP</span>
+                                </button>
                             </div>
                         </a>
                     {% endwith %}

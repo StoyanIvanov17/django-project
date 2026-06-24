@@ -1,0 +1,248 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.main-content.profile-page {
+    padding-top: 100px;
+}
+
+.main-content.with-padding {
+    padding-top: 100px;
+}
+
+.announcement {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgb(0, 74, 74);
+    color: #fff;
+    padding: 8px 0;
+    text-align: center;
+    z-index: 11;
+    transition: transform 0.5s ease;
+}
+
+.announcement h1 {
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.announcement.hide {
+    transform: translateY(-100%);
+}
+
+.navbar {
+    position: fixed;
+    top: 35px;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    z-index: 100;
+    transition: box-shadow 0.25s ease, top 0.3s ease;
+}
+
+.navbar.sticky {
+    top: 0;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.10);
+}
+
+.navbar-container {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.navbar-container a {
+    text-decoration: none;
+}
+
+.nav-left {
+    gap: 30px;
+    padding-left: 20px;
+}
+
+.nav-left a,
+.nav-icons a {
+    text-decoration: none;
+    color: #000000;
+}
+
+.nav-left a:hover,
+.nav-icons a:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.nav-left,
+.nav-right {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.nav-right {
+    justify-content: flex-end;
+    padding-right: 20px;
+}
+
+.nav-mid {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+}
+
+.nav-mid h1 {
+    font-size: 25px;
+    color: black;
+    font-weight: normal;
+    margin: 0;
+}
+
+.nav-mid h1:visited {
+    text-decoration: none;
+    color: black;
+}
+
+.nav-icons {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.user-icons {
+    display: flex;
+    gap: 30px;
+    font-size: 16px;
+}
+
+.nav-dropdown-container {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #ffffff;
+    z-index: 20;
+    display: block;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: transform 0.3s ease;
+    border: 1px solid black;
+}
+
+.nav-dropdown {
+    display: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+}
+
+.nav-dropdown.show {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+}
+
+.nav-dropdown-container.show {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.nav-dropdown-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 40px;
+    display: flex;
+    gap: 60px;
+}
+
+.nav-dropdown-column {
+    padding-right: 10px;
+}
+
+.nav-dropdown-columns {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(160px, 1fr));
+    gap: 40px;
+    flex: 1;
+}
+
+.nav-dropdown-column h4 {
+    font-size: 13px;
+    margin-bottom: 14px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+.nav-dropdown-column a {
+    display: block;
+    font-size: 14px;
+    font-weight: 400;
+    color: #111;
+    text-decoration: none;
+
+    padding: 4px 0;
+    letter-spacing: 0.01em;
+
+    transition: color 0.2s ease, transform 0.2s ease;
+    position: relative;
+}
+
+.nav-dropdown-column a:hover {
+    text-decoration: none;
+    opacity: 0.6;
+}
+
+.nav-dropdown-items {
+    display: flex;
+    gap: 30px;
+}
+
+.nav-featured-item {
+    width: 260px;
+}
+
+.nav-featured-item img {
+    width: 100%;
+}
+
+.nav-featured-item .title {
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.nav-featured-item a {
+    font-size: 13px;
+    text-decoration: underline;
+}
+
+.nav-dropdown-footer {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px 30px;
+}
+
+.nav-dropdown-footer a {
+    font-size: 14px;
+    color: #000;
+    text-decoration: none;
+    position: relative;
+}
+
+.nav-dropdown-footer a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    width: 100%;
+    height: 1px;
+    background: #000;
+}

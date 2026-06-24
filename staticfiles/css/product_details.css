@@ -1,0 +1,236 @@
+.product-details-page {
+    display: flex;
+    gap: 40px;
+}
+
+.product-details-gallery {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    width: 1100px;
+    padding: 50px;
+}
+
+.gallery-image {
+    width: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+.product-details {
+    width: 500px;
+    color: #23384d;
+    margin-top: 80px;
+}
+
+.product-details .title {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 16px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #23384d;
+}
+
+.product-details .title-and-save {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.product-details .price {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 16px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #23384d;
+    margin: 10px 0 20px;
+}
+
+.section-divider {
+    border: none;
+    border-top: 1px solid #838181;
+    margin: 2rem 0 1.5rem;
+}
+
+.product-details .current-color .color-name {
+    color: rgb(0, 0, 0);
+    font-size: 11px;
+    font-weight: 300;
+    line-height: 16px;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+}
+
+.product-details .current-color {
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.product-details .colors {
+    display: flex;
+    gap: 8px;
+    margin: 0 0 30px 4px;
+}
+
+.product-details .color-choice {
+    border: 1px solid #8c8b8b;
+    background: #fff;
+}
+
+.product-details .color-choice.is-selected {
+    outline: 1px solid #000;
+    outline-offset: 3px;
+}
+
+.product-details .colors .color-split {
+    width: 15px;
+    height: 15px;
+    display: block;
+}
+
+.size .title {
+    font-size: 10px;
+}
+
+.add-to-cart-or-express-payment {
+    margin-top: 40px;
+    align-content: flex-start;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.add-to-cart-or-express-payment button {
+    width: 100%;
+    padding: 13px;
+    border-radius: 6px;
+    font-weight: 300;
+    line-height: 16px;
+    letter-spacing: 2px;
+    font-size: 10px;
+    border: 1px solid rgb(47, 69, 90);
+    display: flex;
+}
+
+.add-to-cart {
+    background-color: rgb(0, 74, 74);
+    color: white;
+}
+
+.add-to-cart:hover {
+    cursor: pointer;
+    background-color: rgb(0, 97, 97);
+}
+
+.add-to-cart .right {
+    margin-left: auto;
+    font-size: 12px;
+}
+
+.express-payment {
+    background: #fff;
+}
+
+.express-payment:hover {
+    cursor: pointer;
+    background: #e6e6e6;
+}
+
+
+.express-payment .right {
+    margin-left: auto;
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+.express-payment .right.payment-icons {
+    font-size: 18px;
+}
+
+.product-details .features {
+    font-size: 12px;
+    margin-top: 35px;
+    line-height: 1.8;
+    color: #23384d;
+    margin-bottom: 45px;
+    font-weight: 300;
+}
+
+.complete-look {
+    margin-top: 60px;
+    padding-top: 30px;
+    border-top: 1px solid #d9d9d9;
+}
+
+.complete-look-title {
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 25px;
+}
+
+.complete-look-items {
+    display: flex;
+    flex-direction: column;
+    align-content: flex-start;
+    gap: 18px;
+}
+
+.look-item {
+    display: flex;
+    gap: 14px;
+    text-decoration: none;
+    color: inherit;
+}
+
+.look-item:hover .look-image {
+    opacity: 0.85;
+}
+
+.look-image {
+    width: 85px;
+    height: 110px;
+    object-fit: cover;
+    transition: opacity .2s ease;
+}
+
+.look-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.look-name {
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    line-height: 1.4;
+}
+
+.look-price {
+    font-size: 12px;
+    color: #666;
+}
+
+.look-button {
+    background: white;
+    border: none;
+    display: flex;
+    gap: 10px;
+    margin-top: 50px;
+}
+
+.look-button span {
+    font-size: 9px;
+    font-weight: 300;
+    line-height: 16px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #23384d;
+}

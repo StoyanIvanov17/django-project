@@ -3,8 +3,35 @@ from django.contrib import admin
 from .models import (
     Category, Product, ProductGroup, Size,
     ProductImage, ProductSizeStock,
-    Activity, Fabric, Fit, StylingRecommendation
+    Activity, Fabric, Fit, StylingRecommendation, ProductType
 )
+
+
+@admin.register(ProductType)
+class ProductTypeAdmin(admin.ModelAdmin):
+    list_display = (
+        'name',
+        'category',
+    )
+
+    list_filter = (
+        'category',
+    )
+
+    search_fields = (
+        'name',
+        'category__name',
+    )
+
+    autocomplete_fields = (
+        'category',
+    )
+
+    readonly_fields = (
+        'slug',
+    )
+
+    exclude = ('slug',)
 
 
 class ProductSizeStockInline(admin.TabularInline):
@@ -14,7 +41,7 @@ class ProductSizeStockInline(admin.TabularInline):
 
 class ProductImageInline(admin.TabularInline):
     model = ProductImage
-    extra = 3
+    extra = 0
     ordering = ('order',)
 
 
@@ -58,6 +85,7 @@ class ProductGroupAdmin(admin.ModelAdmin):
     list_display = (
         'name',
         'category',
+        'product_type',
         'fabric',
         'fit',
         'gender',
@@ -67,6 +95,7 @@ class ProductGroupAdmin(admin.ModelAdmin):
 
     list_filter = (
         'category',
+        'product_type',
         'fabric',
         'fit',
         'gender',
@@ -77,6 +106,7 @@ class ProductGroupAdmin(admin.ModelAdmin):
     search_fields = (
         'name',
         'category__name',
+        'product_type__name',
         'fabric__name',
         'fit__name',
     )
@@ -95,6 +125,7 @@ class ProductGroupAdmin(admin.ModelAdmin):
                 'fields': (
                     'name',
                     'category',
+                    'product_type',
                     'gender',
                     'label',
                     'price',

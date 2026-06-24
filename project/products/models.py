@@ -24,6 +24,7 @@ class Activity(models.Model):
 
     homepage_image = models.ImageField(
         upload_to='homepage_categories/',
+        blank=True
     )
 
     homepage_order = models.PositiveIntegerField(
@@ -114,6 +115,32 @@ class Category(models.Model):
         super().save(*args, **kwargs)
 
 
+class ProductType(models.Model):
+    category = models.ForeignKey(
+        Category,
+        on_delete=models.CASCADE,
+        related_name='product_types'
+    )
+
+    name = models.CharField(
+        max_length=100,
+        unique=True
+    )
+
+    slug = models.SlugField(
+        unique=True,
+        blank=True
+    )
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
+
+
 class Size(models.Model):
     name = models.CharField(
         max_length=10
@@ -137,6 +164,12 @@ class ProductGroup(models.Model):
 
     category = models.ForeignKey(
         Category,
+        on_delete=models.CASCADE,
+        related_name='products'
+    )
+
+    product_type = models.ForeignKey(
+        ProductType,
         on_delete=models.CASCADE,
         related_name='products'
     )
@@ -338,6 +371,12 @@ class Product(models.Model):
         ).first() or self.images.first()
 
     @property
+    def complete_look_image(self):
+        return self.images.filter(
+            is_complete_look=True
+        ).first() or self.main_image
+
+    @property
     def available_sizes(self):
         return (
             self.size_stocks
@@ -363,6 +402,10 @@ class ProductImage(models.Model):
     )
 
     is_main = models.BooleanField(
+        default=False
+    )
+
+    is_complete_look = models.BooleanField(
         default=False
     )
 

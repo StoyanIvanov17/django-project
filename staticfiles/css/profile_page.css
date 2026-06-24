@@ -1,0 +1,19 @@
+#something {
+    width: 300px;
+    height: 150px;
+    display: flex;
+    margin: 100px 0 0 100px;
+    border: 1px solid black;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+.test-button {
+    width: 100px;
+    height: 50px;
+    display: flex;
+    margin: 50px 0 0 100px;
+    border: 1px solid black;
+}
